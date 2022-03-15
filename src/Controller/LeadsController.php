@@ -9,6 +9,7 @@ use App\Repository\AdministrateurRepository;
 use App\Repository\AgentRepository;
 use App\Repository\LeadsRepository;
 use App\Repository\ConcessionnaireRepository;
+use App\Repository\MarchandRepository;
 use App\Repository\PartenaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,7 +29,7 @@ class LeadsController extends AbstractController
     }
 
     #[Route('/new', name: 'leads_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager , AgentRepository $agent ,PartenaireRepository $partenaire , AdministrateurRepository $administrateur , ConcessionnaireRepository $concessionnaire): Response
+    public function new(Request $request, EntityManagerInterface $entityManager , AgentRepository $agent ,PartenaireRepository $partenaire , AdministrateurRepository $administrateur , ConcessionnaireRepository $concessionnaire , MarchandRepository $marcha): Response
     {
         
        
@@ -39,15 +40,16 @@ class LeadsController extends AbstractController
 
         $agent = $agent->findAll();
         $administrateur = $administrateur->findAll();
-        //$concessionnaire = $concessionnaire->findAll();
+        $concessionnaire = $concessionnaire->findAll();
+        $marchand = $marcha->findAll();
       
 
         $form->get('agent')->setData($agent);
         $form->get('vendeur')->setData($agent);
         $form->get('partenaire')->setData($part);
         $form->get('administrateur')->setData($administrateur);
-       // $form->get('concessionnaire')->setData($concessionnaire);
-        
+        $form->get('concessionnaire')->setData($concessionnaire);
+        $form->get('marchand')->setData($marchand);
         
 
 

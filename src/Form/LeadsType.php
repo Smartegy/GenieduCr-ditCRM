@@ -6,6 +6,7 @@ use App\Entity\Administrateur;
 use App\Entity\Agent;
 use App\Entity\Concessionnaire;
 use App\Entity\Leads;
+use App\Entity\Marchand;
 use App\Entity\Modeleemail;
 use App\Entity\Modelesms;
 use App\Entity\Partenaire;
@@ -96,21 +97,25 @@ class LeadsType extends AbstractType
                                 'mapped' => false
                               
                             ))
-                           /* ->add('concessionnaire', EntityType::class,array(
+                            ->add('concessionnaire', EntityType::class,array(
                                 'class' => Concessionnaire ::class,
-                                'choice_label' => 'utilisateur.nomutilisateur',
+                                'choice_label' => 'concessionnairemarchand.utilisateur.nomutilisateur',
                                     
                                     'expanded' => false,
                                     'multiple' => true,
                                     'mapped' => false
                                   
-                                ))*/
-             /*
-            ->add('agent')
-            ->add('vendeur')
-            ->add('marchand')
-            ->add('partenaire')
-            ->add('administrateur')*/
+                                ))
+                                ->add('marchand', EntityType::class,array(
+                                    'class' => Marchand ::class,
+                                    'choice_label' => 'concessionnairemarchand.utilisateur.nomutilisateur',
+                                        
+                                        'expanded' => false,
+                                        'multiple' => true,
+                                        'mapped' => false
+                                      
+                                    ))
+     
 
 
             ->add('emailleads',EntityType::class,[
