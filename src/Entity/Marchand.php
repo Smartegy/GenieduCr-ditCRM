@@ -34,6 +34,11 @@ class Marchand
      */
     private $vehicules;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Leads::class, inversedBy="marchand")
+     */
+    private $leads;
+
     public function __construct()
     {
         $this->vehicules = new ArrayCollection();
@@ -52,6 +57,18 @@ class Marchand
     public function setConcessionnairemarchand(Concessionnairemarchand $Concessionnairemarchand): self
     {
         $this->Concessionnairemarchand = $Concessionnairemarchand;
+
+        return $this;
+    }
+
+    public function getLeads(): ?Leads
+    {
+        return $this->leads;
+    }
+
+    public function setLeads(?Leads $leads): self
+    {
+        $this->leads = $leads;
 
         return $this;
     }

@@ -44,6 +44,11 @@ class Partenaire
      * @ORM\OneToOne(targetEntity=Medias::class, cascade={"persist", "remove"})
      */
     private $media;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Leads::class, inversedBy="partenaires")
+     */
+    private $leads;
     
     
 
@@ -115,6 +120,18 @@ class Partenaire
     public function setMedia(?Medias $media): self
     {
         $this->media = $media;
+
+        return $this;
+    }
+
+    public function getLeads(): ?Leads
+    {
+        return $this->leads;
+    }
+
+    public function setLeads(?Leads $leads): self
+    {
+        $this->leads = $leads;
 
         return $this;
     }

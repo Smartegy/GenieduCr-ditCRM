@@ -28,6 +28,11 @@ class Concessionnaire
      */
     private $Concessionnairemarchand;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Leads::class, inversedBy="concessionnaires")
+     */
+    private $leads;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -41,6 +46,18 @@ class Concessionnaire
     public function setConcessionnairemarchand(Concessionnairemarchand $Concessionnairemarchand): self
     {
         $this->Concessionnairemarchand = $Concessionnairemarchand;
+
+        return $this;
+    }
+
+    public function getLeads(): ?Leads
+    {
+        return $this->leads;
+    }
+
+    public function setLeads(?Leads $leads): self
+    {
+        $this->leads = $leads;
 
         return $this;
     }

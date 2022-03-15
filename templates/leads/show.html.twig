@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Leads{% endblock %}
+
+{% block body %}
+    <h1>Leads</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ lead.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ lead.nom }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ lead.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Courriel</th>
+                <td>{{ lead.courriel }}</td>
+            </tr>
+            <tr>
+                <th>Datecreation</th>
+                <td>{{ lead.datecreation ? lead.datecreation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Commantaire</th>
+                <td>{{ lead.commantaire }}</td>
+            </tr>
+            <tr>
+                <th>Numserie</th>
+                <td>{{ lead.numserie }}</td>
+            </tr>
+            <tr>
+                <th>Budgetmonsuelle</th>
+                <td>{{ lead.budgetmonsuelle }}</td>
+            </tr>
+            <tr>
+                <th>Datenaissance</th>
+                <td>{{ lead.datenaissance ? lead.datenaissance|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Statutprofessionnel</th>
+                <td>{{ lead.statutprofessionnel }}</td>
+            </tr>
+            <tr>
+                <th>Revenumensuel</th>
+                <td>{{ lead.revenumensuel }}</td>
+            </tr>
+            <tr>
+                <th>Depuisquand</th>
+                <td>{{ lead.depuisquand ? lead.depuisquand|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nomcompagnie</th>
+                <td>{{ lead.nomcompagnie }}</td>
+            </tr>
+            <tr>
+                <th>Occupationposte</th>
+                <td>{{ lead.occupationposte }}</td>
+            </tr>
+            <tr>
+                <th>Adressedomicile</th>
+                <td>{{ lead.adressedomicile }}</td>
+            </tr>
+            <tr>
+                <th>Locationpropriétaire</th>
+                <td>{{ lead.locationpropriétaire }}</td>
+            </tr>
+            <tr>
+                <th>Paiementmonsuel</th>
+                <td>{{ lead.paiementmonsuel }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ lead.date ? lead.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Datecreationtable</th>
+                <td>{{ lead.datecreationtable ? lead.datecreationtable|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Datemodificationtable</th>
+                <td>{{ lead.datemodificationtable ? lead.datemodificationtable|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Rappel</th>
+                <td>{{ lead.rappel ? lead.rappel|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Marque</th>
+                <td>{{ lead.marque }}</td>
+            </tr>
+            <tr>
+                <th>Modele</th>
+                <td>{{ lead.modele }}</td>
+            </tr>
+            <tr>
+                <th>Annee</th>
+                <td>{{ lead.annee }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ lead.type ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Concessionnaires</th>
+                <td>{{ lead.concessionnaires }}</td>
+            </tr>
+            <tr>
+                <th>Agent</th>
+                <td>{{ lead.agent }}</td>
+            </tr>
+            <tr>
+                <th>Vendeur</th>
+                <td>{{ lead.vendeur }}</td>
+            </tr>
+            <tr>
+                <th>Marchand</th>
+                <td>{{ lead.marchand }}</td>
+            </tr>
+            <tr>
+                <th>Partenaire</th>
+                <td>{{ lead.partenaire }}</td>
+            </tr>
+            <tr>
+                <th>Administrateur</th>
+                <td>{{ lead.administrateur }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('leads_index') }}">back to list</a>
+
+    <a href="{{ path('leads_edit', {'id': lead.id}) }}">edit</a>
+
+    {{ include('leads/_delete_form.html.twig') }}
+{% endblock %}

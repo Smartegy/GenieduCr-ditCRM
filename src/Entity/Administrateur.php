@@ -44,6 +44,11 @@ class Administrateur
      */
     private $utilisateur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Leads::class, inversedBy="administrateurs")
+     */
+    private $leads;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -81,6 +86,18 @@ class Administrateur
     public function setUtilisateur(Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getLeads(): ?Leads
+    {
+        return $this->leads;
+    }
+
+    public function setLeads(?Leads $leads): self
+    {
+        $this->leads = $leads;
 
         return $this;
     }

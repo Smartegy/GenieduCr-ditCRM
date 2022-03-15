@@ -506,6 +506,11 @@ class Vehicule
      */
     private $liquidation;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Operations::class, mappedBy="vehicule", cascade={"persist", "remove"})
+     */
+    private $operations;
+
   
 
     
@@ -1680,6 +1685,28 @@ class Vehicule
     public function setLiquidation(bool $liquidation): self
     {
         $this->liquidation = $liquidation;
+
+        return $this;
+    }
+
+    public function getOperations(): ?Operations
+    {
+        return $this->operations;
+    }
+
+    public function setOperations(?Operations $operations): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($operations === null && $this->operations !== null) {
+            $this->operations->setVehicule(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($operations !== null && $operations->getVehicule() !== $this) {
+            $operations->setVehicule($this);
+        }
+
+        $this->operations = $operations;
 
         return $this;
     }

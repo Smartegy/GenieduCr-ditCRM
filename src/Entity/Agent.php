@@ -81,6 +81,11 @@ class Agent
      */
     private $vehicules;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Leads::class, inversedBy="agent")
+     */
+    private $leads;
+
  
 
     public function __construct()
@@ -237,6 +242,18 @@ class Agent
         if ($this->partenaire->removeElement($partenaire)) {
             $partenaire->removeAgent($this);
         }
+
+        return $this;
+    }
+
+    public function getLeads(): ?Leads
+    {
+        return $this->leads;
+    }
+
+    public function setLeads(?Leads $leads): self
+    {
+        $this->leads = $leads;
 
         return $this;
     }

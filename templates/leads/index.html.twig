@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+{% set page_title = 'Leads dachat' %}
+{% set P_page_title = '' %}
+{% set P_path = '/leads/' %} 
+
+ 
+{% block body %}
+    <h1>Leads d'achat</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Telephone</th>
+                <th>Courriel</th>
+                <th>Datecreation</th>
+                <th>Commantaire</th>
+                <th>Numserie</th>
+                <th>Budgetmonsuelle</th>
+                <th>Datenaissance</th>
+                <th>Statutprofessionnel</th>
+                <th>Revenumensuel</th>
+                <th>Depuisquand</th>
+                <th>Nomcompagnie</th>
+                <th>Occupationposte</th>
+                <th>Adressedomicile</th>
+                <th>Locationpropriétaire</th>
+                <th>Paiementmonsuel</th>
+                <th>Date</th>
+                <th>Datecreationtable</th>
+                <th>Datemodificationtable</th>
+                <th>Rappel</th>
+                <th>Marque</th>
+                <th>Modele</th>
+                <th>Annee</th>
+                <th>Type</th>
+                <th>Concessionnaires</th>
+                <th>Agent</th>
+                <th>Vendeur</th>
+                <th>Marchand</th>
+                <th>Partenaire</th>
+                <th>Administrateur</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lead in leads %}
+            <tr>
+                <td>{{ lead.id }}</td>
+                <td>{{ lead.nom }}</td>
+                <td>{{ lead.telephone }}</td>
+                <td>{{ lead.courriel }}</td>
+                <td>{{ lead.datecreation ? lead.datecreation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ lead.commantaire }}</td>
+                <td>{{ lead.numserie }}</td>
+                <td>{{ lead.budgetmonsuelle }}</td>
+                <td>{{ lead.datenaissance ? lead.datenaissance|date('Y-m-d') : '' }}</td>
+                <td>{{ lead.statutprofessionnel }}</td>
+                <td>{{ lead.revenumensuel }}</td>
+                <td>{{ lead.depuisquand ? lead.depuisquand|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ lead.nomcompagnie }}</td>
+                <td>{{ lead.occupationposte }}</td>
+                <td>{{ lead.adressedomicile }}</td>
+                <td>{{ lead.locationproprietaire }}</td>
+                <td>{{ lead.paiementmonsuel }}</td>
+                <td>{{ lead.date ? lead.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ lead.datecreationtable ? lead.datecreationtable|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ lead.datemodificationtable ? lead.datemodificationtable|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ lead.rappel ? lead.rappel|date('Y-m-d') : '' }}</td>
+                <td>{{ lead.marque }}</td>
+                <td>{{ lead.modele }}</td>
+                <td>{{ lead.annee }}</td>
+                <td>{{ lead.type ? 'Yes' : 'No' }}</td>
+                <td>{{ lead.concessionnaires }}</td>
+                <td>{{ lead.agent }}</td>
+                <td>{{ lead.vendeur }}</td>
+                <td>{{ lead.marchand }}</td>
+                <td>{{ lead.partenaire }}</td>
+                <td>{{ lead.administrateur }}</td>
+                <td>
+                    <a href="{{ path('leads_show', {'id': lead.id}) }}">show</a>
+                    <a href="{{ path('leads_edit', {'id': lead.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="32">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('leads_new') }}">Create new</a>
+{% endblock %}
