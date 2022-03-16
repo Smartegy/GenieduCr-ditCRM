@@ -117,7 +117,7 @@ class LeadsType extends AbstractType
                                                  },
                                                  'expanded' => false ,
                                                  'required' => false ,
-                                                 'mapped' => false,
+                                                 'mapped' => true,
                                                  'label' => false 
                                     
                                             ))
