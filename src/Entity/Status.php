@@ -26,14 +26,10 @@ class Status
      */
     private $nom;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Leads::class, mappedBy="statusvehicule")
-     */
-    private $leads;
 
     public function __construct()
     {
-        $this->leads = new ArrayCollection();
+      
     }
 
  
@@ -56,34 +52,7 @@ class Status
         return $this;
     }
 
-    /**
-     * @return Collection|Leads[]
-     */
-    public function getLeads(): Collection
-    {
-        return $this->leads;
-    }
 
-    public function addLead(Leads $lead): self
-    {
-        if (!$this->leads->contains($lead)) {
-            $this->leads[] = $lead;
-            $lead->setStatusvehicule($this);
-        }
 
-        return $this;
-    }
-
-    public function removeLead(Leads $lead): self
-    {
-        if ($this->leads->removeElement($lead)) {
-            // set the owning side to null (unless already changed)
-            if ($lead->getStatusvehicule() === $this) {
-                $lead->setStatusvehicule(null);
-            }
-        }
-
-        return $this;
-    }
 }
 

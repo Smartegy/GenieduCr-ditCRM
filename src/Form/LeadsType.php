@@ -19,6 +19,8 @@ use App\Repository\ModelesmsRepository;
 use App\Repository\PartenaireRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\DataTransformer\ChoicesToValuesTransformer;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -54,19 +56,10 @@ class LeadsType extends AbstractType
 
       ->add('agent', EntityType::class,array(
                 'class' => Agent::class,
-                'choice_label' => 'utilisateur.nomutilisateur', 
-                'query_builder' => function(AgentRepository $repo)
-                {
-                    $agents = $repo->fillAgents();
-                    return $agents;
-                    },
-                    
-                    'expanded' => false,
-                    'multiple' => true,
-                    'mapped' => true
+                'choice_label' => 'utilisateur.nomutilisateur'
                   
                 ))
-                ->add('vendeur', EntityType::class,array(
+            /*    ->add('vendeur', EntityType::class,array(
                     'class' => Agent::class,
                     'choice_label' => 'utilisateur.nomutilisateur', 
                     'query_builder' => function(AgentRepository $repo)
@@ -79,7 +72,7 @@ class LeadsType extends AbstractType
                         'multiple' => true,
                         'mapped' => false
                       
-                    ))
+                    ))*/
                   ->add('partenaire', EntityType::class,array(
                         'class' => Partenaire ::class,
                         'choice_label' => 'utilisateur.nomutilisateur',
@@ -107,20 +100,24 @@ class LeadsType extends AbstractType
                                     ))
                                    
                                   
-
+                                  
                                          
-                                           ->add('status',EntityType::class,array(
-                                                'class' => status::class,
-                                                'choice_label' => function ($status) {
-                                                 
-                                                    return $status->getNom();
-                                                 },
-                                                 'expanded' => false ,
-                                                 'required' => false ,
-                                                 'mapped' => true,
-                                                 'label' => false 
-                                    
-                                            ))
+                                        
+
+
+
+                                        ->add('statusvehicule', ChoiceType::class,
+                                            [
+                                                'label' => 'Status :',
+                                                'required' => false,
+                                                'choices' => array(
+                                                    'usagé' => 'usagé',
+                                                    'neuf' => 'neuf',
+                                              
+                                                ),
+                                                'placeholder' => 'Status',
+                                            ]
+                                        )
 
 
             ->add('emailleads',EntityType::class,[

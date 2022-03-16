@@ -37,17 +37,17 @@ class LeadsController extends AbstractController
         $lead = new Leads();
         $form = $this->createForm(LeadsType::class, $lead);
       
-           
+        
         
        /* $part = $partenaire->findAll();
 
-        $agent = $agent->findAll();
+        
         $administrateur = $administrateur->findAll();
         $concessionnaire = $concessionnaire->findAll();
         $marchand = $marcha->findAll();
       
 
-        $form->get('agent')->setData($agent);
+       
         $form->get('vendeur')->setData($agent);
         $form->get('partenaire')->setData($part);
         $form->get('administrateur')->setData($administrateur);
@@ -56,8 +56,6 @@ class LeadsController extends AbstractController
         $form->get('status')->setData($marchand);
      //   $form->get('status')->getData();*/
       
-        
-
 
         $form->handleRequest($request);
 

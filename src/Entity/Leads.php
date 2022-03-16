@@ -201,10 +201,13 @@ class Leads
     private $marchand;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="leads")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $statusvehicule;
+
+
+
+  
     
 
 
@@ -685,18 +688,21 @@ class Leads
         return $this;
     }
 
-    public function getStatusvehicule(): ?Status
+    public function getStatusvehicule(): ?string
     {
         return $this->statusvehicule;
     }
 
-    public function setStatusvehicule(?Status $statusvehicule): self
+    public function setStatusvehicule(string $statusvehicule): self
     {
         $this->statusvehicule = $statusvehicule;
 
         return $this;
     }
 
+   
+
+   
  
 
 }
