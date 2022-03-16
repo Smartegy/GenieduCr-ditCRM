@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Concessionnaire;
 use App\Entity\Leads;
+use App\Entity\Status;
 use App\Form\LeadsType;
 use App\Repository\AdministrateurRepository;
 use App\Repository\AgentRepository;
@@ -12,6 +13,7 @@ use App\Repository\ConcessionnaireRepository;
 use App\Repository\MarchandRepository;
 use App\Repository\PartenaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,12 +33,13 @@ class LeadsController extends AbstractController
     #[Route('/new', name: 'leads_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager , AgentRepository $agent ,PartenaireRepository $partenaire , AdministrateurRepository $administrateur , ConcessionnaireRepository $concessionnaire , MarchandRepository $marcha): Response
     {
-        
-       
+    
         $lead = new Leads();
         $form = $this->createForm(LeadsType::class, $lead);
-
-        $part = $partenaire->findAll();
+      
+           
+        
+       /* $part = $partenaire->findAll();
 
         $agent = $agent->findAll();
         $administrateur = $administrateur->findAll();
@@ -50,6 +53,9 @@ class LeadsController extends AbstractController
         $form->get('administrateur')->setData($administrateur);
         $form->get('concessionnaire')->setData($concessionnaire);
         $form->get('marchand')->setData($marchand);
+        $form->get('status')->setData($marchand);
+     //   $form->get('status')->getData();*/
+      
         
 
 

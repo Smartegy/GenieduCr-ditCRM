@@ -82,9 +82,11 @@ class Agent
     private $vehicules;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Leads::class, inversedBy="agent")
+     * @ORM\OneToMany(targetEntity=Leads::class, mappedBy="agent")
      */
     private $leads;
+
+
 
  
 
@@ -99,6 +101,7 @@ class Agent
         $this->datemodification = new DateTime('now');
         $this->partenaire = new ArrayCollection();
         $this->vehicules = new ArrayCollection();
+        $this->leads = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -246,17 +249,36 @@ class Agent
         return $this;
     }
 
-    public function getLeads(): ?Leads
+    /**
+     * @return Collection|Leads[]
+     */
+    public function getLeads(): Collection
     {
         return $this->leads;
     }
 
-    public function setLeads(?Leads $leads): self
+    public function addLead(Leads $lead): self
     {
-        $this->leads = $leads;
+        if (!$this->leads->contains($lead)) {
+            $this->leads[] = $lead;
+            $lead->setAgent($this);
+        }
 
         return $this;
     }
+
+    public function removeLead(Leads $lead): self
+    {
+        if ($this->leads->removeElement($lead)) {
+            // set the owning side to null (unless already changed)
+            if ($lead->getAgent() === $this) {
+                $lead->setAgent(null);
+            }
+        }
+
+        return $this;
+    }
+
 
    
 

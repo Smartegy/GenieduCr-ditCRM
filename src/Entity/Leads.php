@@ -169,6 +169,40 @@ class Leads
 
 
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Administrateur::class, inversedBy="leads")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $administrateur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Agent::class, inversedBy="leads")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $agent;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Partenaire::class, inversedBy="leads")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $partenaire;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Concessionnaire::class, inversedBy="leads")
+      * @ORM\JoinColumn(nullable=false)
+     */
+    private $concessionnaire;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Marchand::class, inversedBy="leads")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $marchand;
+    
+
+
+
     public function __construct()
     {
         $this->emailleads = new ArrayCollection();
@@ -181,11 +215,8 @@ class Leads
             }
         
             $this->datemodificationtable = new DateTime('now');
-            $this->concessionnaires = new ArrayCollection();
-            $this->marchand = new ArrayCollection();
-            $this->partenaires = new ArrayCollection();
-            $this->administrateurs = new ArrayCollection();
-            $this->agent = new ArrayCollection();
+         
+        
    
     }
 
@@ -580,6 +611,70 @@ class Leads
     public function setType(?bool $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+   
+
+    
+    public function getAdministrateur(): ?Administrateur
+    {
+        return $this->administrateur;
+    }
+
+    public function setAdministrateur(?Administrateur $administrateur): self
+    {
+        $this->administrateur = $administrateur;
+
+        return $this;
+    }
+
+    public function getAgent(): ?Agent
+    {
+        return $this->agent;
+    }
+
+    public function setAgent(?Agent $agent): self
+    {
+
+        $this->agent = $agent;
+
+        return $this;
+    }
+
+    public function getPartenaire(): ?Partenaire
+    {
+        return $this->partenaire;
+    }
+
+    public function setPartenaire(?Partenaire $partenaire): self
+    {
+        $this->partenaire = $partenaire;
+
+        return $this;
+    }
+
+    public function getConcessionnaire(): ?Concessionnaire
+    {
+        return $this->concessionnaire;
+    }
+
+    public function setConcessionnaire(?Concessionnaire $concessionnaire): self
+    {
+        $this->concessionnaire = $concessionnaire;
+
+        return $this;
+    }
+
+    public function getMarchand(): ?Marchand
+    {
+        return $this->marchand;
+    }
+
+    public function setMarchand(?Marchand $marchand): self
+    {
+        $this->marchand = $marchand;
 
         return $this;
     }

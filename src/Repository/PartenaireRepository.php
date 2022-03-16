@@ -56,5 +56,20 @@ class PartenaireRepository extends ServiceEntityRepository
     }
 
 
+   /* public function findNom(){
+    {
+        return $this->createQueryBuilder('partenaire')
+        ->addSelect('nomutilisateur') 
+        ->innerjoin('partenaire.utilisateur', 'pu') 
+        ->where('partenaire.id = :pu.id')
+        ->setParameter('utilisateur', 'Utilisateur')    
+        ->getQuery()
+        ->getResult()
+
+        ;
+    }*/
+
+
+
     
 }

@@ -11,6 +11,7 @@ use App\Entity\Modeleemail;
 use App\Entity\Modelesms;
 use App\Entity\Partenaire;
 use App\Entity\SourcesLeads;
+use App\Entity\Status;
 use App\Entity\Statusleads;
 use App\Repository\AgentRepository;
 use App\Repository\ModeleemailRepository;
@@ -51,7 +52,7 @@ class LeadsType extends AbstractType
            
 
 
-            ->add('agent', EntityType::class,array(
+      ->add('agent', EntityType::class,array(
                 'class' => Agent::class,
                 'choice_label' => 'utilisateur.nomutilisateur', 
                 'query_builder' => function(AgentRepository $repo)
@@ -62,7 +63,7 @@ class LeadsType extends AbstractType
                     
                     'expanded' => false,
                     'multiple' => true,
-                    'mapped' => false
+                    'mapped' => true
                   
                 ))
                 ->add('vendeur', EntityType::class,array(
@@ -79,43 +80,47 @@ class LeadsType extends AbstractType
                         'mapped' => false
                       
                     ))
-                   ->add('partenaire', EntityType::class,array(
+                  ->add('partenaire', EntityType::class,array(
                         'class' => Partenaire ::class,
                         'choice_label' => 'utilisateur.nomutilisateur',
-                            
-                            'expanded' => false,
-                            'multiple' => true,
-                            'mapped' => false
-                          
                         ))
                         ->add('administrateur', EntityType::class,array(
                             'class' => Administrateur ::class,
-                            'choice_label' => 'utilisateur.nomutilisateur',
-                                
-                                'expanded' => false,
-                                'multiple' => true,
-                                'mapped' => false
+                            'choice_label' => 'utilisateur.nomutilisateur', 
                               
                             ))
                             ->add('concessionnaire', EntityType::class,array(
                                 'class' => Concessionnaire ::class,
                                 'choice_label' => 'concessionnairemarchand.utilisateur.nomutilisateur',
-                                    
-                                    'expanded' => false,
-                                    'multiple' => true,
-                                    'mapped' => false
-                                  
+  
                                 ))
-                                ->add('marchand', EntityType::class,array(
+                               ->add('marchand', EntityType::class,array(
                                     'class' => Marchand ::class,
                                     'choice_label' => 'concessionnairemarchand.utilisateur.nomutilisateur',
                                         
-                                        'expanded' => false,
-                                        'multiple' => true,
-                                        'mapped' => false
-                                      
+                               ))
+                                    
+                                    ->add('administrateur',EntityType::class,array(
+                                        'class' => Administrateur::class,
+                                        'choice_label' => 'utilisateur.nomutilisateur',
+                          
                                     ))
-     
+                                   
+                                  
+
+                                         
+                                           ->add('status',EntityType::class,array(
+                                                'class' => status::class,
+                                                'choice_label' => function ($status) {
+                                                 
+                                                    return $status->getNom();
+                                                 },
+                                                 'expanded' => false ,
+                                                 'required' => false ,
+                                                 'mapped' => false,
+                                                 'label' => false 
+                                    
+                                            ))
 
 
             ->add('emailleads',EntityType::class,[
@@ -154,6 +159,9 @@ class LeadsType extends AbstractType
             ))
         ;
     }
+
+
+    
 
     public function configureOptions(OptionsResolver $resolver): void
     {

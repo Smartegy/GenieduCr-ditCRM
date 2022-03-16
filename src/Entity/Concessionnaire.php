@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ConcessionnaireRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
  
@@ -29,14 +31,18 @@ class Concessionnaire
     private $Concessionnairemarchand;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Leads::class, inversedBy="concessionnaires")
+     * @ORM\OneToMany(targetEntity=Leads::class, mappedBy="concessionnaire")
      */
     private $leads;
 
-    public function getId(): ?int
+    public function __construct()
     {
-        return $this->id;
+        $this->leads = new ArrayCollection();
     }
+
+ 
+
+   
 
     public function getConcessionnairemarchand(): ?Concessionnairemarchand
     {
@@ -50,15 +56,36 @@ class Concessionnaire
         return $this;
     }
 
-    public function getLeads(): ?Leads
+    /**
+     * @return Collection|Leads[]
+     */
+    public function getLeads(): Collection
     {
         return $this->leads;
     }
 
-    public function setLeads(?Leads $leads): self
+    public function addLead(Leads $lead): self
     {
-        $this->leads = $leads;
+        if (!$this->leads->contains($lead)) {
+            $this->leads[] = $lead;
+            $lead->setConcessionnaire($this);
+        }
 
         return $this;
     }
+
+    public function removeLead(Leads $lead): self
+    {
+        if ($this->leads->removeElement($lead)) {
+            // set the owning side to null (unless already changed)
+            if ($lead->getConcessionnaire() === $this) {
+                $lead->setConcessionnaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+   
 }

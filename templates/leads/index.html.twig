@@ -35,12 +35,7 @@
                 <th>Modele</th>
                 <th>Annee</th>
                 <th>Type</th>
-                <th>Concessionnaires</th>
-                <th>Agent</th>
-                <th>Vendeur</th>
-                <th>Marchand</th>
-                <th>Partenaire</th>
-                <th>Administrateur</th>
+             
                 <th>actions</th>
             </tr>
         </thead>
@@ -72,12 +67,8 @@
                 <td>{{ lead.modele }}</td>
                 <td>{{ lead.annee }}</td>
                 <td>{{ lead.type ? 'Yes' : 'No' }}</td>
-                <td>{{ lead.concessionnaires }}</td>
-                <td>{{ lead.agent }}</td>
-                <td>{{ lead.vendeur }}</td>
-                <td>{{ lead.marchand }}</td>
-                <td>{{ lead.partenaire }}</td>
-                <td>{{ lead.administrateur }}</td>
+              
+               
                 <td>
                     <a href="{{ path('leads_show', {'id': lead.id}) }}">show</a>
                     <a href="{{ path('leads_edit', {'id': lead.id}) }}">edit</a>

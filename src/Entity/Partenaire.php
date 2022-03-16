@@ -46,9 +46,11 @@ class Partenaire
     private $media;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Leads::class, inversedBy="partenaires")
+     * @ORM\OneToMany(targetEntity=Leads::class, mappedBy="partenaire")
      */
     private $leads;
+
+  
     
     
 
@@ -58,6 +60,7 @@ class Partenaire
     {
         $this->agents = new ArrayCollection();
         $this->vehicules = new ArrayCollection();
+        $this->leads = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -124,17 +127,39 @@ class Partenaire
         return $this;
     }
 
-    public function getLeads(): ?Leads
+    /**
+     * @return Collection|Leads[]
+     */
+    public function getLeads(): Collection
     {
         return $this->leads;
     }
 
-    public function setLeads(?Leads $leads): self
+    public function addLead(Leads $lead): self
     {
-        $this->leads = $leads;
+        if (!$this->leads->contains($lead)) {
+            $this->leads[] = $lead;
+            $lead->setPartenaire($this);
+        }
 
         return $this;
     }
+
+    public function removeLead(Leads $lead): self
+    {
+        if ($this->leads->removeElement($lead)) {
+            // set the owning side to null (unless already changed)
+            if ($lead->getPartenaire() === $this) {
+                $lead->setPartenaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+  
+
+
 
    
 }
