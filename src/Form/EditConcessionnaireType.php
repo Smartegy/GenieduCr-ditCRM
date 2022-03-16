@@ -18,18 +18,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EditConcessionnaireType extends AbstractType
 {
-    
-   
-   
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
-       
-
         $builder
-
-         
          ->add('concessionnairemarchand', EditConcessionnairemarchandType::class, ['label' => false ]);
         
         
