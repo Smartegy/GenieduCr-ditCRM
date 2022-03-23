@@ -87,6 +87,17 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
     //     return $query->getOneOrNullResult();
     // }
 
+
+
+    public function findNameByID($value): ?Utilisateur
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery('nomutilisateur')
+            ->getOneOrNullResult()
+        ;
+    }
    
     
 }

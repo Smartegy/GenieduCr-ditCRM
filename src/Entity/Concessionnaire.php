@@ -34,6 +34,12 @@ class Concessionnaire
      * @ORM\OneToMany(targetEntity=Leads::class, mappedBy="concessionnaire")
      */
     private $leads;
+    public function getId(): ?int
+    {
+        return $this->id;
+        
+    }
+    
 
     public function __construct()
     {

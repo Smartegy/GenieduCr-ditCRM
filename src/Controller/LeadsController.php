@@ -2,16 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Agent;
 use App\Entity\Concessionnaire;
 use App\Entity\Leads;
 use App\Entity\Status;
+use App\Form\AgentType;
 use App\Form\LeadsType;
 use App\Repository\AdministrateurRepository;
 use App\Repository\AgentRepository;
 use App\Repository\LeadsRepository;
 use App\Repository\ConcessionnaireRepository;
 use App\Repository\MarchandRepository;
+use App\Repository\ModeleemailRepository;
+use App\Repository\ModelesmsRepository;
 use App\Repository\PartenaireRepository;
+use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,12 +36,20 @@ class LeadsController extends AbstractController
     }
 
     #[Route('/new', name: 'leads_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager , AgentRepository $agent ,PartenaireRepository $partenaire , AdministrateurRepository $administrateur , ConcessionnaireRepository $concessionnaire , MarchandRepository $marcha): Response
+    public function new(LeadsRepository $leads,ModeleemailRepository $email,ModelesmsRepository $sms,Request $request, EntityManagerInterface $entityManager , UtilisateurRepository $u, AgentRepository $agent ,PartenaireRepository $partenaire , AdministrateurRepository $administrateur , ConcessionnaireRepository $concessionnaire , MarchandRepository $marcha): Response
     {
-    
+   
         $lead = new Leads();
-        $form = $this->createForm(LeadsType::class, $lead);
       
+        $form = $this->createForm(LeadsType::class, $lead);
+     
+      /*  foreach ($originalTags as $tag) {
+            if (false === $task->getTags()->contains($tag)) {
+                // remove the Task from the Tag
+                $tag->getTasks()->removeElement($task);
+                $em->persist($tag);
+            }*/
+       
         
         
        /* $part = $partenaire->findAll();
@@ -55,12 +68,25 @@ class LeadsController extends AbstractController
         $form->get('marchand')->setData($marchand);
         $form->get('status')->setData($marchand);
      //   $form->get('status')->getData();*/
-      
+   /*  $emailleads = $email->findAll();
+    foreach ($emailleads as $email) {
+       // var_dump($email);die;
+        $lead->removeEmaillead($email);
+     
 
+        
+    } 
+    $sms = $sms->findAll();
+    foreach ($sms as $sm) {
+        $lead->removeSmslead($sm);
+        
+    } */
+   // $form->get('emailleads')->setData(NULL);
+  //  $form->get('smsleads')->setData(NULL);
         $form->handleRequest($request);
-
+      
         if ($form->isSubmitted() && $form->isValid()) {
-           
+          
             $entityManager->persist($lead);
             $entityManager->flush();
 

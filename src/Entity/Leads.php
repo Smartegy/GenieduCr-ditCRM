@@ -120,16 +120,7 @@ class Leads
      */
     private $rappel;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Modeleemail::class)
-     */
-    private $emailleads;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Modelesms::class)
-     */
-    private $smsleads;
-
+ 
     /**
      * @ORM\ManyToOne(targetEntity=Statusleads::class)
      * @ORM\JoinColumn(nullable=false)
@@ -205,6 +196,11 @@ class Leads
      */
     private $statusvehicule;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Vendeurr::class, inversedBy="leads")
+     */
+    private $vendeurr;
+
 
 
   
@@ -213,20 +209,15 @@ class Leads
 
 
     public function __construct()
+  
     {
-        $this->emailleads = new ArrayCollection();
-        $this->smsleads = new ArrayCollection();
-        $this->operations = new ArrayCollection();
+       
 
-            if($this->datecreationtable == null)
-            {
-            $this->datecreationtable = new DateTime('now');
-            }
+        if($this->datecreation == null){
+            $this->datecreation = new DateTime('now');
+        }
         
-            $this->datemodificationtable = new DateTime('now');
-         
-        
-   
+        $this->datemodification = new DateTime('now');
     }
 
     public function getId(): ?int
@@ -474,53 +465,9 @@ class Leads
         return $this;
     }
 
-    /**
-     * @return Collection|Modeleemail[]
-     */
-    public function getEmailleads(): Collection
-    {
-        return $this->emailleads;
-    }
+   
 
-    public function addEmaillead(Modeleemail $emaillead): self
-    {
-        if (!$this->emailleads->contains($emaillead)) {
-            $this->emailleads[] = $emaillead;
-        }
-
-        return $this;
-    }
-
-    public function removeEmaillead(Modeleemail $emaillead): self
-    {
-        $this->emailleads->removeElement($emaillead);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Modelesms[]
-     */
-    public function getSmsleads(): Collection
-    {
-        return $this->smsleads;
-    }
-
-    public function addSmslead(Modelesms $smslead): self
-    {
-        if (!$this->smsleads->contains($smslead)) {
-            $this->smsleads[] = $smslead;
-        }
-
-        return $this;
-    }
-
-    public function removeSmslead(Modelesms $smslead): self
-    {
-        $this->smsleads->removeElement($smslead);
-
-        return $this;
-    }
+   
 
     public function getStatusleads(): ?Statusleads
     {
@@ -582,35 +529,8 @@ class Leads
         return $this;
     }
 
-    /**
-     * @return Collection|Operations[]
-     */
-    public function getOperations(): Collection
-    {
-        return $this->operations;
-    }
+   
 
-    public function addOperation(Operations $operation): self
-    {
-        if (!$this->operations->contains($operation)) {
-            $this->operations[] = $operation;
-            $operation->setLead($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOperation(Operations $operation): self
-    {
-        if ($this->operations->removeElement($operation)) {
-            // set the owning side to null (unless already changed)
-            if ($operation->getLead() === $this) {
-                $operation->setLead(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getType(): ?bool
     {
@@ -696,6 +616,18 @@ class Leads
     public function setStatusvehicule(string $statusvehicule): self
     {
         $this->statusvehicule = $statusvehicule;
+
+        return $this;
+    }
+
+    public function getVendeurr(): ?Vendeurr
+    {
+        return $this->vendeurr;
+    }
+
+    public function setVendeurr(?Vendeurr $vendeurr): self
+    {
+        $this->vendeurr = $vendeurr;
 
         return $this;
     }

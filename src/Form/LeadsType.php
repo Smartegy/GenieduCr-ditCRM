@@ -13,20 +13,25 @@ use App\Entity\Partenaire;
 use App\Entity\SourcesLeads;
 use App\Entity\Status;
 use App\Entity\Statusleads;
+use App\Entity\Utilisateur;
+use App\Entity\Vendeurr;
 use App\Repository\AgentRepository;
 use App\Repository\ModeleemailRepository;
 use App\Repository\ModelesmsRepository;
 use App\Repository\PartenaireRepository;
+use App\Repository\UtilisateurRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\DataTransformer\ChoicesToValuesTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
 class LeadsType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder,  array $options): void
     {
         $builder
             ->add('nom')
@@ -59,20 +64,13 @@ class LeadsType extends AbstractType
                 'choice_label' => 'utilisateur.nomutilisateur'
                   
                 ))
-            /*    ->add('vendeur', EntityType::class,array(
-                    'class' => Agent::class,
-                    'choice_label' => 'utilisateur.nomutilisateur', 
-                    'query_builder' => function(AgentRepository $repo)
-                    {
-                        $agents = $repo->fillVendeurs();
-                        return $agents;
-                        },
-                        
-                        'expanded' => false,
-                        'multiple' => true,
-                        'mapped' => false
+                ->add('vendeurr', EntityType::class,array(
+                    'class' => Vendeurr::class,
+                    'choice_label' => 'utilisateur.nomutilisateur'
                       
-                    ))*/
+                    ))
+  
+
                   ->add('partenaire', EntityType::class,array(
                         'class' => Partenaire ::class,
                         'choice_label' => 'utilisateur.nomutilisateur',
@@ -94,8 +92,10 @@ class LeadsType extends AbstractType
                                ))
                                     
                                     ->add('administrateur',EntityType::class,array(
+                                        
                                         'class' => Administrateur::class,
                                         'choice_label' => 'utilisateur.nomutilisateur',
+                                        
                           
                                     ))
                                    
@@ -120,25 +120,32 @@ class LeadsType extends AbstractType
                                         )
 
 
-            ->add('emailleads',EntityType::class,[
-                'class' => Modeleemail::class,
-                'choice_label' => function ($email) {
-                   return $email->getTitre();
-                },
-                'expanded' => true,
-                'multiple' => true,
-                'by_reference' => false 
-                  ])
-
-                  ->add('smsleads',EntityType::class,[
-                    'class' => Modelesms::class,
-                    'choice_label' => function ($sms) {
-                       return $sms->getTitre();
+          
+           /*    ->add('emailleads',EntityType::class,[
+                    'class' => Modeleemail::class,
+                    'choice_label' => function ($email) {
+                       return $email->getTitre();
                     },
                     'expanded' => true,
                     'multiple' => true,
-                    'by_reference' => false 
+                    'required' => false,
+                    'by_reference' => false ,
+                    
                       ])
+                  
+    
+                      ->add('smsleads',EntityType::class,[
+                        'class' => Modelesms::class,
+                        'choice_label' => function ($sms) {
+                           return $sms->getTitre();
+                        },
+                        'expanded' => true,
+                        'multiple' => true,
+                        'required' => false,
+                        'by_reference' => false ,
+                       
+                          ])*/
+                          
     
             
 
@@ -164,6 +171,7 @@ class LeadsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Leads::class,
+           
         ]);
     }
 }

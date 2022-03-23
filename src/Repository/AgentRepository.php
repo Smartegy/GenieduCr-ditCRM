@@ -82,10 +82,27 @@ class AgentRepository extends ServiceEntityRepository
         ->innerjoin('e.typeagent', 'r')
         ->where('r.Type = :agent')
         ->setParameter('agent', 'Agent')
+     
         
         ;
 
     }
+
+
+    public function fillAgent(){
+
+        return $this->createQueryBuilder('e')
+        ->addSelect('e') // to make Doctrine actually use the join
+        ->innerjoin('e.typeagent', 'r')
+        ->where('r.Type = :agent')
+        ->setParameter('agent', 'Agent')
+        ->getQuery()
+        ->getResult()
+        ;
+
+    }
+
+
 
 
     public function findAgentbyPartnaire($value){
@@ -146,4 +163,39 @@ class AgentRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+
+
+
+    public function findNameByID($value): ?Agent
+    {
+        return $this->createQueryBuilder('agent')
+        ->addSelect('agent')
+
+        ->innerjoin('agent.typeagent', 'typeagent')
+        ->innerjoin('agent.utilisateur', 'u')  
+        ->where('typeagent.Type = :agent')
+            ->andWhere('agent.id = :val')
+            ->setParameter('val', $value)
+            ->setParameter('agent', 'Agent')
+            ->getQuery('u.id')
+            ->getOneOrNullResult()
+        ;
+    }
+
+
+    public function findOneById($value): ?Agent
+    {
+        return $this->createQueryBuilder('agent')
+            ->andWhere('agent.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery('agent.id')
+            ->getOneOrNullResult()
+        ;
+    }
+
+
+
+
+
 }

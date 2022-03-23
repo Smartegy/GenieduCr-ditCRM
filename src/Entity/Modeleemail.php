@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ModeleemailRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ModeleemailRepository::class)
