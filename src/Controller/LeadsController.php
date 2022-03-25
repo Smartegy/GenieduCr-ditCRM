@@ -29,6 +29,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/leads')]
 class LeadsController extends AbstractController
 {
+
+ 
     #[Route('/', name: 'leads_index', methods: ['GET'])]
     public function index(LeadsRepository $leadsRepository, NotesRepository $notes): Response
     {
