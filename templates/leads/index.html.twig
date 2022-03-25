@@ -396,26 +396,6 @@
 		});
 
 </script> 
-<script type="text/javascript">
-	function editDocument(){
-    $(document).on("click", ".open-editBox", function () {
-        var editId = $(this).data('id');
-        $.ajax({
-            type: 'GET',
-            url: editId+"/leads/",
-            //data: {"editId": editId},
-            success: function(response){
-                // alert($.get());
-                $('#editPlayerModel').html(response);
-            }
-        });
-        // alert(editId);
-        //$(".modal-body #editId").val( editId );
-    });
-}
-
-
-</script>
-  
+ 
   
 {% endblock %} 
