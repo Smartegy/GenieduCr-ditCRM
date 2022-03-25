@@ -14,11 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/notes')]
 class NotesController extends AbstractController
 {
-    #[Route('/', name: 'notes_index', methods: ['GET'])]
-    public function index(NotesRepository $notesRepository): Response
-    {
-        return $this->render('notes/index.html.twig', [
-            'notes' => $notesRepository->findAll(),
+    #[Route('/', name: 'index', methods: ['GET'])]
+    public function index(NotesRepository $notesRepository,Request $request,NotesRepository $notes): Response
+    { 
+        $question_id = $request->query->get('id');
+        $result= $notes->findNotesByLead($question_id );
+        dd($result);die();
+
+        return $this->render('leads/index.html.twig', [
+            'notess' => $result,
         ]);
     }
 

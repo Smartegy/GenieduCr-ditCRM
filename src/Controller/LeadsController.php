@@ -30,33 +30,45 @@ use Symfony\Component\Routing\Annotation\Route;
 class LeadsController extends AbstractController
 {
 
- 
+   
     #[Route('/', name: 'leads_index', methods: ['GET'])]
     public function index(LeadsRepository $leadsRepository, NotesRepository $notes): Response
     {
        $llead=$leadsRepository->findAll();
         // dd($llead);die;
         $mytab=[];
-             
+           
 
         foreach($llead as $leead)
         {
            $data = $leead->getId();
-         //  dump($data); die () ;
+        
            
             $result= $notes->findNotesByLead($data);
+         
+             //  dump($result); die () ;
+            array_push($mytab,$result); 
            
-            if($result)
-          {  array_push($mytab,$result); }
-             else 
-             {  array_push($mytab,'');  }
-    
+          
  
         }
-       
+       // dd($result);die;
         return $this->render('leads/index.html.twig', [
             'leads' => $leadsRepository->findAll(),
             'notes' => $mytab,
+        ]);
+    }
+    #[Route('/note', name: 'notes_index', methods: ['GET'])]
+    public function Notes(NotesRepository $notesRepository,Request $request,NotesRepository $notes,LeadsRepository $leadsRepository): Response
+    { 
+        $llead=$leadsRepository->findAll();
+        $question_id = $request->query->get('id');
+        $result= $notes->findNotesByLead($question_id );
+        //dd($result);die();
+
+        return $this->render('leads/index.html.twig', [
+            'notess' => $result,
+            'leads' => $leadsRepository->findAll(),
         ]);
     }
 
