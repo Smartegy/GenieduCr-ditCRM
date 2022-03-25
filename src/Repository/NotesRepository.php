@@ -47,4 +47,18 @@ class NotesRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findNotesByLead($value){
+
+        return $this->createQueryBuilder('note')
+        ->addSelect('note')   
+        ->innerjoin('note.lead', 'l')  
+       ->where('l.id = :val')
+       ->setParameter('val', $value)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+
 }

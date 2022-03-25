@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Agent;
 use App\Entity\Concessionnaire;
 use App\Entity\Leads;
+use App\Entity\Notes;
 use App\Entity\Status;
 use App\Form\AgentType;
 use App\Form\LeadsType;
@@ -15,6 +16,7 @@ use App\Repository\ConcessionnaireRepository;
 use App\Repository\MarchandRepository;
 use App\Repository\ModeleemailRepository;
 use App\Repository\ModelesmsRepository;
+use App\Repository\NotesRepository;
 use App\Repository\PartenaireRepository;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,10 +30,30 @@ use Symfony\Component\Routing\Annotation\Route;
 class LeadsController extends AbstractController
 {
     #[Route('/', name: 'leads_index', methods: ['GET'])]
-    public function index(LeadsRepository $leadsRepository): Response
+    public function index(LeadsRepository $leadsRepository, NotesRepository $notes): Response
     {
+       $llead=$leadsRepository->findAll();
+       // dd($llead);die;
+        $mytab=[];
+        foreach($llead as $leead)
+        {
+       $data = $leead->getId();
+         if (isset($data)) 
+         {
+           
+            $result= $notes->findNotesByLead($data);
+           
+            array_push($mytab,$result);
+            //dump($result);die;
+
+         }
+
+       
+        }
+        dd($mytab);die;
         return $this->render('leads/index.html.twig', [
             'leads' => $leadsRepository->findAll(),
+            'notes' => $mytab,
         ]);
     }
 
@@ -130,13 +152,13 @@ class LeadsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'leads_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'leads_delete', methods: ['delete'])]
     public function delete(Request $request, Leads $lead, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$lead->getId(), $request->request->get('_token'))) {
+       
             $entityManager->remove($lead);
             $entityManager->flush();
-        }
+        
 
         return $this->redirectToRoute('leads_index', [], Response::HTTP_SEE_OTHER);
     }

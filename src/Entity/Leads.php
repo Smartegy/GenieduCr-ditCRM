@@ -36,7 +36,7 @@ class Leads
     private $courriel;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $datecreation;
 
@@ -71,7 +71,7 @@ class Leads
     private $revenumensuel;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $depuisquand;
 
@@ -101,7 +101,7 @@ class Leads
     private $paiementmonsuel;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $date;
 
@@ -201,6 +201,11 @@ class Leads
      */
     private $vendeurr;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Notes::class, mappedBy="lead")
+     */
+    private $note;
+
 
 
   
@@ -218,6 +223,7 @@ class Leads
         }
         
         $this->datemodification = new DateTime('now');
+        $this->note = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -628,6 +634,36 @@ class Leads
     public function setVendeurr(?Vendeurr $vendeurr): self
     {
         $this->vendeurr = $vendeurr;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notes[]
+     */
+    public function getNote(): Collection
+    {
+        return $this->note;
+    }
+
+    public function addNote(Notes $note): self
+    {
+        if (!$this->note->contains($note)) {
+            $this->note[] = $note;
+            $note->setLead($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Notes $note): self
+    {
+        if ($this->note->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getLead() === $this) {
+                $note->setLead(null);
+            }
+        }
 
         return $this;
     }

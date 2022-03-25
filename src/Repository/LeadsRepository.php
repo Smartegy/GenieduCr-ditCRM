@@ -46,7 +46,19 @@ class LeadsRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+
     */
+
+      public function findOneById($value): ?Leads
+    {
+        return $this->createQueryBuilder('lead')
+            ->andWhere('lead.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+ 
 
 
 
