@@ -22,6 +22,13 @@ class Notes
      */
     private $note;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Leads::class)
+     */
+    private $lead;
+
+  
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,4 +45,18 @@ class Notes
 
         return $this;
     }
+
+    public function getLead(): ?Leads
+    {
+        return $this->lead;
+    }
+
+    public function setLead(?Leads $lead): self
+    {
+        $this->lead = $lead;
+
+        return $this;
+    }
+
+
 }
