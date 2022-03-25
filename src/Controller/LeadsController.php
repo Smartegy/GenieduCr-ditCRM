@@ -33,24 +33,25 @@ class LeadsController extends AbstractController
     public function index(LeadsRepository $leadsRepository, NotesRepository $notes): Response
     {
        $llead=$leadsRepository->findAll();
-       // dd($llead);die;
+        // dd($llead);die;
         $mytab=[];
+             
+
         foreach($llead as $leead)
         {
-       $data = $leead->getId();
-         if (isset($data)) 
-         {
+           $data = $leead->getId();
+         //  dump($data); die () ;
            
             $result= $notes->findNotesByLead($data);
            
-            array_push($mytab,$result);
-            //dump($result);die;
-
-         }
-
-       
+            if($result)
+          {  array_push($mytab,$result); }
+             else 
+             {  array_push($mytab,'');  }
+    
+ 
         }
-        dd($mytab);die;
+       
         return $this->render('leads/index.html.twig', [
             'leads' => $leadsRepository->findAll(),
             'notes' => $mytab,
