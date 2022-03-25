@@ -97,8 +97,7 @@
 															<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
 																<path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
 															  </svg>
-															  <a href="{{path('notes_index', {'id' : lead.id})}}"  data-bs-toggle="modal" data-bs-target="#kt_modal_add_user" >
-																 
+                                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">																 
 																	
 																	
 											
@@ -223,7 +222,10 @@
 													
 
 
-														{% endfor %}
+											
+ 
+
+
 
 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
 	<!--begin::Modal dialog-->
@@ -252,7 +254,7 @@
 				</ul>
 				<!--end::Modal title-->
 				<!--begin::Close-->
-				<div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+				<div id="closeNote" class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" data-bs-dismiss="modal" aria-label="Close">
 					<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
 					<span class="svg-icon svg-icon-1">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -282,20 +284,23 @@
 								 <!--begin::Input group-->
 								   <div class="fv-row mb-10">
 									<!--begin::Label-->
-								  {# <label class="fs-6 fw-bold form-label mb-2"> Note </label>  #}
-                                   {# {% for mara in  notes %}
-								  
-								   <label class="fs-6 fw-bold form-label mb-2"> {{mara.note}} </label><br>
-								
-								   {% endfor %} #}
+								  <label class="fs-6 fw-bold form-label mb-2"> Note </label>   
+                                   
+
+						 {% if lead.id ==  %}
                           
+						   {% for n in lead.note %}
+								  
+								   <label class="fs-6 fw-bold form-label mb-2"> {{n.note}} </label><br>
+								
+								   {% endfor %}  
 										<!--end::Input-->
 								</div>
 					 
-                        {% for n in notess %}
+                        {# {% for n in notess %}
 
 						{{n.note}}
-						{% endfor %}
+						{% endfor %} #}
 
 
 					</div>
@@ -317,7 +322,7 @@
 														
 														
 												
-
+			{% endfor %}
 											
 											</tbody>
 											<!--end::Table body-->
@@ -396,6 +401,12 @@
 		});
 
 </script> 
+
+
+ 
+
+
+  
  
   
 {% endblock %} 
