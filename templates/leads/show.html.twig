@@ -103,7 +103,12 @@
                                     <!--end::Nav item-->
                                  
                                     <!--begin::Nav item-->
-
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('notes_index', {'idlead' : lead.id})}}">Notes</a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">Couriels</a>
+                                    </li>
                                     <!--end::Nav item-->
 
                                 </ul>
@@ -410,19 +415,32 @@
                                 <label class="col-lg-4 fw-bold text-muted">Agent</label>
                                 <!--end::Label-->
                                 <!--begin::Col-->
+                                {% if lead.Agent == NULL %}
+                                  <div class="col-lg-8">
+                                    <span class="fw-bold text-gray-800 fs-6"> </span>
+                                </div>
+                                {% else %}
+
                                 <div class="col-lg-8">
                                     <span class="fw-bold text-gray-800 fs-6">{{lead.Agent.utilisateur.nomutilisateur}}</span>
                                 </div>
+                                {% endif %}
                                 <!--end::Col-->
                             </div>
                         <div class="row mb-7">
                             <!--begin::Label-->
                             <label class="col-lg-4 fw-bold text-muted">Vendeur</label>
                             <!--end::Label-->
+                            {% if lead.Vendeurr == NULL %}
+                            <div class="col-lg-8">
+                                <span class="fw-bold text-gray-800 fs-6"> </span>
+                            </div>
+                            {% else %}
                             <!--begin::Col-->
                             <div class="col-lg-8">
                                 <span class="fw-bold text-gray-800 fs-6">{{lead.Vendeurr.utilisateur.nomutilisateur}}</span>
                             </div>
+                            {% endif %}
                             <!--end::Col-->
                         </div>
                        <div class="row mb-7">
@@ -430,40 +448,63 @@
                         <label class="col-lg-4 fw-bold text-muted">Partenaire</label>
                         <!--end::Label-->
                         <!--begin::Col-->
+                        {% if lead.Partenaire == NULL %}
+                        <div class="col-lg-8">
+                            <span class="fw-bold text-gray-800 fs-6"> </span>
+                        </div>
+                        {% else %}
                         <div class="col-lg-8">
                             <span class="fw-bold text-gray-800 fs-6">{{lead.Partenaire.utilisateur.nomutilisateur}}</span>
                         </div>
+                        {% endif %}
                         <!--end::Col-->
                     </div>
                    <div class="row mb-7">
                     <!--begin::Label-->
                     <label class="col-lg-4 fw-bold text-muted">Administrateur</label>
                     <!--end::Label-->
+                    {% if lead.Administrateur == NULL %}
+                    <div class="col-lg-8">
+                        <span class="fw-bold text-gray-800 fs-6"> </span>
+                    </div>
+                    {% else %}
                     <!--begin::Col-->
                     <div class="col-lg-8">
                         <span class="fw-bold text-gray-800 fs-6">{{lead.Administrateur.utilisateur.nomutilisateur}}</span>
                
                     <!--end::Col--></div>
-                       
+                    {% endif %}
                        </div>
                         <div class="row mb-7">
                             <!--begin::Label-->
                             <label class="col-lg-4 fw-bold text-muted">Concessionnaire</label>
                             <!--end::Label-->
+                            {% if lead.Concessionnaire == NULL %}
+                            <div class="col-lg-8">
+                                <span class="fw-bold text-gray-800 fs-6"> </span>
+                            </div>
+                            {% else %}
                             <!--begin::Col-->
                             <div class="col-lg-8">
                                 <span class="fw-bold text-gray-800 fs-6">{{lead.Concessionnaire.concessionnairemarchand.utilisateur.nomutilisateur}}</span>
                             </div>
+                            {% endif %}
                             <!--end::Col-->
                         </div>
                        <div class="row mb-7">
                         <!--begin::Label-->
                         <label class="col-lg-4 fw-bold text-muted">Marchand</label>
                         <!--end::Label-->
+                        {% if lead.Marchand == NULL %}
+                        <div class="col-lg-8">
+                            <span class="fw-bold text-gray-800 fs-6"> </span>
+                        </div>
+                        {% else %}
                         <!--begin::Col-->
                         <div class="col-lg-8">
                             <span class="fw-bold text-gray-800 fs-6">{{lead.Marchand.concessionnairemarchand.utilisateur.nomutilisateur}}</span>
                         </div>
+                        {% endif %}
                         <!--end::Col-->
                         </div>
         

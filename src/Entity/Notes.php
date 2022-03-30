@@ -24,6 +24,7 @@ class Notes
 
     /**
      * @ORM\ManyToOne(targetEntity=Leads::class)
+    
      */
     private $lead;
 

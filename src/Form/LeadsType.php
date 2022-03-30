@@ -61,12 +61,18 @@ class LeadsType extends AbstractType
 
       ->add('agent', EntityType::class,array(
                 'class' => Agent::class,
-                'choice_label' => 'utilisateur.nomutilisateur'
+                'choice_label' => 'utilisateur.nomutilisateur',
+                'required' => false,
+                'label' => false ,
+                'mapped'=>true,
                   
                 ))
                 ->add('vendeurr', EntityType::class,array(
                     'class' => Vendeurr::class,
-                    'choice_label' => 'utilisateur.nomutilisateur'
+                    'choice_label' => 'utilisateur.nomutilisateur',
+                    'required' => false,
+                    'label' => false ,
+                    'mapped'=>true,
                       
                     ))
   
@@ -74,20 +80,25 @@ class LeadsType extends AbstractType
                   ->add('partenaire', EntityType::class,array(
                         'class' => Partenaire ::class,
                         'choice_label' => 'utilisateur.nomutilisateur',
+                        'required' => false,
+                        'label' => false ,
+                        'mapped'=>true,
                         ))
-                        ->add('administrateur', EntityType::class,array(
-                            'class' => Administrateur ::class,
-                            'choice_label' => 'utilisateur.nomutilisateur', 
-                              
-                            ))
+                       
                             ->add('concessionnaire', EntityType::class,array(
                                 'class' => Concessionnaire ::class,
                                 'choice_label' => 'concessionnairemarchand.utilisateur.nomutilisateur',
-  
+                                'required' => false,
+                                'label' => false ,
+                                'mapped'=>true,
+                
                                 ))
                                ->add('marchand', EntityType::class,array(
                                     'class' => Marchand ::class,
                                     'choice_label' => 'concessionnairemarchand.utilisateur.nomutilisateur',
+                                    'required' => false,
+                                    'label' => false ,
+                                    'mapped'=>true,
                                         
                                ))
                                     
@@ -95,6 +106,9 @@ class LeadsType extends AbstractType
                                         
                                         'class' => Administrateur::class,
                                         'choice_label' => 'utilisateur.nomutilisateur',
+                                        'required' => false,
+                                        'label' => false ,
+                                        'mapped'=>true,
                                         
                           
                                     ))

@@ -83,6 +83,7 @@ class Agent
 
     /**
      * @ORM\OneToMany(targetEntity=Leads::class, mappedBy="agent")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $leads;
 

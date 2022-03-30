@@ -21,17 +21,17 @@ class Leads
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $telephone;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $courriel;
 
@@ -163,31 +163,31 @@ class Leads
 
     /**
      * @ORM\ManyToOne(targetEntity=Administrateur::class, inversedBy="leads")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="id",nullable=true)
      */
     private $administrateur;
 
     /**
      * @ORM\ManyToOne(targetEntity=Agent::class, inversedBy="leads")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="id",nullable=true)
      */
     private $agent;
 
     /**
      * @ORM\ManyToOne(targetEntity=Partenaire::class, inversedBy="leads")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="id" ,nullable=true)
      */
     private $partenaire;
 
     /**
      * @ORM\ManyToOne(targetEntity=Concessionnaire::class, inversedBy="leads")
-      * @ORM\JoinColumn(nullable=false)
+      * @ORM\JoinColumn(referencedColumnName="id" ,nullable=true)
      */
     private $concessionnaire;
 
     /**
      * @ORM\ManyToOne(targetEntity=Marchand::class, inversedBy="leads")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
      */
     private $marchand;
 
@@ -198,6 +198,7 @@ class Leads
 
     /**
      * @ORM\ManyToOne(targetEntity=Vendeurr::class, inversedBy="leads")
+     * * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
      */
     private $vendeurr;
 
@@ -225,11 +226,13 @@ class Leads
         
         $this->datemodification = new DateTime('now');
         $this->note = new ArrayCollection();
+  
+    
     }
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->id ;
     }
 
     public function getNom(): ?string
@@ -571,7 +574,7 @@ class Leads
         return $this->agent;
     }
 
-    public function setAgent(?Agent $agent): self
+    public function setAgent(?Agent $agent = null): self
     {
 
         $this->agent = $agent;
@@ -584,7 +587,7 @@ class Leads
         return $this->partenaire;
     }
 
-    public function setPartenaire(?Partenaire $partenaire): self
+    public function setPartenaire(?Partenaire $partenaire =null): self
     {
         $this->partenaire = $partenaire;
 
@@ -596,7 +599,7 @@ class Leads
         return $this->concessionnaire;
     }
 
-    public function setConcessionnaire(?Concessionnaire $concessionnaire): self
+    public function setConcessionnaire(?Concessionnaire $concessionnaire = null): self
     {
         $this->concessionnaire = $concessionnaire;
 
@@ -608,7 +611,7 @@ class Leads
         return $this->marchand;
     }
 
-    public function setMarchand(?Marchand $marchand): self
+    public function setMarchand(?Marchand $marchand = null): self
     {
         $this->marchand = $marchand;
 
@@ -632,7 +635,7 @@ class Leads
         return $this->vendeurr;
     }
 
-    public function setVendeurr(?Vendeurr $vendeurr): self
+    public function setVendeurr(?Vendeurr $vendeurr = null): self
     {
         $this->vendeurr = $vendeurr;
 

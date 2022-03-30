@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Notes;
 use App\Form\NotesType;
+use App\Repository\LeadsRepository;
 use App\Repository\NotesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,35 +15,58 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/notes')]
 class NotesController extends AbstractController
 {
-    #[Route('/', name: 'index', methods: ['GET'])]
-    public function index(NotesRepository $notesRepository,Request $request,NotesRepository $notes): Response
+    #[Route('/new', name: 'test', methods: ['GET'])]
+    public function index(NotesRepository $notesRepository,Request $request,NotesRepository $notes,LeadsRepository $leadsRepository): Response
     { 
         $question_id = $request->query->get('id');
         $result= $notes->findNotesByLead($question_id );
-        dd($result);die();
+      //  dd($result);die();
 
-        return $this->render('leads/index.html.twig', [
-            'notess' => $result,
+        return $this->render('notes/index.html.twig', [
+            'notes' => $result,
+            'leads' => $leadsRepository->findAll(),
         ]);
     }
 
-    #[Route('/new', name: 'notes_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/notess/{idlead}', name: 'notes_index', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager,NotesRepository $notes,LeadsRepository $leadsRepository): Response
     {
+        $question_id = $request->query->get('idlead');
+       $data= $request->getPathInfo();
+
+       $res= explode('/',$data,4);
+     
+        $param=$res[3];
+       $paranfinal= intval($param);
+       // dd($paranfinal);die;
+       // dd($question_id);die;
+        $result= $notes->findNotesByLead($paranfinal );
         $note = new Notes();
         $form = $this->createForm(NotesType::class, $note);
+        $onelead=$leadsRepository->findOneById($paranfinal);
+       // dd($onelead);die;
+       //$request->get('lead')->setId(2); 
+    
+        $form->get('lead')->setData($onelead);  
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($note);
             $entityManager->flush();
+           
+            $uri = $request->getUri();
+          
+            
 
-            return $this->redirectToRoute('notes_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirect($request->request->get('referer'));
         }
 
-        return $this->renderForm('notes/new.html.twig', [
+        return $this->renderForm('notes/index.html.twig', [
             'note' => $note,
             'form' => $form,
+            'notes' => $result,
+            'lead' => $leadsRepository->findAll(),
+            'question_id' => $paranfinal,
         ]);
     }
 
@@ -72,14 +96,14 @@ class NotesController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'notes_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'notes_delete', methods: ['delete'])]
     public function delete(Request $request, Notes $note, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$note->getId(), $request->request->get('_token'))) {
+    
             $entityManager->remove($note);
             $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('notes_index', [], Response::HTTP_SEE_OTHER);
+        
+            return $this->redirect($request->request->get('referer'));
     }
+
 }

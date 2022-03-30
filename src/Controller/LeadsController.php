@@ -2,11 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Administrateur;
 use App\Entity\Agent;
 use App\Entity\Concessionnaire;
 use App\Entity\Leads;
+use App\Entity\Marchand;
 use App\Entity\Notes;
+use App\Entity\Partenaire;
 use App\Entity\Status;
+use App\Entity\Utilisateur;
+use App\Entity\Vendeurr;
 use App\Form\AgentType;
 use App\Form\LeadsType;
 use App\Repository\AdministrateurRepository;
@@ -19,9 +24,14 @@ use App\Repository\ModelesmsRepository;
 use App\Repository\NotesRepository;
 use App\Repository\PartenaireRepository;
 use App\Repository\UtilisateurRepository;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Text;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,36 +41,178 @@ class LeadsController extends AbstractController
 {
 
    
-    #[Route('/', name: 'leads_index', methods: ['GET'])]
-    public function index(LeadsRepository $leadsRepository, NotesRepository $notes): Response
+    #[Route('/', name: 'leads_index',)]
+    public function index(LeadsRepository $leadsRepository, NotesRepository $notes ,Request $request): Response
     {
-       $llead=$leadsRepository->findAll();
-        // dd($llead);die;
-        $mytab=[];
-           
+        $leads = $leadsRepository ->findAll();
+        $form = $this->createFormBuilder()
 
-        foreach($llead as $leead)
-        {
-           $data = $leead->getId();
+       -> add('nom', null , array('required' => false))
+        ->add('telephone', null , array('required' => false))
+        ->add('courriel', null , array('required' => false))
         
-           
-            $result= $notes->findNotesByLead($data);
-         
-             //  dump($result); die () ;
-            array_push($mytab,$result); 
-           
-          
+        ->add('agent', EntityType::class,array(
+            'class' => Agent::class,
+            'choice_label' => 'utilisateur.nomutilisateur',
+            'required' => false,
+            'label' => false 
+              
+            ))
+            ->add('vendeurr', EntityType::class,array(
+                'class' => Vendeurr::class,
+                'choice_label' => 'utilisateur.nomutilisateur',
+                'required' => false,
+                'label' => false 
+                  
+                ))
+              ->add('partenaire', EntityType::class,array(
+                    'class' => Partenaire::class,
+                    'choice_label' => 'utilisateur.nomutilisateur',
+                    'required' => false,
+                    'label' => false 
+                      
+                    ))
+                    ->add('concessionnaire', EntityType::class,array(
+                        'class' => Concessionnaire ::class,
+                        'choice_label' => 'concessionnairemarchand.utilisateur.nomutilisateur',
+                        'required' => false,
+                        'label' => false 
+
+                        ))
+                    ->add('marchand', EntityType::class,array(
+                      'class' => Marchand ::class,
+                        'choice_label' => 'concessionnairemarchand.utilisateur.nomutilisateur',
+                        'required' => false,
+                        'label' => false 
+                                
+                       ))
+                            
+                    ->add('administrateur',EntityType::class,array(
+                                
+                       'class' => Administrateur::class,
+                        'choice_label' => 'utilisateur.nomutilisateur',
+                        'required' => false,
+                        'label' => false       
+                  
+                            ))
+         ->add('rappel' , DateType::class , array('required' => false))
+         ->add('datecreation', DateType::class , array('required' => false)) 
+         ->add('datecreationend', DateType::class , array('required' => false)) 
+         ->add('Submit', SubmitType::class)
+
+        ->add('Reset', ResetType::class )
+
+       ->getForm();
+        ;
+        $form -> handleRequest($request);  
+        $nom =$form->get('nom')->getData() ;
+        $tel =$form->get('telephone')->getData() ;    
+        $email =$form->get('courriel')->getData() ;     
+        $agent =$form->get('agent')->getData() ;
+        $vendeurr =$form->get('vendeurr')->getData() ;  
+        $partenaire =$form->get('partenaire')->getData() ; 
+        $concessionnaire =$form->get('concessionnaire')->getData() ; 
+        $marchand =$form->get('marchand')->getData() ;  
+        $administrateur =$form->get('administrateur')->getData() ;
+        $rappel =$form->get('rappel')->getData() ; 
+        $datecreation =$form->get('datecreation')->getData() ;   
+        $datecreationend =$form->get('datecreation')->getData() ;          
+
+        
+        $phe ='' ;
+        $condition = '' ;
+        if ($agent )
+         { $U_form = $form->get('agent')->getData();
+         $condition .=  '&& $v->getAgent() == $U_form ' ; }
+         if ($vendeurr )
+         { $U_form = $form->get('vendeurr')->getData();
+         $condition .=  '&& $v->getVendeurr() == $U_form ' ; }
+         if ($partenaire )
+         { $U_form = $form->get('partenaire')->getData();
+         $condition .=  '&& $v->getPartenaire() == $U_form ' ; }
+         if ($concessionnaire )
+         { $U_form = $form->get('concessionnaire')->getData();
+         $condition .=  '&& $v->getConcessionnaire() == $U_form ' ; }
+         if ($marchand )
+         { $U_form = $form->get('marchand')->getData();
+         $condition .=  '&& $v->getMarchand() == $U_form ' ; }
+         if ($administrateur )
+         { $U_form = $form->get('administrateur')->getData();
+         $condition .=  '&& $v->getAdministrateur() == $U_form ' ; }
+         if ($nom) 
+         { $nom_form = $form->get('nom')->getData( ) ;
+           $condition .=  '&& $v->getNom() == $nom_form ' ; }
+           if ($tel) 
+           { $tel_form = $form->get('telephone')->getData( );
+             $condition .=  '&& $v->getTelephone() == $tel_form ' ; }
+         if ($email)
+         { $email_form = $form->get('courriel')->getData();
+          $condition .=  '&& $v->getCourriel == $email_form ' ; }
+          if ($rappel)
+         {  $rappel_form = $form->get('rappel')->getData();
+          $condition .=  '&& $v->getRappel() == $rappel_form ' ; }
+          if ($datecreation)
+         {  $datecreation_form = $form->get('datecreation')->getData() ;
+          $condition .=  '&& $v->getDatecreation() == $datecreation_form ' ; }
+          if ($datecreationend)
+          {  $datecreationend_form = $form->get('datecreation')->getData() ;
+           $condition .=  '&& $v->getDatecreation() == $datecreationend_form ' ; }
+
+         //  dd($datecreationend);die;
+
  
-        }
-       // dd($result);die;
+                             if ( substr($condition, 0,2) == '&&' ) 
+ 
+                             { $condition[0] = " " ;
+                                 $condition[1] = " " ;
+ 
+                             }
+ 
+ 
+                             {$cmd = ' if (' . $condition . ') ';
+                                 $cmd .= ' {  ' ;
+           // $condition .= $phe . ' = true' ;
+           $cmd .= '$phe = true ;'   ;
+           $cmd .= '  } ' ;
+           $cmd .= ' else {  $phe = false ;}   ' ;
+           $i =0 ;
+           $filterr = $leadsRepository -> findAll() ;
+           if(!empty($condition))
+ 
+           {   $filterr = [] ;
+             foreach ( $leads as $v)
+             {
+                 ++$i ;
+ 
+                 if($condition)
+                 { eval( $cmd );
+                     if($phe == 'true') 
+                     { 
+                         $filterr[$i] = $v ; }
+      
+                     }
+                 }
+             }
+             else {$filterr = $leadsRepository -> findAll() ;}
+         }
+ 
+ 
+
+
+
+                                 
+      //  dd(filterr);die;
         return $this->render('leads/index.html.twig', [
-            'leads' => $leadsRepository->findAll(),
-            'notes' => $mytab,
+         
+            'form' => $form->createView(),
+            'leads' => $filterr 
+           
         ]);
     }
-    #[Route('/note', name: 'notes_index', methods: ['GET'])]
+    #[Route('/note', name: 'test', methods: ['GET'])]
     public function Notes(NotesRepository $notesRepository,Request $request,NotesRepository $notes,LeadsRepository $leadsRepository): Response
     { 
+        //dd('hello');die;
         $llead=$leadsRepository->findAll();
         $question_id = $request->query->get('id');
         $result= $notes->findNotesByLead($question_id );
@@ -71,12 +223,17 @@ class LeadsController extends AbstractController
             'leads' => $leadsRepository->findAll(),
         ]);
     }
+    /**
+     * @Route("/hello-page", name="hello_page")
+     */
+    
 
     #[Route('/new', name: 'leads_new', methods: ['GET', 'POST'])]
     public function new(LeadsRepository $leads,ModeleemailRepository $email,ModelesmsRepository $sms,Request $request, EntityManagerInterface $entityManager , UtilisateurRepository $u, AgentRepository $agent ,PartenaireRepository $partenaire , AdministrateurRepository $administrateur , ConcessionnaireRepository $concessionnaire , MarchandRepository $marcha): Response
     {
    
         $lead = new Leads();
+       
       
         $form = $this->createForm(LeadsType::class, $lead);
      
@@ -123,9 +280,13 @@ class LeadsController extends AbstractController
         $form->handleRequest($request);
       
         if ($form->isSubmitted() && $form->isValid()) {
-          
+            /*$agentt = $agent->findOneById($lead->getAgent()->getId());
+            $lead->setAgent($agentt);*/ 
+           
+ 
             $entityManager->persist($lead);
             $entityManager->flush();
+          // $agent_id=$form->get('agent')->getData();
 
             return $this->redirectToRoute('leads_index', [], Response::HTTP_SEE_OTHER);
         }
