@@ -58,7 +58,8 @@ class NotesController extends AbstractController
           
             
 
-            return $this->redirect($request->request->get('referer'));
+          
+            return $this->redirectToRoute('notes_index',array('idlead' => $paranfinal));
         }
 
         return $this->renderForm('notes/index.html.twig', [
@@ -96,14 +97,15 @@ class NotesController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'notes_delete', methods: ['delete'])]
+    #[Route('/{id}/{idlead}', name: 'notes_delete', methods: ['delete'])]
     public function delete(Request $request, Notes $note, EntityManagerInterface $entityManager): Response
     {
-    
+        $idlead = $request->get('idlead');
             $entityManager->remove($note);
             $entityManager->flush();
         
-            return $this->redirect($request->request->get('referer'));
+          
+            return $this->redirectToRoute('notes_index',array('idlead' => $idlead));
     }
 
 }

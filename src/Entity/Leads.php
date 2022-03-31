@@ -208,6 +208,11 @@ class Leads
      */
     private $note;
 
+    /**
+     * @ORM\OneToMany(targetEntity=FilesLead::class, mappedBy="lead")
+     */
+    private $filesLeads;
+
 
 
   
@@ -226,6 +231,7 @@ class Leads
         
         $this->datemodification = new DateTime('now');
         $this->note = new ArrayCollection();
+        $this->filesLeads = new ArrayCollection();
   
     
     }
@@ -666,6 +672,36 @@ class Leads
             // set the owning side to null (unless already changed)
             if ($note->getLead() === $this) {
                 $note->setLead(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FilesLead[]
+     */
+    public function getFilesLeads(): Collection
+    {
+        return $this->filesLeads;
+    }
+
+    public function addFilesLead(FilesLead $filesLead): self
+    {
+        if (!$this->filesLeads->contains($filesLead)) {
+            $this->filesLeads[] = $filesLead;
+            $filesLead->setLead($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFilesLead(FilesLead $filesLead): self
+    {
+        if ($this->filesLeads->removeElement($filesLead)) {
+            // set the owning side to null (unless already changed)
+            if ($filesLead->getLead() === $this) {
+                $filesLead->setLead(null);
             }
         }
 
