@@ -250,7 +250,32 @@
 
 
 
-<div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
+
+													
+													
+													
+													</tr>
+														
+														
+												
+			{% endfor %}
+											
+											</tbody>
+											<!--end::Table body-->
+										</table>
+											<!--end::Table-->
+									</div>
+									<!--end::Card body-->
+							 </di>
+ 				 
+				</div>
+				</div>
+				</div>
+				</div>
+ 
+ 	 
+
+	  <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
 	<!--begin::Modal dialog-->
 	<div class="modal-dialog modal-dialog-centered modal-xl">
 		<!--begin::Modal content-->
@@ -291,80 +316,196 @@
 			<!--end::Modal header-->
 			<!--begin::Modal body-->
 			<div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-				
-				
-				<!--begin::Form-->
-				{{  form_start(form) }}
-				 
-					<!--begin::Scroll-->
-					<div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
-					 
-					 <div class="row">
-							<!--begin::Input group-->
+															<!--begin::Form-->
+ 															{{  form_start(form) }}
+																<!--begin::Scroll-->
+																<div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+																 
+																 <div class="row">
+																	<!--begin::Input group-->
 
-						
-								<div class="col-4 mb-7   ">
-									<!--begin::Form-->
-								
-										<!--begin::Input group-->
-										<div class="fv-row mb-10">
-										<!--begin::Label-->
-										
-											<label class="fs-6 fw-bold form-label mb-2"> Nom </label> 
-											
-												
-												<!--end::Input-->
-										</div>
-									
-								</div>
-								
-                       
-                        </div>
-						
-						
+																	 <div class="col-3 mb-7">
+															             <!--begin::Form-->
+																		
+ 															            	<!--begin::Input group-->
+															               	<div class="fv-row mb-10">
+																            	<!--begin::Label-->
+																	          {# <label class="fs-6 fw-bold form-label mb-2"> Nom </label>  #}
+																				  {{ form_row(form.nom) }}
+																				   
+																                    <!--end::Input-->
+															                </div>
+																 
+														        	</div>
 
-						</div>
-						{{ form_end(form) }}
-                   
+													                <div class="col-3 mb-7   ">
+															             <!--begin::Form-->
+ 															            	<!--begin::Input group-->
+															               	<div class="fv-row mb-10">
+																            	<!--begin::Label-->
+																	          {# <label class="fs-6 fw-bold form-label mb-2"> Téléphone </label> #}
+																                <!--end::Label-->
+																                	<!--begin::Input-->
 
-					<!--end::Form-->
-				</div>
+																				  {{ form_row(form.telephone) }}
+																	               
+															                 </div>
+																		 
+														        	</div>
+															              
+																	<div  class="col-3 mb-7">
 
-					</div>
-				
+                                                                      
+															            	<!--begin::Input group-->
+															               	<div class="fv-row mb-10">
+ 																	             <!--begin::Label-->
+																	            {# <label class=" fs-6 fw-bold form-label mb-2">Courriel</label> #}
+																                	<!--end::Label-->
+
+														                          {{ form_row(form.courriel) }}
+																			 </div>
+													 
+														            </div>
+
+																		<div class="col-3 mb-7 ml-5">
+																		<!--begin::Label-->
+																		<label class="  fw-bold fs-6 mb-5">rappel  </label>
+																		<!--end::Label-->
+																		<!--begin::Roles-->
+																		<!--begin::Input row-->
+																	 
+																		{{ form_widget(form.rappel) }}
+																	</div>
+														                  <!--end::Modal body-->
+																</div>
+
+															<div class="row">
+															        <div  class="col-3 mb-7">
+ 															            	<!--begin::Input group-->
+															                
+ 																	             <!--begin::Label-->
+																	            <label class=" fs-6 fw-bold form-label mb-2">Agent</label>
+																                	<!--end::Label-->
+																                   	<!--begin::Input-->
+																               
+													                               {{ form_row(form.agent) }}
+																                	<!--end::Input-->
+ 																	
+																     	    
+																
+																              <!--end::Actions-->
+															    
+															                 <!--end::Form-->
+														            </div>
+
+																	 <div  class="col-3 mb-7">
+
+ 															            	<!--begin::Input group-->
+															               	<div class="fv-row mb-10">
+ 																	             <!--begin::Label-->
+																	            <label class=" fs-6 fw-bold form-label mb-2">Vendeur</label>
+																                	<!--end::Label-->
+																                   	<!--begin::Input-->
+																                {{ form_row(form.vendeurr) }}
+                                                                                	 
+																     	    </div>
+														            </div>
 
 
-				<!--end::Form-->
-			</div>
+																	<div class="col-3 mb-7 ml-5">
+																		<!--begin::Label-->
+																		<label class="  fw-bold fs-6 mb-5">partenaire  </label>
+																		<!--end::Label-->
+																		<!--begin::Roles-->
+																		<!--begin::Input row-->
+																	 
+																		{{ form_row(form.partenaire) }}
+																	</div>
+
+																	<div class="col-3 mb-7 ml-5">
+																		<!--begin::Label-->
+																		<label class="  fw-bold fs-6 mb-5">concessionaire  </label>
+																		<!--end::Label-->
+																		<!--begin::Roles-->
+																		<!--begin::Input row-->
+																	 
+																		{{ form_row(form.concessionnaire) }}
+																	</div>
+																	</div>
+
+
+                                                              <div class="row">
+																
+	                                                              <div class="col-3 mb-7 ml-5">
+																		<!--begin::Label-->
+																		<label class="  fw-bold fs-6 mb-5">Marchand  </label>
+																		<!--end::Label-->
+																		<!--begin::Roles-->
+																		<!--begin::Input row-->
+																	 
+																		{{ form_widget(form.marchand) }}
+																	</div>
+
+																	  <div class="col-3 mb-7 ml-5">
+																		<!--begin::Label-->
+																		<label class="  fw-bold fs-6 mb-5">Administrateur  </label>
+																		<!--end::Label-->
+																		<!--begin::Roles-->
+																		<!--begin::Input row-->
+																	 
+																		{{ form_widget(form.administrateur) }}
+																	</div>
+
+																	 <div class="col-3 mb-7 ml-5">
+																		<!--begin::Label-->
+																		<label class="  fw-bold fs-6 mb-5">datecreation  </label>
+																		<!--end::Label-->
+																		<!--begin::Roles-->
+																		<!--begin::Input row-->
+																	 
+																		{{ form_widget(form.datecreation) }}
+																	</div>
+
+
+																	 <div class="col-3 mb-7 ml-5">
+																		<!--begin::Label-->
+																		<label class="  fw-bold fs-6 mb-5">datecreationend  </label>
+																		<!--end::Label-->
+																		<!--begin::Roles-->
+																		<!--begin::Input row-->
+																	 
+																		{{ form_widget(form.datecreationend) }}
+																	</div>
+																	
+
+                                                               
+														    </div>
+
+															 </div>
+																<!--end::Scroll-->
+															 <div class="row">
+																	{# <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button> #}
+																	<div class="col-6">
+																	  {{ form_row(form.Reset) }}
+																	  
+                                                                    </div>  
+		                                                            <div class="col-6">
+																	 {{ form_row(form.Submit) }} 
+																	 </div>
+
+
+																</div>
+															    {{ form_end(form) }}
+
+
+															<!--end::Form-->
+														</div>
 			<!--end::Modal body-->
 		</div>
 		<!--end::Modal content-->
 	</div>
 	<!--end::Modal dialog-->
 </div>
-													
-													
-													
-													</tr>
-														
-														
-												
-			{% endfor %}
-											
-											</tbody>
-											<!--end::Table body-->
-										</table>
-											<!--end::Table-->
-									</div>
-									<!--end::Card body-->
-							 </di>
- 				 
-				</div>
-				</div>
-				</div>
-				</div>
- 
- 	 
 
 
  	{{ include('layout/pagination.html.twig') }}
