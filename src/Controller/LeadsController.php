@@ -328,14 +328,14 @@ class LeadsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'leads_delete', methods: ['delete'])]
+    #[Route('/delete/{id}', name: 'leads_delete')]
     public function delete(Request $request, Leads $lead, EntityManagerInterface $entityManager): Response
     {
-       
+      // dd('hello');die;
             $entityManager->remove($lead);
             $entityManager->flush();
         
 
-        return $this->redirectToRoute('leads_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('leads_index');
     }
 }

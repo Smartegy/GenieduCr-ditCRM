@@ -49,7 +49,7 @@
 																	   
 												<td>						
 																	
-											<form  method="POST" style="display:inline-block"  id="myform" action="{{path('delete_administrateur', {'id' : note.id})}}" onsubmit="return">
+											<form  method="POST" style="display:inline-block"  id="myform" action="{{path('notes_delete', {'id' : note.id , 'idlead' :question_id}) }}" onsubmit="return">
 																		
 																	
 																	 

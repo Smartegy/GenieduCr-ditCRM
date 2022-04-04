@@ -163,31 +163,34 @@ class Leads
 
     /**
      * @ORM\ManyToOne(targetEntity=Administrateur::class, inversedBy="leads")
-     * @ORM\JoinColumn(referencedColumnName="id",nullable=true)
+     * @ORM\JoinColumn(referencedColumnName="id",nullable=true,onDelete="SET NULL")
      */
     private $administrateur;
 
     /**
      * @ORM\ManyToOne(targetEntity=Agent::class, inversedBy="leads")
-     * @ORM\JoinColumn(referencedColumnName="id",nullable=true)
+     * @ORM\JoinColumn(referencedColumnName="id",nullable=true,onDelete="SET NULL")
+
+ 
      */
     private $agent;
 
     /**
      * @ORM\ManyToOne(targetEntity=Partenaire::class, inversedBy="leads")
-     * @ORM\JoinColumn(referencedColumnName="id" ,nullable=true)
+     * @ORM\JoinColumn(referencedColumnName="id" ,nullable=true ,onDelete="SET NULL")
+     
      */
     private $partenaire;
 
     /**
      * @ORM\ManyToOne(targetEntity=Concessionnaire::class, inversedBy="leads")
-      * @ORM\JoinColumn(referencedColumnName="id" ,nullable=true)
+      * @ORM\JoinColumn(referencedColumnName="id" ,nullable=true,onDelete="SET NULL")
      */
     private $concessionnaire;
 
     /**
      * @ORM\ManyToOne(targetEntity=Marchand::class, inversedBy="leads")
-     * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true,onDelete="SET NULL")
      */
     private $marchand;
 
