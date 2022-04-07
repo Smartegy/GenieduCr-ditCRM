@@ -213,6 +213,11 @@ class Leads
      */
     private $filesLeads;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Email::class, mappedBy="lead")
+     */
+    private $emails;
+
 
 
   
@@ -232,6 +237,7 @@ class Leads
         $this->datemodification = new DateTime('now');
         $this->note = new ArrayCollection();
         $this->filesLeads = new ArrayCollection();
+        $this->emails = new ArrayCollection();
   
     
     }
@@ -703,6 +709,33 @@ class Leads
             if ($filesLead->getLead() === $this) {
                 $filesLead->setLead(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Email[]
+     */
+    public function getEmails(): Collection
+    {
+        return $this->emails;
+    }
+
+    public function addEmail(Email $email): self
+    {
+        if (!$this->emails->contains($email)) {
+            $this->emails[] = $email;
+            $email->addLead($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmail(Email $email): self
+    {
+        if ($this->emails->removeElement($email)) {
+            $email->removeLead($this);
         }
 
         return $this;

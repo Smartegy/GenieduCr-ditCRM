@@ -61,5 +61,53 @@ class LeadsRepository extends ServiceEntityRepository
  
 
 
+    public function findBytodaysrem()
+    { $date = new \DateTime('@'.strtotime('now')) ;
+         $time = date('d/m/Y');
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.rappel = :val')
+            ->setParameter('val',$time)
+            
+         
+            ->getQuery()
+            ->getResult()
+        ;
+
+      
+    }
+
+    public function findAllRem1()
+    {  
+
+       $qb= $this->select('u.rappel')
+        ->from('leads', 'u')
+         ->orderBy('u.name', 'ASC');
+     
+        ;
+      return $qb ;
+        
+
+      
+    }
+
+    /**
+     * @return Array[] Returns an array of Leads objects
+     */
+    
+    public function findAllRem()
+    {  
+
+        return $this->createQueryBuilder('l')
+        ->select('l.rappel'  )
+        ->getQuery()
+        ->getResult()
+    ;
+        
+        
+
+      
+    }
+
+
 
 }

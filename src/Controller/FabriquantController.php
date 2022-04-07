@@ -155,8 +155,6 @@ class FabriquantController extends AbstractController
 
                 $media->setType($type);
 
-
-
             }
 
             $om->persist($fabriquants);
