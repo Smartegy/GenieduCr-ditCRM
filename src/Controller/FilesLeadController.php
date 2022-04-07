@@ -157,7 +157,7 @@ class FilesLeadController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/{idlead}', name: 'files_lead_delete', methods: ['delete'])]
+    #[Route('/{id}/{idlead}', name: 'files_lead_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, FilesLead $filesLead, EntityManagerInterface $entityManager): Response
     {
         $idlead = $request->get('idlead');

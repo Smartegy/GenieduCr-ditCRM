@@ -32,6 +32,7 @@
 										
 											
 										
+                                      	
 												{% for file in files %}
 											
 																	
@@ -54,15 +55,14 @@
 																	   
 																		
 																	
-											<form  method="POST" style="display:inline-block"  id="myform" action="#" onsubmit="return">
+											<form  method="POST" style="display:inline-block"  id="myform" action="{{path('files_lead_delete', {'id' : file.id , 'idlead' :question_id}) }}" onsubmit="return">
 																		
 																	
 																	 
 																		<input type="hidden" name="_method" value="delete">
 																		<input type="hidden" name="_token" value="{{csrf_token('SUP' ~ file.id)}}">
 											
-																	   
-																		
+																	   	
 																		
 													<a href="{{path('files_lead_delete', {'id' : file.id , 'idlead' :question_id}) }}" class="confirmModalLink btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 																		
