@@ -178,7 +178,7 @@ class AgentController extends AbstractController
          'isModification' => $agent->getId() !== null
      ]);
  }
- #[Route('/delete-agent/{id}', name: 'delete_agent')]
+ #[Route('/delete-agent/{id}', name: 'deleteagent' )]
  public function suppression(Agent $agent, Request $request,ObjectManager $objectManager){
   //   if($this->isCsrfTokenValid("SUP". $agent->getId(),$request->get('_token'))){
          $objectManager->remove($agent);

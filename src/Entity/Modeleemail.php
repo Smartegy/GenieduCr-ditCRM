@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ModeleemailRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\FormTypeInterface;
 
@@ -49,6 +51,11 @@ class Modeleemail
      */
     private $datemodification;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Courriel::class, mappedBy="modele")
+     */
+    private $courriels;
+
     public function __construct()
     {
        
@@ -59,6 +66,7 @@ class Modeleemail
             }
         
             $this->datemodification = new DateTime('now');
+            $this->courriels = new ArrayCollection();
    
     }
 
@@ -135,6 +143,36 @@ class Modeleemail
     public function setDatemodification(\DateTimeInterface $datemodification): self
     {
         $this->datemodification = $datemodification;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Courriel[]
+     */
+    public function getCourriels(): Collection
+    {
+        return $this->courriels;
+    }
+
+    public function addCourriel(Courriel $courriel): self
+    {
+        if (!$this->courriels->contains($courriel)) {
+            $this->courriels[] = $courriel;
+            $courriel->setModele($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourriel(Courriel $courriel): self
+    {
+        if ($this->courriels->removeElement($courriel)) {
+            // set the owning side to null (unless already changed)
+            if ($courriel->getModele() === $this) {
+                $courriel->setModele(null);
+            }
+        }
 
         return $this;
     }

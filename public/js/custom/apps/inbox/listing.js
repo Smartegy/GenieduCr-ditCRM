@@ -12,7 +12,7 @@ var KTAppInboxListing = function () {
             "info": false,
             'order': [],
             // 'paging': false,
-            // 'pageLength': false,      
+            'pageLength': true,      
         });
 
         datatable.on('draw', function () {

@@ -221,6 +221,11 @@ class Leads
      */
     private $emails;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Courriel::class, mappedBy="lead")
+     */
+    private $courriels;
+
 
 
   
@@ -241,6 +246,7 @@ class Leads
         $this->note = new ArrayCollection();
         $this->filesLeads = new ArrayCollection();
         $this->emails = new ArrayCollection();
+        $this->courriels = new ArrayCollection();
   
     
     }
@@ -739,6 +745,36 @@ class Leads
     {
         if ($this->emails->removeElement($email)) {
             $email->removeLead($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Courriel[]
+     */
+    public function getCourriels(): Collection
+    {
+        return $this->courriels;
+    }
+
+    public function addCourriel(Courriel $courriel): self
+    {
+        if (!$this->courriels->contains($courriel)) {
+            $this->courriels[] = $courriel;
+            $courriel->setLead($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourriel(Courriel $courriel): self
+    {
+        if ($this->courriels->removeElement($courriel)) {
+            // set the owning side to null (unless already changed)
+            if ($courriel->getLead() === $this) {
+                $courriel->setLead(null);
+            }
         }
 
         return $this;
