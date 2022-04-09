@@ -404,7 +404,7 @@
 															<td>
 																<div class="text-dark mb-1">
 																	<!--begin::Heading-->
-																	<a href="../../demo1/dist/apps/inbox/reply.html" class="text-dark">
+																	<a href="{{path("view_email",{ 'id' : e.Id})}}" class="text-dark">
 																		<span class="fw-bolder">{{e.sujet}}</span>
 																		<span class="fw-bolder d-none d-md-inine">-</span>
 																		<span class="d-none d-md-inine text-muted">Courriel envoyer pour {{e.lead.nom}} </span>
