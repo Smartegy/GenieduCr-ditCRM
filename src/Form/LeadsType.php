@@ -129,7 +129,7 @@ class LeadsType extends AbstractType
                                                     'neuf' => 'neuf',
                                               
                                                 ),
-                                                'placeholder' => 'Status',
+                                                'placeholder' => ' ',
                                             ]
                                         )
 
@@ -173,8 +173,12 @@ class LeadsType extends AbstractType
             ->add('sourcesleads',EntityType::class,array(
                 'class' => SourcesLeads::class,
                 'choice_label' => 'nom',
+                'required' => false,
+                'label' => false ,
+                'mapped'=>true,
   
             ))
+           
         ;
     }
 

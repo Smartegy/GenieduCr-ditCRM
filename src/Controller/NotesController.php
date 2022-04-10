@@ -97,7 +97,7 @@ class NotesController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/{idlead}', name: 'notes_delete', methods: ['GET', 'POST'])]
+    #[Route('/{id}/{idlead}', name: 'notes_delete')]
     public function delete(Request $request, Notes $note, EntityManagerInterface $entityManager): Response
     {
         $idlead = $request->get('idlead');

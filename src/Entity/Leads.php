@@ -125,11 +125,12 @@ class Leads
      * @ORM\ManyToOne(targetEntity=Statusleads::class)
      * @ORM\JoinColumn(nullable=false)
      */
+    
     private $statusleads;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SourcesLeads::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=SourcesLeads::class,inversedBy="leads")
+    * @ORM\JoinColumn(referencedColumnName="id", nullable=true,onDelete="SET NULL")
      */
     private $sourcesleads;
 
@@ -201,7 +202,7 @@ class Leads
 
     /**
      * @ORM\ManyToOne(targetEntity=Vendeurr::class, inversedBy="leads")
-     * * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
+     * * @ORM\JoinColumn(referencedColumnName="id", nullable=true,onDelete="SET NULL")
      */
     private $vendeurr;
 

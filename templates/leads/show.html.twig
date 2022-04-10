@@ -111,7 +111,7 @@
                                     </li>
 
                                       <li class="nav-item mt-2">
-                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('email')}}">Email</a>
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('email', {'idlead' : lead.id})}}">Courriel</a>
                                     </li>
                                     <!--end::Nav item-->
 
@@ -187,9 +187,16 @@
                                         </label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
+                                   
+                                    {% if lead.SourcesLeads == NULL %}
+                                    <div class="col-lg-8">
+                                        <span class="fw-bolder fs-6 text-gray-800"></span>
+                                    </div>
+                                    {% else %}
                                     <div class="col-lg-8">
                                         <span class="fw-bolder fs-6 text-gray-800">{{lead.SourcesLeads.nom}}</span>
                                     </div>
+                                    {% endif %}
                                     <!--end::Col-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8">
@@ -392,8 +399,9 @@
                                     <div class="col-lg-8">
                                         <span class="fw-bold text-gray-800 fs-6">{{lead.marque}}</span>
                                     </div>
+                               </div>
                                     <!--end::Col-->
-                                </div><div class="row mb-7">
+                                <div class="row mb-7">
                                     <!--begin::Label-->
                                     <label class="col-lg-4 fw-bold text-muted">Modéle</label>
                                     <!--end::Label-->
@@ -403,7 +411,7 @@
                                     </div>
                                     <!--end::Col-->
                                 </div>
-                            </div><div class="row mb-7">
+                            <div class="row mb-7">
                                 <!--begin::Label-->
                                 <label class="col-lg-4 fw-bold text-muted">Année</label>
                                 <!--end::Label-->
