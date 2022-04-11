@@ -756,7 +756,7 @@
 															   <a href="{{path("leads_show",{ 'id' : lead.Id})}}" class="text-gray-800 text-hover-primary fs-6 fw-bolder"data-kt-ecommerce-product-filter="product_name">{{lead.nom}}</a>
 														     	<span class="text-muted fw-bold d-block fs-7">
 														        	<br> 
-															    <div class="ms-5"><a href="{{path('email')}}">
+															    <div class="ms-5"><a href="{{path('courriel' , { 'idlead' : lead.Id} )}}">
 																			<!--begin::Svg Icon | path: assets/media/icons/duotune/communication/com002.svg-->
 																			<span class="svg-icon svg-icon-muted svg-icon-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"  data-bs-toggle="tooltip" data-bs-placement="top"title="Envoyer un courriel">
 																				<path opacity="0.3" d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z" fill="currentColor"/>

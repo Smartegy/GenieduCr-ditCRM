@@ -41,7 +41,7 @@ class CourrielType extends AbstractType
             ])
        
 
-          ->add('text', TextareaType::class, [
+        /*  ->add('text', TextareaType::class, [
                 'label' => 'texte message',
                 'required' => false,
                 'attr' => [
@@ -49,8 +49,8 @@ class CourrielType extends AbstractType
                 ]
             ])
  
-            ->add('sujet' )
-
+           // ->add('sujet' )
+*/
 
             ->add('modele', EntityType::class,array(
                 'class' => Modeleemail ::class,
@@ -73,7 +73,32 @@ class CourrielType extends AbstractType
             
         ;
 
+        $builder->get('modele')->addEventListener(FormEvents::POST_SUBMIT, 
+        function (FormEvent $event) {
+                 $form1 = $event->getForm();
+                 $data = $event->getForm();
+                 $form1 = $event->getForm()->getParent();
+                   //  dd($form1) ;die ; 
+                 $form1->add('sujet' ,null , array(
+                    'label' => 'Sujet',
+                    'empty_data' => $form1->get('modele')->getData()->getSujetemail()
+                )) ;
 
+                $form1->add('text' ,TextareaType::class , array(
+                    'label' => 'texte message',
+                    'required' => false,
+                    'empty_data' => $form1->get('modele')->getData()->getMessage() ,
+
+                    'attr' => [ 'class' => 'form-control' ] )) ;
+
+                $modele = $data->getData();
+
+                
+             
+ 
+        })
+         
+        ;
     
     
 ;
