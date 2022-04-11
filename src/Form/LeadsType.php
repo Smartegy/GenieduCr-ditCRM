@@ -41,7 +41,10 @@ class LeadsType extends AbstractType
             ->add('commantaire')
             ->add('numserie')
             ->add('budgetmonsuelle')
-            ->add('datenaissance')
+            ->add('datenaissance',
+            'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
+            'choices' => $this->getYears(1920)
+        ])
             ->add('statutprofessionnel')
             ->add('revenumensuel')
             ->add('depuisquand')
@@ -183,7 +186,13 @@ class LeadsType extends AbstractType
     }
 
 
-    
+    private function getYears($min, $max='current')
+    {
+         $years = range($min, ($max === 'current' ? date('Y') : $max));
+
+         return array_combine($years, $years);
+    }
+  
 
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CourrielRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,7 +47,28 @@ class Courriel
      * @ORM\ManyToOne(targetEntity=Modeleemail::class, inversedBy="courriels")
      */
     private $modele;
+      /**
+     * @ORM\Column(type="datetime")
+     */
+    private $datecreation;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $datemodification;
+
+
+    public function __construct()
+    {
+       
+
+        if($this->datecreation == null){
+            $this->datecreation = new DateTime('now');
+        }
+        
+        $this->datemodification = new DateTime('now');
+        
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -140,6 +162,29 @@ class Courriel
     public function setEmetteur($emetteur)
     {
         $this->emetteur = $emetteur;
+
+        return $this;
+    }
+    public function getDatecreation(): ?\DateTimeInterface
+    {
+        return $this->datecreation;
+    }
+
+    public function setDatecreation(\DateTimeInterface $datecreation): self
+    {
+        $this->datecreation = $datecreation;
+
+        return $this;
+    }
+
+    public function getDatemodification(): ?\DateTimeInterface
+    {
+        return $this->datemodification;
+    }
+
+    public function setDatemodification(\DateTimeInterface $datemodification): self
+    {
+        $this->datemodification = $datemodification;
 
         return $this;
     }
