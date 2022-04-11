@@ -28,11 +28,11 @@ class ModeleemailController extends AbstractController
         $modeleemail = new Modeleemail();
         $form = $this->createForm(ModeleemailType::class, $modeleemail);
         $form->handleRequest($request);
-        $form ->get('user')->setData('agent');   
+       // $form ->get('user')->setData('agent');   
         $entityManager->persist($modeleemail);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $form ->get('user')->setData('agent');   
+           
             $entityManager->persist($modeleemail);
             $entityManager->flush();
 
@@ -73,7 +73,7 @@ class ModeleemailController extends AbstractController
         ]);
     }
 
-    #[Route('delete/{id}', name: 'modeleemail_delete', methods: ['POST'])]
+    #[Route('delete/{id}', name: 'modeleemail_delete' )]
     public function delete(Request $request, Modeleemail $modeleemail, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$modeleemail->getId(), $request->request->get('_token'))) {
@@ -81,6 +81,6 @@ class ModeleemailController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('modeleemail_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('modele', [], Response::HTTP_SEE_OTHER);
     }
 }

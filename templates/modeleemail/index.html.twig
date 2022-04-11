@@ -75,12 +75,14 @@
 															<tr>
 																<td><div class="d-flex align-items-center">
 																	
-																	<div class="d-flex justify-content-start flex-column">
+																	    <div class="d-flex justify-content-start flex-column">
 																		<a href="{{path("modeleemail_index",{ 'id' : modeleemail.Id})}}" class="text-dark fw-bolder text-hover-primary fs-6">{{modeleemail.titre}}</a>
-																	</div>
-																</div></td>
+																	   </div>
+																    </div>
+																</td>
 																
-																<td><div class="d-flex justify-content-end flex-shrink-0">
+																<td>
+																<div class="d-flex justify-content-end flex-shrink-0">
 																		
 																	<a href="{{path("modeleemail_show",{ 'id' : modeleemail.Id})}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 																		<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
@@ -98,7 +100,7 @@
 																	   
 																		
 																	
-											<form  method="POST" style="display:inline-block"  id="myform" action="{{path('modeleemail_delete', {'id' : modeleemail.id})}}" onsubmit="returne">
+										                              	<form  method="POST" style="display:inline-block"  id="myform" action="{{path('modeleemail_delete', {'id' : modeleemail.id})}}" onsubmit="return">
 																		
 																	
 																	 
@@ -107,8 +109,8 @@
 											
 																	   
 																		
-																		
-													<a href="{{path('modeleemail_delete', {'id' : modeleemail.id})}}" class="confirmModalLink btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+												 						
+												                      	<a href="{{path('modeleemail_delete', {'id' : modeleemail.id})}}" class="confirmModalLink btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 																		
 																		
 												
@@ -121,8 +123,8 @@
 																		</span>
 																		<!--end::Svg Icon-->
 
-													</a>
-                                                    </form>
+												                     	</a>
+                                                                       </form>
 																		
 																						<div class="modal fade" tabindex="-1" id="kt_modal_1">
 																							<div class="modal-dialog">
@@ -165,7 +167,7 @@
 										<!--end::Table-->
 									</div>
 									<!--end::Card body-->
-							 </di>
+							 </div>
  				 
 				</div>
 				</div>

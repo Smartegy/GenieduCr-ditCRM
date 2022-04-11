@@ -39,7 +39,7 @@ class Modeleemail
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $user;
+    private $user ='agent';
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
