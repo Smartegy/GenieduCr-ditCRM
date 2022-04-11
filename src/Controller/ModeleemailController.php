@@ -73,7 +73,7 @@ class ModeleemailController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'modeleemail_delete', methods: ['POST'])]
+    #[Route('delete/{id}', name: 'modeleemail_delete', methods: ['POST'])]
     public function delete(Request $request, Modeleemail $modeleemail, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$modeleemail->getId(), $request->request->get('_token'))) {

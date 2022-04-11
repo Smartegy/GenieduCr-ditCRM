@@ -128,7 +128,7 @@
     
                                             <div class="row mb-6">
     
-                                                {{ form_label(form.sujetemail, "Sujet Email :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+                                                {{ form_label(form.sujetemail, "Sujet Courriel :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
     
                                                 <div class="col-lg-8 fv-row fv-plugins-icon-container">
                                                     {{ form_widget(form.sujetemail, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
@@ -150,7 +150,7 @@
     
     
                                                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                                    <button type="reset" class="btn btn-light btn-active-light-primary me-2"><a href="{{path("administrateur")}}"> Annuler</a></button>
+                                                    <button type="reset" class="btn btn-light btn-active-light-primary me-2"><a href="{{path("modeleemail_index")}}"> Annuler</a></button>
                                                     <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Valider</button>
                                                 </div>
     

@@ -42,7 +42,7 @@ class ModelesmsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'modelesms_show', methods: ['GET'])]
+    #[Route('show/{id}', name: 'modelesms_show', methods: ['GET'])]
     public function show(Modelesms $modelesm): Response
     {
         return $this->render('modelesms/show.html.twig', [
@@ -68,7 +68,7 @@ class ModelesmsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'modelesms_delete', methods: ['POST'])]
+    #[Route('delete/{id}', name: 'modelesms_delete', methods: ['POST'])]
     public function delete(Request $request, Modelesms $modelesm, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$modelesm->getId(), $request->request->get('_token'))) {
