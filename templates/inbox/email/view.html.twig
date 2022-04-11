@@ -277,7 +277,8 @@
 														<div class="d-flex align-items-center">
 															<!--begin::Avatar-->
 															<div class="symbol symbol-50 me-4">
-																<span class="symbol-label" style="background-image:url(assets/media/avatars/150-1.jpg);"></span>
+																<span class="symbol-label" style="background-image:url(assets/media/avatars/150-1.jpg);">
+																{# {{courriel.lead.nom|slice(0)[:1]}}</span> #}
 															</div>
 															<!--end::Avatar-->
 															<div class="pe-5">
@@ -418,7 +419,7 @@
 															<p>Best regards,</p>
 															<p class="mb-0">Jason Muller</p> #}
 
-                                                            <p> {{courriel.text}}</p>
+                                                            <p> {{courriel.text|nl2br}}</p>
 														</div>
 													</div>
 													<!--end::Message content-->
