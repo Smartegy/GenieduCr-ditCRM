@@ -37,7 +37,7 @@ class LeadsType extends AbstractType
             ->add('nom')
             ->add('telephone')
             ->add('courriel')
-            ->add('datecreation')
+    
             ->add('commantaire')
             ->add('numserie')
             ->add('budgetmonsuelle')
@@ -188,7 +188,7 @@ class LeadsType extends AbstractType
 
     private function getYears($min, $max='current')
     {
-         $years = range($min, ($max === 'current' ? date('Y') : $max));
+         $years = range($min, ($max === 'current' ? date('Y-M-D') : $max));
 
          return array_combine($years, $years);
     }

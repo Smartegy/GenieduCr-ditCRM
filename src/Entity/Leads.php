@@ -36,7 +36,7 @@ class Leads
     private $courriel;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $datecreation;
 
@@ -56,7 +56,7 @@ class Leads
     private $budgetmonsuelle;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $datenaissance;
 
@@ -241,9 +241,10 @@ class Leads
 
         if($this->datecreation == null){
             $this->datecreation = new DateTime('now');
+            $this->datecreationtable = new DateTime('now');
         }
         
-        $this->datemodification = new DateTime('now');
+        $this->datemodificationtable = new DateTime('now');
         $this->note = new ArrayCollection();
         $this->filesLeads = new ArrayCollection();
         $this->emails = new ArrayCollection();
@@ -341,17 +342,23 @@ class Leads
         return $this;
     }
 
-    public function getDatenaissance(): ?\DateTimeInterface
+    public function getDatenaissance(): ?int
     {
         return $this->datenaissance;
     }
 
-    public function setDatenaissance(?\DateTimeInterface $datenaissance): self
+    public function setDatenaissance(?int $datenaissance): self
     {
         $this->datenaissance = $datenaissance;
 
         return $this;
     }
+
+   
+
+
+
+
 
     public function getStatutprofessionnel(): ?string
     {
