@@ -32,6 +32,7 @@ class Leads
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+   
      */
     private $courriel;
 
@@ -208,22 +209,25 @@ class Leads
 
     
     /**
-      * @ORM\OneToMany(targetEntity=Notes::class, mappedBy="lead")
+      * @ORM\OneToMany(targetEntity=Notes::class,mappedBy="lead",cascade={"persist", "remove"})
+
      */
     private $note;
 
     /**
-     * @ORM\OneToMany(targetEntity=FilesLead::class, mappedBy="lead")
+     * @ORM\OneToMany(targetEntity=FilesLead::class,mappedBy="lead",cascade={"persist", "remove"})
+   
      */
     private $filesLeads;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Email::class, mappedBy="lead")
+     * @ORM\ManyToMany(targetEntity=Email::class, mappedBy="lead", cascade={"persist", "remove"})
      */
     private $emails;
 
     /**
-     * @ORM\OneToMany(targetEntity=Courriel::class, mappedBy="lead")
+     * @ORM\OneToMany(targetEntity=Courriel::class,mappedBy="lead",cascade={"persist", "remove"})
+
      */
     private $courriels;
 
