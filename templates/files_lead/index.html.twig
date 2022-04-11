@@ -29,9 +29,80 @@
 									<div class="card-body py-4">
 										<!--begin::Table-->
 			
-										
-											
 										<div class="card-body py-4 form-control form-control-sm form-control-solid ">
+												<div class=" overflow-auto pb-5">
+													<div class="d-flex align-items-center border border-dashed border-gray-0 rounded min-w-700px p-5">
+																{# <div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-700px p-5"> #}
+
+												{% for file in files %}
+											  
+															<div class=" col-3 d-flex flex-aligns-center pe-10 pe-lg-20">
+																<a href="#" class="text-gray-800 text-hover-primary d-flex flex-column">
+																	<!--begin::Image-->
+																	<div class="symbol symbol-60px mb-5">
+																		
+																			 <a download href="{{asset('/media/files/' ~ file.nom  )}}" >
+																			 <img alt="" class="w-30px me-3" src="/media/svg/files/pdf.svg">
+																			   {# <i class="fa fa-download"></i> #}
+																			   </a>
+				
+																	</div>
+																	<!--end::Image-->
+																	<!--begin::Title-->
+																	{# <div class="fs-5 fw-bolder mb-2">{{file.titre}}.</div> #}
+																	<!--end::Title-->
+																</a>
+																	
+																		<!--end::Icon-->
+																		<!--begin::Info-->
+																		<div class="ms-1 fw-bold">
+																	 
+																			
+																			<a download href="{{asset('/media/files/' ~ file.nom  )}}" class="fs-6 text-hover-primary fw-bolder"> {{file.titre}} </a>
+																		 
+																			<div class="text-gray-400">
+																			 <a download href="{{asset('/media/files/' ~ file.nom  )}}" >
+																			 
+																			   {# <i class="fa fa-download"></i> #}
+																			  	 {# <img alt="" class="w-30px me-3" src="/media/svg/files/download.gif"> #}
+																			   <!--begin::Svg Icon | path: assets/media/icons/duotune/files/fil021.svg-->
+                                                                              <span class="svg-icon svg-icon-3">
+																			  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                              <path opacity="0.5" d="M19 15C20.7 15 22 13.7 22 12C22 10.3 20.7 9 19 9C18.9 9 18.9 9 18.8 9C18.9 8.7 19 8.3 19 8C19 6.3 17.7 5 16 5C15.4 5 14.8 5.2 14.3 5.5C13.4 4 11.8 3 10 3C7.2 3 5 5.2 5 8C5 8.3 5 8.7 5.1 9H5C3.3 9 2 10.3 2 12C2 13.7 3.3 15 5 15H19Z" fill="black"/>
+                                                                              <path d="M13 17.4V12C13 11.4 12.6 11 12 11C11.4 11 11 11.4 11 12V17.4H13Z" fill="black"/>
+                                                                              <path opacity="0.5" d="M8 17.4H16L12.7 20.7C12.3 21.1 11.7 21.1 11.3 20.7L8 17.4Z" fill="black"/>
+                                                                              </svg></span>
+                                                                              <!--end::Svg Icon-->
+																			   
+																			   
+																			   </a>
+														                       <form  method="POST" style="display:inline-block"  id="myform" action="{{path('files_lead_delete', {'id' : file.id , 'idlead' :question_id}) }}" onsubmit="returne">
+																                   <input type="hidden" name="_method" value="delete">
+																                    <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ file.id)}}">
+														                            <a href="{{path('files_lead_delete', {'id' : file.id , 'idlead' :question_id}) }}" class="confirmModalLink btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">	
+																					<span class="svg-icon svg-icon-3">
+															                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															                 	         <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black" />
+															                	        <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black" />
+															                	        <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black" />
+															                             </svg>
+														                                 </span>
+														                            </a>
+										                                     	</form>
+																			</div>
+																		 
+																		</div>
+																		<!--begin::Info-->
+															</div>
+																	<!--end::Item-->
+												{% endfor %}
+													{# </div> #}
+																	<!--end::Item-->
+													</div> 	</div>
+											</div>
+								
+											
+										{# <div class="card-body py-4 form-control form-control-sm form-control-solid ">
 											
 												{% for file in files %}
 											 
@@ -66,33 +137,27 @@
 
 																<input type="hidden" name="_method" value="delete">
 																<input type="hidden" name="_token" value="{{csrf_token('SUP' ~ file.id)}}">
-														   <a href="{{path('files_lead_delete', {'id' : file.id , 'idlead' :question_id}) }}" class="confirmModalLink btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">	<span class="svg-icon svg-icon-3">
-															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black" />
-																<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black" />
-																<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black" />
-															</svg>
-														</span>
-														   </a>
-											</form>
-															<!--end::Card body-->
+														         <a href="{{path('files_lead_delete', {'id' : file.id , 'idlead' :question_id}) }}" class="confirmModalLink btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+																<span class="svg-icon svg-icon-3">
+															      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															    	<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black" />
+																    <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black" />
+																    <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black" />
+															      </svg>
+														       </span>
+														        </a>
+											                </form>
+													 
 														</div>
 												
 													</div>
-													<!--end::Card-->
-												
-									
-													<!--begin::Card-->
-													
-													<!--end::Card-->
-											
-												<!--end::Col-->
-											</div>				
+											 
+											    </div>				
 																        
                                 
 												{% endfor %}
 											
-											</div>
+										</div> #}
 										<!--end::Table-->
 
                                         <br/> <br/>

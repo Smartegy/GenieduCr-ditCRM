@@ -17,7 +17,7 @@
 											<!--begin::Aside content-->
 											<div class="card-body">
 												<!--begin::Button-->
-												<a href="{{path("new_modele")}}" class="btn btn-primary text-uppercase w-100 mb-10">New Message</a>
+												<a href="{{path("new_modele")}}" class="btn btn-primary text-uppercase w-100 mb-10">Nouveau  </a>
 												<!--end::Button-->
 												<!--begin::Menu-->
 												<div class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
@@ -383,15 +383,34 @@
 															 
 															 
 															<!--begin::Author-->
-															<td class="w-150px w-md-175px">
+															<td class="w-350px w-md-300px">
 																<a href="../../demo1/dist/apps/inbox/reply.html" class="d-flex align-items-center text-dark">
 																	<!--begin::Avatar-->
-																	{# <div class="symbol symbol-35px me-3">
+																	{% if e.id is divisible by(3) %}
+  	                                                                 	<div class="symbol symbol-35px me-7 ">
 																		<div class="symbol-label bg-light-danger">
-																			{# <span class="text-danger">M</span> 
+																			<span class="text-danger">{{e.id}}</span> 
 																		</div>
-																	</div> #}
+																	</div>
+
+																	{%  elseif  e.id is divisible by(2) %}
+  	                                                                 	<div class="symbol symbol-35px me-7">
+																		<div class="symbol-label bg-light-primary">
+																			<span class="text-primary">{{e.id}}</span> 
+																		</div>
+																	</div>
+
+																	 {% else %}
+																		<div class="symbol symbol-35px me-7">
+																		<div class="symbol-label bg-light-warning">
+																			<span class="text-warning">{{e.id}}</span> 
+																		</div>
+																	</div>
 																	<!--end::Avatar-->
+                                                 
+                                                                     {% endif %}
+
+															
 																	<!--begin::Name-->
 																	<span class="fw-bold"> {{e.titre}} </span>
 																	<!--end::Name-->
@@ -410,14 +429,18 @@
 																	<!--end::Heading-->
 																</div>
 																<!--begin::Badges-->
-																{# <div class="badge badge-light-primary"> Envoyer par :{{e.lead.nom}}</div> #}
+																<div class="badge badge-light-primary"> Envoyer par :{{e.lead.nom}}</div>
 																{# <div class="badge badge-light-warning">task</div> #}
 																<!--end::Badges-->
 															</td>
+															
 															<!--end::Title-->
 															<!--begin::Date-->
-															<td class="w-100px text-end fs-7 pe-9">
-																<span class="fw-bold">8:30 PM</span>
+															<td class=" row w-150px text-end fs-7 pe-9">
+															<div>	<span class="fw-bold">{{e.datecreationtable|date('H:i')}} </span> </div>
+															<div>	<span class="fw-bold">{{e.datecreationtable|date('d M ' )}} </span> </div>
+															{# <div>	<span class="fw-bold">{{e.datecreationtable|format_datetime('d M', 'short', locale='fr')}} </span> </div> #}
+														  {# <div>	<span class="fw-bold">{{ e.datecreationtable|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }} </span> </div>   #}
 															</td>
 															<!--end::Date-->
 														</tr>

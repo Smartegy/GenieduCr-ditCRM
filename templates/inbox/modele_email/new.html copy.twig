@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% set page_title = 'Nouveau Modele des emails' %}
+{% set page_title = 'Nouveau   email' %}
 {% set P_page_title = '' %}
 {% set P_path = '/email' %} 
 
@@ -10,7 +10,7 @@
 										<div class="card">
 											<div class="card-header align-items-center">
 												<div class="card-title">
-													<h2>Ecrire un nouveau modele</h2>
+													<h2>Ecrire un nouveau email</h2>
 												</div>
 											</div>
 											<div class="card-body p-0">
@@ -21,7 +21,7 @@
 														<!--begin::To-->
 														<div class="d-flex align-items-center border-bottom px-8 min-h-50px">
 															<!--begin::Label-->
-															<div class="text-dark fw-bolder w-75px">Titre:</div>
+															<div class="text-dark fw-bolder w-75px">To:</div>
 															<!--end::Label-->
 															<!--begin::Input-->
 															<input type="text" class="form-control border-0" name="compose_to" value="" data-kt-inbox-form="tagify" />
@@ -75,7 +75,38 @@
 
 														</div>
 														<!--end::Message-->
-												 
+														<!--begin::Attachments-->
+														<div class="dropzone dropzone-queue px-8 py-4" id="kt_inbox_reply_attachments" data-kt-inbox-form="dropzone">
+															<div class="dropzone-items">
+																<div class="dropzone-item" style="display:none">
+																	<!--begin::Dropzone filename-->
+																	<div class="dropzone-file">
+																		<div class="dropzone-filename" title="some_image_file_name.jpg">
+																			<span data-dz-name="">some_image_file_name.jpg</span>
+																			<strong>(
+																			<span data-dz-size="">340kb</span>)</strong>
+																		</div>
+																		<div class="dropzone-error" data-dz-errormessage=""></div>
+																	</div>
+																	<!--end::Dropzone filename-->
+																	<!--begin::Dropzone progress-->
+																	<div class="dropzone-progress">
+																		<div class="progress">
+																			<div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-dz-uploadprogress=""></div>
+																		</div>
+																	</div>
+																	<!--end::Dropzone progress-->
+																	<!--begin::Dropzone toolbar-->
+																	<div class="dropzone-toolbar">
+																		<span class="dropzone-delete" data-dz-remove="">
+																			<i class="bi bi-x fs-1"></i>
+																		</span>
+																	</div>
+																	<!--end::Dropzone toolbar-->
+																</div>
+															</div>
+														</div>
+														<!--end::Attachments-->
 													</div>
 													<!--end::Body-->
 													<!--begin::Footer-->
@@ -86,7 +117,7 @@
 															<div class="btn-group me-4">
 																<!--begin::Submit-->
 																<span class="btn btn-primary fs-bold px-6" data-kt-inbox-form="send">
-																	<span class="indicator-label">Enregistrer</span>
+																	<span class="indicator-label">Send</span>
 																	<span class="indicator-progress">Please wait...
 																	<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 																</span>
@@ -105,14 +136,14 @@
 																	<!--begin::Menu-->
 																	<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-150px py-4" data-kt-menu="true">
 																		<!--begin::Menu item-->
-																		{# <div class="menu-item px-3">
+																		<div class="menu-item px-3">
 																			<a href="#" class="menu-link px-3">Schedule send</a>
-																		</div> #}
+																		</div>
 																		<!--end::Menu item-->
 																		<!--begin::Menu item-->
-																		{# <div class="menu-item px-3">
+																		<div class="menu-item px-3">
 																			<a href="#" class="menu-link px-3">Save &amp; archive</a>
-																		</div> #}
+																		</div>
 																		<!--end::Menu item-->
 																		<!--begin::Menu item-->
 																		<div class="menu-item px-3">
@@ -126,7 +157,7 @@
 															</div>
 															<!--end::Send-->
 															<!--begin::Upload attachement-->
-															{# <span class="btn btn-icon btn-sm btn-clean btn-active-light-primary me-2" id="kt_inbox_reply_attachments_select" data-kt-inbox-form="dropzone_upload">
+															<span class="btn btn-icon btn-sm btn-clean btn-active-light-primary me-2" id="kt_inbox_reply_attachments_select" data-kt-inbox-form="dropzone_upload">
 																<!--begin::Svg Icon | path: icons/duotune/communication/com008.svg-->
 																<span class="svg-icon svg-icon-2 m-0">
 																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -135,9 +166,9 @@
 																	</svg>
 																</span>
 																<!--end::Svg Icon-->
-															</span> #}
+															</span>
 															<!--end::Upload attachement-->
-															{# <!--begin::Pin-->
+															<!--begin::Pin-->
 															<span class="btn btn-icon btn-sm btn-clean btn-active-light-primary">
 																<!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
 																<span class="svg-icon svg-icon-2 m-0">
@@ -147,12 +178,12 @@
 																	</svg>
 																</span>
 																<!--end::Svg Icon-->
-															</span> #}
+															</span>
 															<!--end::Pin-->
 														</div>
 														<!--end::Actions-->
 														<!--begin::Toolbar-->
-														{# <div class="d-flex align-items-center">
+														<div class="d-flex align-items-center">
 															<!--begin::More actions-->
 															<span class="btn btn-icon btn-sm btn-clean btn-active-light-primary me-2" data-toggle="tooltip" title="More actions">
 																<!--begin::Svg Icon | path: icons/duotune/coding/cod001.svg-->
@@ -178,7 +209,7 @@
 																<!--end::Svg Icon-->
 															</span>
 															<!--end::Dismiss reply-->
-														</div> #}
+														</div>
 														<!--end::Toolbar-->
 													</div>
 													<!--end::Footer-->
