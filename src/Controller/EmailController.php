@@ -132,8 +132,8 @@ class EmailController extends AbstractController
 
 
        $form->get('lead')->setData($onelead);  
-       $form->get('emailuser')->setData($userEmail);  
-       $form->get('mail')->setData($maillead);  
+       $form->get('emetteur')->setData($userEmail);  
+       $form->get('recepteur')->setData($maillead);  
       
 
    

@@ -20,7 +20,7 @@ class Courriel
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $mail;
+    private $recepteur;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -35,7 +35,7 @@ class Courriel
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $emailuser;
+    private $emetteur;
 
     /**
      * @ORM\ManyToOne(targetEntity=Leads::class, inversedBy="courriels")
@@ -52,17 +52,7 @@ class Courriel
         return $this->id;
     }
 
-    public function getMail(): ?string
-    {
-        return $this->mail;
-    }
-
-    public function setMail(?string $mail): self
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }
+  
 
     public function getSujet(): ?string
     {
@@ -88,17 +78,7 @@ class Courriel
         return $this;
     }
 
-    public function getEmailuser(): ?string
-    {
-        return $this->emailuser;
-    }
-
-    public function setEmailuser(?string $emailuser): self
-    {
-        $this->emailuser = $emailuser;
-
-        return $this;
-    }
+   
 
     public function getLead(): ?leads
     {
@@ -123,4 +103,47 @@ class Courriel
 
         return $this;
     }
+
+    /**
+     * Get the value of recepteur
+     */ 
+    public function getRecepteur()
+    {
+        return $this->recepteur;
+    }
+
+    /**
+     * Set the value of recepteur
+     *
+     * @return  self
+     */ 
+    public function setRecepteur($recepteur)
+    {
+        $this->recepteur = $recepteur;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of emetteur
+     */ 
+    public function getEmetteur()
+    {
+        return $this->emetteur;
+    }
+
+    /**
+     * Set the value of emetteur
+     *
+     * @return  self
+     */ 
+    public function setEmetteur($emetteur)
+    {
+        $this->emetteur = $emetteur;
+
+        return $this;
+    }
+
+
+    
 }

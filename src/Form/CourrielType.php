@@ -27,13 +27,13 @@ class CourrielType extends AbstractType
     {
         $builder  
      
-            ->add('mail', EmailType::class, [
+            ->add('recepteur', EmailType::class, [
                 'label' => 'mail lead',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
-            ->add('emailuser', EmailType::class, [
+            ->add('emetteur', EmailType::class, [
                 'label' => 'mail user',
                 'attr' => [
                     'class' => 'form-control'
