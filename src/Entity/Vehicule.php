@@ -486,13 +486,13 @@ class Vehicule
 
     /**
      * @ORM\OneToOne(targetEntity=Medias::class, inversedBy="vehicule", cascade={"persist", "remove"})
-     * * @ORM\JoinColumn(nullable=false)
+     * * @ORM\JoinColumn(nullable=true)
      */
     private $media;
 
     /**
      * @ORM\OneToMany(targetEntity=GalerieVehicule::class, mappedBy="vehicule", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $galerie;
 
@@ -510,6 +510,53 @@ class Vehicule
      * @ORM\OneToOne(targetEntity=Operations::class, mappedBy="vehicule", cascade={"persist", "remove"})
      */
     private $operations;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $trim;
+
+    
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $options_xl;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $special_mentions;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $in_service_date;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $external_url;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $photo;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $mainphoto;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $video_en;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $video_fr;
 
   
 
@@ -1707,6 +1754,126 @@ class Vehicule
         }
 
         $this->operations = $operations;
+
+        return $this;
+    }
+
+    public function getTrim(): ?string
+    {
+        return $this->trim;
+    }
+
+    public function setTrim(?string $trim): self
+    {
+        $this->trim = $trim;
+
+        return $this;
+    }
+
+    public function getWarranty(): ?string
+    {
+        return $this->warranty;
+    }
+
+    public function setWarranty(?string $warranty): self
+    {
+        $this->warranty = $warranty;
+
+        return $this;
+    }
+
+    public function getOptionsXl(): ?string
+    {
+        return $this->options_xl;
+    }
+
+    public function setOptionsXl(?string $options_xl): self
+    {
+        $this->options_xl = $options_xl;
+
+        return $this;
+    }
+
+    public function getSpecialMentions(): ?string
+    {
+        return $this->special_mentions;
+    }
+
+    public function setSpecialMentions(?string $special_mentions): self
+    {
+        $this->special_mentions = $special_mentions;
+
+        return $this;
+    }
+
+    public function getInServiceDate(): ?\DateTimeInterface
+    {
+        return $this->in_service_date;
+    }
+
+    public function setInServiceDate(?\DateTimeInterface $in_service_date): self
+    {
+        $this->in_service_date = $in_service_date;
+
+        return $this;
+    }
+
+    public function getExternalUrl(): ?string
+    {
+        return $this->external_url;
+    }
+
+    public function setExternalUrl(?string $external_url): self
+    {
+        $this->external_url = $external_url;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getMainPhoto(): ?string
+    {
+        return $this->mainphoto;
+    }
+
+    public function setMainPhoto(?string $mainphoto): self
+    {
+        $this->mainphoto = $mainphoto;
+
+        return $this;
+    }
+
+    public function getVideoEn(): ?string
+    {
+        return $this->video_en;
+    }
+
+    public function setVideoEn(string $video_en): self
+    {
+        $this->video_en = $video_en;
+
+        return $this;
+    }
+
+    public function getVideoFr(): ?string
+    {
+        return $this->video_fr;
+    }
+
+    public function setVideoFr(?string $video_fr): self
+    {
+        $this->video_fr = $video_fr;
 
         return $this;
     }

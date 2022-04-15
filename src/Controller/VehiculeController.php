@@ -71,21 +71,12 @@ class VehiculeController extends AbstractController
         
     }
 
-    #[Route('/filter', name: 'filter')]
-    public function index(VehiculeRepository $repository , ModeleRepository $MRepo , FabriquantRepository $Frep , StatusRepository $Rstatus)
-    {
-         $vehicule = $repository -> findAll();
-        
-        
-         return $this->render('vehicule/index.html.twig', [
-
-             'vehicule' => $vehicule 
-        ]);  
-    }
+ 
 
     #[Route('/vehicule', name: 'vehicule')]
     public function filter( ModeleRepository $MRep , VehiculeRepository $repository,FabriquantRepository $Frep,  StatusRepository $Rstatus , Request $request , UtilisateurRepository $Users)
     {
+
    
         $form = $this->createFormBuilder()
         ->add('Year',
@@ -166,8 +157,9 @@ class VehiculeController extends AbstractController
         $Modele =$form->get('Modele')->getData() ; 
         $Users =$form->get('Users')->getData();  
         $vehicules = $repository -> findAll();
+        $vehicule1 = $repository -> findOneById(1);
         $Inv =$form->get('Inv')->getData();           
-
+          //   dd($vehicule1->getMainPhoto()) ; die () ;
       
 
        $phe ='' ;
@@ -233,7 +225,7 @@ class VehiculeController extends AbstractController
             }
             else {$filterr = $repository -> findAll() ;}
         }
-
+//dd($filterr) ; die() ; 
      
         return $this->render('vehicule/index.html.twig', [
             'form' => $form->createView(),
@@ -392,6 +384,7 @@ class VehiculeController extends AbstractController
             else {$filterr = $repository -> findAll() ;}
         }
 
+        
         return $this->render('vehicule/index_liquidation.html.twig', [
             
          
