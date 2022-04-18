@@ -248,17 +248,30 @@
 																	
 																	
 																		<div class="d-flex justify-content-start flex-column">
-																			
-																		   
+																			 {% if vehicule.media %}
 																			<h3></h3><a href="#" class="text-dark fw-bolder text-hover-primary fs-6"><img src="{{asset(vehicule.media.lien)}}" alt={{vehicule.media.nom}} width="100"/></a></div>	
+																			{% else %}
+                                                                            <h3></h3><a href="#" class="text-dark fw-bolder text-hover-primary fs-6">
+																			  <img src="{{vehicule.mainphoto}}" alt="" width="100"/></a>  
+																			</div>	
+
+																				
+																			
+																			{% endif %}
+																		   
+ 																	
 																		</div>
+																	
+																	
+																	
 																	</div>
 																</td>
 																<td class="col mb-4">
 																<b>{{vehicule.annee}}.{{vehicule.marque.nom}}.{{vehicule.modele.nom}}.{{vehicule.Couleurexterieur}}</b><br/>
-																{{vehicule.carproof}}<br/>
+																{# {{vehicule.carproof}}<br/> #}
 																{{vehicule.vin}}<br/>
 																{{vehicule.category.nom}}
+																<p class="text-muted"> {{vehicule.trim}} </p>
 															    </td>
 																<td>
 																{{vehicule.utilisateur.nom}}

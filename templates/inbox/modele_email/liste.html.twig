@@ -384,7 +384,7 @@
 															 
 															<!--begin::Author-->
 															<td class="w-350px w-md-300px">
-																<a href="{{path("view_email" , {'id' : e.id})}}" class="d-flex align-items-center text-dark">
+																<a href="{{path("view_modele" , {'id' : e.id})}}" class="d-flex align-items-center text-dark">
 																	<!--begin::Avatar-->
 																	{% if e.id is divisible by(3) %}
   	                                                                 	<div class="symbol symbol-35px me-7 ">
@@ -412,7 +412,7 @@
 
 															
 																	<!--begin::Name-->
-																	<span class="fw-bold" href="{{path("view_email" , {'id' : e.id})}}"> {{e.titre}} </span>
+																	<span class="fw-bold" href="{{path("view_modele" , {'id' : e.id})}}"> {{e.titre}} </span>
 																	<!--end::Name-->
 																</a>
 															</td>
@@ -421,7 +421,7 @@
 															<td>
 																<div class="text-dark mb-1">
 																	<!--begin::Heading-->
-																	<a href="{{path("view_email" , {'id' : e.id})}}" class="text-dark">
+																	<a href="{{path("view_modele" , {'id' : e.id})}}" class="text-dark">
 																		<span class="fw-bolder">{{e.sujetemail}}</span>
 																		<span class="fw-bolder d-none d-md-inine">-</span>
 																		<span class="d-none d-md-inine text-muted"> {{e.message}} </span>

@@ -74,6 +74,18 @@ class EmailController extends AbstractController
         ]);
     }
 
+    #[Route('/inbox/modele/view/{id}', name: 'view_modele' , methods: ['GET'])]
+    public function viewmodele(Modeleemail $Courriel): Response
+    {
+      //  $Listedesemails = $mailRepository->findAll() ; 
+
+       // dd($Listedesemails) ; die ; 
+        
+        return $this->render('inbox/modele_email/view.html.twig', [
+            'courriel' => $Courriel,
+        ]);
+    }
+
     #[Route('/inbox/modele/new', name: 'new_modele')]
     public function new(ModeleemailRepository $mailRepository): Response
     {
