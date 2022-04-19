@@ -168,7 +168,13 @@ class VehiculeType extends AbstractType
            
             ->add('garentie', TextareaType::class, [
                 'attr' => ['class' => 'tinymce'],
-            ])
+            ])  
+
+            ->add('specialmentions', TextareaType::class, [
+                'attr' => ['class' => 'tinymce  text-editor large-2 columns'],
+            ])  
+            
+         
             ->add('carproof')
            
            
@@ -252,11 +258,11 @@ class VehiculeType extends AbstractType
            
         
             
-            ->add('conditions',EntityType::class,array(
+           /* ->add('conditions',EntityType::class,array(
                 'class' => Condition::class,
                 'choice_label' => 'nom',
   
-            ))
+            ))*/
 
            
            

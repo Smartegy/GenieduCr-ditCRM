@@ -92,7 +92,12 @@ class MarchandController extends AbstractController
             //Pour chaque fab on recupere l'id et le liens du logo
             //Puis on l'enregistre dans le tableau
             //L'id ce met en KEY et le lien en VALUE
-            $lienLogo[$fab->getId()] = $fab->getMedia()->getLien();
+            if($fab->getMedia())
+           { $lienLogo[$fab->getId()] = $fab->getMedia()->getLien();}
+           else 
+           { 
+              $lienLogo[$fab->getId()] = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" ;
+            }
         }
         $form = $this->createForm(EditMarchandType::class, $marchand)->remove("password");
 
@@ -135,7 +140,7 @@ class MarchandController extends AbstractController
            
             $type = $repository->gettype('photo');
            
-            $media->setType($type);
+           // $media->setType($type);
 
            $this->om->persist($marchand);
             $om->flush();
@@ -171,7 +176,12 @@ class MarchandController extends AbstractController
             //Pour chaque fab on recupere l'id et le liens du logo
             //Puis on l'enregistre dans le tableau
             //L'id ce met en KEY et le lien en VALUE
-            $lienLogo[$fab->getId()] = $fab->getMedia()->getLien();
+            if($fab->getMedia())
+            { $lienLogo[$fab->getId()] = $fab->getMedia()->getLien();}
+            else 
+            { 
+               $lienLogo[$fab->getId()] = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" ;
+             }
         }
         $form = $this->createForm(MarchandType::class, $marchand);
         //On recupere le concessmarchand
@@ -221,7 +231,7 @@ class MarchandController extends AbstractController
 
             $type = $repository->gettype('photo');
 
-            $media->setType($type);
+            //$media->setType($type);
 
             $this->om->persist($marchand);
             $om->flush();

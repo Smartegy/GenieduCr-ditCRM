@@ -144,7 +144,7 @@
 																		<!--end::Svg Icon-->
 																	</a>
 																	
-																	<form  method="POST" style="display:inline-block" id="myform" action="{{path('delete_agent', {'id' : agent.id})}}" onsubmit="return">
+																	<form  method="POST" style="display:inline-block" id="myform" action="{{path('deleteagent', {'id' : agent.id})}}" onsubmit="return">
 																		
 																		<input type="hidden" name="_method" value="delete">
 																		<input type="hidden" name="_token" value="{{csrf_token('SUP' ~ agent.id)}}">
