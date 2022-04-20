@@ -47,4 +47,18 @@ class ModeleemailRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+       
+    public function findOneById($value): ?Modeleemail
+    {
+        return $this->createQueryBuilder('Modeleemail')
+            ->andWhere('Modeleemail.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    
 }
