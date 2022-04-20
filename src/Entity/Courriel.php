@@ -46,7 +46,7 @@ class Courriel
     /**
      * @ORM\ManyToOne(targetEntity=Modeleemail::class, inversedBy="courriels")
      */
-    private $modele;
+    public $modele;
       /**
      * @ORM\Column(type="datetime")
      */
