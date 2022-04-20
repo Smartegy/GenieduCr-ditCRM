@@ -556,6 +556,11 @@ class Vehicule
      */
     private $specialmentions;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Options::class, mappedBy="vehicule")
+     */
+    private $options;
+
   
 
     
@@ -1630,6 +1635,7 @@ class Vehicule
         
         $this->datemodification = new DateTime('now');
         $this->galerie = new ArrayCollection();
+        $this->options = new ArrayCollection();
        
         
     }
@@ -1864,6 +1870,33 @@ class Vehicule
     public function setSpecialmentions(?string $specialmentions): self
     {
         $this->specialmentions = $specialmentions;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Options[]
+     */
+    public function getOptions(): Collection
+    {
+        return $this->options;
+    }
+
+    public function addOption(Options $option): self
+    {
+        if (!$this->options->contains($option)) {
+            $this->options[] = $option;
+            $option->addVehicule($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOption(Options $option): self
+    {
+        if ($this->options->removeElement($option)) {
+            $option->removeVehicule($this);
+        }
 
         return $this;
     }
