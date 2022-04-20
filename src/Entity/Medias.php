@@ -32,11 +32,7 @@ class Medias
      */
     private $lien;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Typemedia::class, inversedBy="medias")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $type;
+ 
 
 
      /**
@@ -84,17 +80,7 @@ class Medias
         return $this;
     }
 
-    public function getType(): ?Typemedia
-    {
-        return $this->type;
-    }
-
-    public function setType(?Typemedia $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
+ 
 
     public function setImageFile(UploadedFile $media):void
     {

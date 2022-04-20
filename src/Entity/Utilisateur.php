@@ -60,14 +60,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
      
     private $nomutilisateur;
-       /**
-     * @ORM\Column(type="datetime")
-     */
-    private $datecreation;
-        /**
-     * @ORM\Column(type="datetime")
-     */
-    private $datemodification;
+
 
 
     /**
@@ -101,6 +94,36 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToOne(targetEntity=Concessionnairemarchand::class, mappedBy="Utilisateur", cascade={"persist", "remove"})
      */
     private $concessionnairemarchand;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $addresse;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ville;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $region;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $postal;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $datecreation;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $datemodification;
 
     // /**
     // * @ORM\ManyToOne(targetEntity=Vehicule::class, inversedBy="utilisateur")
@@ -156,17 +179,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    public function getDatecreation(): ?\DateTimeInterface
-    {
-        return $this->datecreation;
-    }
-
-    public function setDatecreation(\DateTimeInterface $datecreation): self
-    {
-        $this->datecreation = $datecreation;
-
-        return $this;
-    }
+ 
     public function getDatemodification(): ?\DateTimeInterface
     {
         return $this->datemodification;
@@ -340,5 +353,65 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     //     return $this;
     // }
+
+    public function getAddresse(): ?string
+    {
+        return $this->addresse;
+    }
+
+    public function setAddresse(?string $addresse): self
+    {
+        $this->addresse = $addresse;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getRegion(): ?string
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?string $region): self
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    public function getPostal(): ?string
+    {
+        return $this->postal;
+    }
+
+    public function setPostal(?string $postal): self
+    {
+        $this->postal = $postal;
+
+        return $this;
+    }
+
+    public function getDatecreation(): ?\DateTimeInterface
+    {
+        return $this->datecreation;
+    }
+
+    public function setDatecreation(\DateTimeInterface $datecreation): self
+    {
+        $this->datecreation = $datecreation;
+
+        return $this;
+    }
 
 }

@@ -421,11 +421,7 @@ class Vehicule
      */
     private $toitouvrant;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Condition::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $conditions;
+  
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -433,7 +429,7 @@ class Vehicule
     private $disponiblefinance;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text", length=1255)
      */
     private $financement;
 
@@ -521,12 +517,9 @@ class Vehicule
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $options_xl;
+    private $optionsxl;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $special_mentions;
+   
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -557,6 +550,11 @@ class Vehicule
      * @ORM\Column(type="text", nullable=true)
      */
     private $video_fr;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $specialmentions;
 
   
 
@@ -1511,17 +1509,7 @@ class Vehicule
         return $this;
     }
 
-    public function getConditions(): ?Condition
-    {
-        return $this->conditions;
-    }
-
-    public function setConditions(?Condition $conditions): self
-    {
-        $this->conditions = $conditions;
-
-        return $this;
-    }
+  
 
     public function getDisponiblefinance(): ?bool
     {
@@ -1784,27 +1772,17 @@ class Vehicule
 
     public function getOptionsXl(): ?string
     {
-        return $this->options_xl;
+        return $this->optionsxl;
     }
 
-    public function setOptionsXl(?string $options_xl): self
+    public function setOptionsXl(?string $optionsxl): self
     {
-        $this->options_xl = $options_xl;
+        $this->optionsxl = $optionsxl;
 
         return $this;
     }
 
-    public function getSpecialMentions(): ?string
-    {
-        return $this->special_mentions;
-    }
-
-    public function setSpecialMentions(?string $special_mentions): self
-    {
-        $this->special_mentions = $special_mentions;
-
-        return $this;
-    }
+ 
 
     public function getInServiceDate(): ?\DateTimeInterface
     {
@@ -1874,6 +1852,18 @@ class Vehicule
     public function setVideoFr(?string $video_fr): self
     {
         $this->video_fr = $video_fr;
+
+        return $this;
+    }
+
+    public function getSpecialmentions(): ?string
+    {
+        return $this->specialmentions;
+    }
+
+    public function setSpecialmentions(?string $specialmentions): self
+    {
+        $this->specialmentions = $specialmentions;
 
         return $this;
     }
