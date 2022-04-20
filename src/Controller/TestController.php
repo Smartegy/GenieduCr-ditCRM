@@ -23,7 +23,11 @@ use App\Entity\Utilisateur;
 use App\Repository\UtilisateurRepository;
 use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+* @IsGranted("IS_AUTHENTICATED_FULLY")
+*/
 
 
 class TestController extends AbstractController

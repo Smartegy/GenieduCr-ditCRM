@@ -48,6 +48,11 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Mime\Email;
 use App\Service\SendMailService;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+* @IsGranted("IS_AUTHENTICATED_FULLY")
+*/
 class EmailController extends AbstractController
 {
     #[Route('/inbox/email', name: 'email')]

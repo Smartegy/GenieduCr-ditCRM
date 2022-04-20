@@ -17,6 +17,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+* @IsGranted("IS_AUTHENTICATED_FULLY")
+*/
 class FabriquantController extends AbstractController
 {
 

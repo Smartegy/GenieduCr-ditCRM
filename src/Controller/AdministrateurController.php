@@ -29,9 +29,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-
+/**
+* @IsGranted("IS_AUTHENTICATED_FULLY")
+*/
 class AdministrateurController extends AbstractController  
 {
+    
     public function __construct(AdministrateurRepository $administrateurRepository,
 
     )
@@ -40,8 +43,11 @@ class AdministrateurController extends AbstractController
 
     }
 
+ 
+        
+     
 
-    #[Route('/administrateur', name: 'administrateur')]
+    #[ Route('/administrateur', name: 'administrateur')] 
     public function index(AdministrateurRepository $repository): Response
     {
         $administrateurs = $repository -> findAll();

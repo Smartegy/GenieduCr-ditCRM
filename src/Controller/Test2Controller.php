@@ -22,7 +22,11 @@ use App\Form\TestType;
 use App\Entity\Status;
 use App\Entity\Utilisateur;
 use App\Repository\UtilisateurRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+* @IsGranted("IS_AUTHENTICATED_FULLY")
+*/
 class Test2Controller extends AbstractController
 {
     #[Route('/test2', name: 'test2')]

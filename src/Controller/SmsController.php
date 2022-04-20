@@ -47,7 +47,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Mime\Email;
 use App\Service\SendMailService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+* @IsGranted("IS_AUTHENTICATED_FULLY")
+*/
 class SmsController extends AbstractController
 {
     #[Route('/chat/messages', name: 'chat')]

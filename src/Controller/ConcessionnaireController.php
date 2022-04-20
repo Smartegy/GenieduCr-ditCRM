@@ -28,7 +28,13 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+
+
+/**
+* @IsGranted("IS_AUTHENTICATED_FULLY")
+*/
 class ConcessionnaireController extends AbstractController
 {
     private MediasRepository $MR;

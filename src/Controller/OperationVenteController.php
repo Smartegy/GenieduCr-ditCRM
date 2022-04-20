@@ -11,6 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+* @IsGranted("IS_AUTHENTICATED_FULLY")
+*/
 #[Route('/operation/vente')]
 class OperationVenteController extends AbstractController
 {

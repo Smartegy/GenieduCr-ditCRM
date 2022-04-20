@@ -23,7 +23,11 @@ use App\Entity\Status;
 use App\Entity\Utilisateur;
 use App\Repository\UtilisateurRepository;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+* @IsGranted("IS_AUTHENTICATED_FULLY")
+*/
 class Test3Controller extends AbstractController
 {
     #[Route('/test3', name: 'test3')]

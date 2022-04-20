@@ -32,6 +32,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UtilisateurRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 use App\Entity\Fabriquant;
@@ -46,6 +47,9 @@ use App\Entity\Utilisateur;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+* @IsGranted("IS_AUTHENTICATED_FULLY")
+*/
 
 
 class VehiculeController extends AbstractController
