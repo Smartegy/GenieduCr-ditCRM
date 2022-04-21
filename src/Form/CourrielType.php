@@ -54,7 +54,14 @@ class CourrielType extends AbstractType
                 'choice_label' => 'titre',
                 'required' => true,
                 'multiple' => false , 
+                'placeholder' => 'choisir un modele',
                 ))
+              
+    
+               
+              
+
+
 
  
    
