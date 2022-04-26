@@ -47,4 +47,49 @@ class CourrielRepository extends ServiceEntityRepository
         ;
     }
     */
+  
+
+
+    public function findBycourriel($value)
+    {
+        return $this->createQueryBuilder('courriel')
+            ->andWhere('courriel.emetteur = :val')
+            ->andWhere('courriel.recepteur = :value')
+            //->setParameters(['val'=> $value,'value'=> $valuee])
+            ->setParameter('val', $value)
+            ->setParameter('value', $value)
+            //->orderBy('courriel.datecreation', 'DESC')
+            ->getQuery()
+            ->getResult()
+    
+        ;
+    }
+
+
+
+   /* public function findByEmetteur($value)
+    {
+        return $this->createQueryBuilder('courriel')
+            ->andWhere('courriel.recepteur = :value')
+            ->setParameter('value', $value)
+         
+            ->getQuery()
+            ->getResult()
+    
+        ;
+    }
+    public function findByRecepteur($value)
+    {
+        return $this->createQueryBuilder('courriel')
+            ->andWhere('courriel.emetteur = :val')
+            ->setParameter('val', $value)
+         
+            ->getQuery()
+            ->getResult()
+    
+        ;
+    }
+*/
+
+
 }

@@ -99,5 +99,13 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
         ;
     }
    
-    
+    public function findIdByCourriel($value): ?Utilisateur
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.courriel = :val')
+            ->setParameter('val', $value)
+            ->getQuery('id')
+            ->getOneOrNullResult()
+        ;
+    }
 }

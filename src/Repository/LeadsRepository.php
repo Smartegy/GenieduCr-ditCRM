@@ -58,6 +58,15 @@ class LeadsRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+    public function findOneByCourriel($value): ?Leads
+    {
+        return $this->createQueryBuilder('lead')
+            ->andWhere('lead.courriel = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    } 
  
 
 

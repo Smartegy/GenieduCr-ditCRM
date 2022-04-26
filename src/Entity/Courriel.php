@@ -56,12 +56,12 @@ class Courriel
       /**
      * @ORM\Column(type="datetime")
      */
-    private $datecreation;
+    public $datecreation;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $datemodification;
+    public $datemodification;
 
 
     public function __construct()
