@@ -161,7 +161,8 @@ class EmailController extends AbstractController
 
                     }
 
-                    if( in_array($var2, $userr)){
+                   
+                    if (( in_array($var2, $userr)) && (!in_array($var2, $tabmailing))){
 
                       // dd('sucess');die;
                         
