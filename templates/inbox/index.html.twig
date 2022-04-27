@@ -26,7 +26,7 @@
                             <div class="d-flex flex-column">
                                 <!--begin::Name-->
                                 <div class="d-flex align-items-center mb-2">
-                                    <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{lead.nom}}</a>
+                                    <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1" >{{lead.nom}}</a>
                    
 
                                 </div>
@@ -42,11 +42,12 @@
                                             </svg>
                                         </span>
                                         <!--end::Svg Icon-->{{lead.Statusleads.nom}}</a>
+                                   
 
                                 </div>
                                 <div class="d-flex flex-wrap fw-bold fs-6 mb-4 pe-2">
 
-                                    <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
+                                    <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2" id="uniqlead">
                                         <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
                                         <span class="svg-icon svg-icon-4 me-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -74,6 +75,7 @@
                     <!--begin::Nav item-->
                     <li class="nav-item mt-2">
                         <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="{{path("leads_show",{ 'id' : lead.Id})}}">Aperçu</a>
+                        
                     </li>
                     <!--end::Nav item-->
                     <!--begin::Nav item-->
@@ -149,9 +151,38 @@
                                 <!--begin::Author-->
                                 <div class="d-flex align-items-center">
                                     <!--begin::Avatar-->
+                                   
+                                    {% if e.emetteur == lead.courriel %}
+
+                                 
+                                    
                                     <div class="symbol symbol-50 me-4">
-                                        <span class="symbol-label" style="background-image:url(assets/media/avatars/150-1.jpg);"></span>
+                                        <div class="symbol-label bg-light-danger">
+                                            <span class="text-danger">{{lead.nom|slice(0)[:1]}}</span>
+                                        </div>
                                     </div>
+                                
+                               
+                            {% else  %}
+                           
+                                {% for userr in user %}
+                                   {% if e.emetteur == userr.courriel %}
+                                 
+                                   <div class="symbol symbol-50 me-4">
+                                    <div class="symbol-label bg-light-primary">
+                                        <span class="text-primary">{{userr.nomutilisateur|slice(0)[:1]}}</span>
+                                    </div>
+                                </div>
+                                
+                                   {% endif %}
+                                <!--end::Name-->
+                                {% endfor %}
+                            {% endif %}
+
+
+
+
+
                                     <!--end::Avatar-->
                                     <div class="pe-5">
                                         <!--begin::Author details-->
@@ -293,7 +324,8 @@
                                        
                                         <!--begin::Reply-->
                                         {% if e.emetteur == lead.courriel %}
-                                        <a href="#" class="btn btn-sm btn-icon btn-clear btn-active-light-primary me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Répondre">
+                                        <a href="#haut"  class="btn btn-sm btn-icon btn-clear btn-active-light-primary me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Rédiger un courriel">
+                                        
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen055.svg-->
                                             <span class="svg-icon svg-icon-2 m-0">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -307,15 +339,9 @@
                                         {% endif %}
                                         <!--end::Reply-->
                                         <!--begin::Settings-->
-                                        <a href="#" class="btn btn-sm btn-icon btn-clear btn-active-light-primary" data-bs-toggle="tooltip" data-bs-placement="top" id="toaccordion" title="Settings">
+                                        <a href="#"  class="btn btn-sm btn-icon btn-clear btn-active-light-primary" data-bs-toggle="tooltip" data-bs-placement="top" id="toaccordion" title="Settings">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen053.svg-->
-                                            <span class="svg-icon svg-icon-2 m-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect x="10" y="10" width="4" height="4" rx="2" fill="black" />
-                                                    <rect x="10" y="3" width="4" height="4" rx="2" fill="black" />
-                                                    <rect x="10" y="17" width="4" height="4" rx="2" fill="black" />
-                                                </svg>
-                                            </span>
+                                           
                                             <!--end::Svg Icon-->
                                         </a>
                                         <!--end::Settings-->
@@ -326,20 +352,28 @@
                             <!--end::Message header-->
                             <!--begin::Message content-->
                             <div class="cache" >
-                               
-                                 
-                                        <p class="mb-0" class="paragraphe" > {{e.sujet}}</p>
-                                   
-                                    
-                                    
-                                    <p class="mb-0" class="paragraphe">{{e.text}}</p>
+                             
+                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                                    <span class="svg-icon svg-icon-2 m-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect x="10" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
+                                            <rect x="17" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
+                                            <rect x="3" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                            
+                             <p style="display:none" id="parag">
+                                {{e.sujet}}<br/><br/>
+                                {{e.text}}
+                             </p>
                                   
-                          
-                            </div>
+    
+                            </div> 
                             <!--end::Message content-->
-                        </div>
+                     
                            <div class="separator my-6"></div>
-                  {% endfor %}       
+                       {% endfor %}       
                         <!--end::Message accordion-->
                      
                         <!--begin::Message accordion-->
@@ -364,7 +398,9 @@
 								<!--begin::Card-->
 								<div class="card">
 									<!--begin::Card header-->
-									<h3 class="fw-bolder m-0"> Envoyer Courriel</h3>
+								
+                                    <a  name="haut"  class="fw-bolder m-0">Envoyer Courriel</a>
+                               
 									<!--end::Card header-->
 									<!--begin::Card body-->
 									<div class="card-body py-4">
@@ -513,7 +549,7 @@
 
 
  	{{ include('layout/pagination.html.twig') }}
-						<script>
+<script>
 							$("#kt_datatable_example_5").DataTable({
  "language": {
         "lengthMenu": "Afficher _MENU_",
@@ -605,86 +641,35 @@ $("#modele").on("change", function(e) {
 
 </script>
 
-
-<script>
-    texteaccordeon = document.getElementById('textecache');
-   
+<script  type="text/javascript">
     
-    var longueur = $('.repetition');
+ var  cache=  document.getElementsByClassName("cache");
+
+  var parag = document.getElementsByClassName("parag");
  
+  var i = 0;
+ for(i=0; i<cache.length; i++) {
+    cellule=cache[i];
+    cellule.addEventListener("click", function(event){
+            p=this.querySelector('#parag');
 
-    $("#toaccordion").on("click", function(e) {
-        e.preventDefault(); 
-   
-     //  var  cache = document.querySelector('.cache');
-     var  cache=  document.getElementsByClassName("cache");
-     var x = cache.length;
-     var i = 0;
-     for(i=0; i<cache.length; i++) {
-            var myp = cache[i];
+                        if (p.style.display === "none") {
+                                    p.style.display = "block";
+                            } else {
+                                p.style.display = "none";
+                            }
 
-         if (cache[i].style.display === "none") {
-            cache[i].style.display = "block";
-    } else {
-        cache[i].style.display = "none";
-    }
-            
-   
+
+    });
+
+
+  
      }
 
 
-
-
-        for(var i = 0;i<longueur.length;i++){
-            var longueu = longueur[i];
-           
-           
-            var para = longueu.getElementsByClassName( "cache" ).innerHTML;
-        
-        
-           
-            //data=$(longueu).find( "div.cache" );
-
-           //console.log(data);
-
-        //    $(".cache").toggle();
-           
-      
-                    }
-
-
-
-
-
-//console.log(longueur.length);
-
-
-
-
-
-/*if(texteaccordeon.style.display == "block")
-{
-    texteaccordeon.style.display = "none";
-    console.log("sucess");
-
-}
-
-
-if(texteaccordeon.style.display = "none")
-{
-    texteaccordeon.style.display = "block";
-
-}*/
-
-
-
-//console.log(texteaccordeon);  
-
-
-}); 
-
 </script>
 
-</script>
+
+
 {% endblock %} 
 
