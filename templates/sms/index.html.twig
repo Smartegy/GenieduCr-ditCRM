@@ -96,7 +96,7 @@
                         <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('email', {'idlead' : lead.id})}}">Courriel</a>
                     </li>
                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('sms', {'idlead' : lead.id})}}">SMS</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">SMS</a>
                     </li>
                     <!--end::Nav item-->
 
@@ -221,7 +221,7 @@
                                                             </div>
                                                                  <div class="ms-3">
                                                                     <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1">{{lead.nom}} </a>
-                                                                    <span class="text-muted fs-7 mb-1">{{e.datecreation ? e.datecreation|date('Y-m-d') : '' }}</span>
+                                                                    <span class="text-muted fs-7 mb-1">{{e.datecreation ? e.datecreation|date('Y-m-d-h-s') : '' }}</span>
                                                                    </div>
                                                                    <div class="p-5 rounded bg-light-info text-dark fw-bold mw-lg-400px text-start" data-kt-element="message-text">{{e.text}}</div>
                                                                 </div>
@@ -242,7 +242,7 @@
                                                                             <div class="d-flex align-items-center mb-2">
                                                                                 <!--begin::Details-->
                                                                                 <div class="me-3">
-                                                                                    <span class="text-muted fs-7 mb-1">{{e.datecreation ? e.datecreation|date('Y-m-d') : '' }}</span>
+                                                                                    <span class="text-muted fs-7 mb-1">{{e.datecreation ? e.datecreation|date('Y-m-d-h-s') : '' }}</span>
                                                                                     <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary ms-1">{{userr.nomutilisateur}}</a>
                                                                                 </div>
                                                                                 <!--end::Details-->
@@ -384,10 +384,10 @@ $("#modele").on("change", function(e) {
      var a=(this.value);         
      var contexts = $('.credsEarned');
       clickvalue=this.value;
+      console.log(this.value);
      for(var i = 0;i<contexts.length;i++){
             var context = contexts[i];
             myid= $(context).find( ".js-user-rating" ).html();
-            mysujet= $(context).find( "div.sujet-rating" ).html();
             mymessage= $(context).find( "div.message-rating" ).html();
 
                         if( clickvalue == myid )  
@@ -396,9 +396,17 @@ $("#modele").on("change", function(e) {
         
                         }
 
-                        else{ }
+                        else
+                        {  }
                     }
-  });  
+                    if (clickvalue == "" )
+                    {
+                        document.getElementById('text').value = " ";
+                       
+                    }
+  }); 
+
+
 
 </script>
 

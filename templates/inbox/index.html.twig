@@ -93,7 +93,7 @@
                     </li>
 
                       <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('email', {'idlead' : lead.id})}}">Courriel</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">Courriel</a>
                     </li>
                     <!--end::Nav item-->
 
@@ -633,6 +633,12 @@ $("#modele").on("change", function(e) {
                         
                         
                         else{ }
+                    }
+                    if (clickvalue == "" )
+                    {
+                        document.getElementById('sujet').value = " ";
+                        CKEDITOR.instances["text"].insertHtml(" ");
+                       
                     }
        
           });  
