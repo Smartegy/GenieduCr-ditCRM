@@ -67,7 +67,7 @@ class CourrielRepository extends ServiceEntityRepository
 
 
 
-   /* public function findByEmetteur($value)
+   public function findByEmetteur($value)
     {
         return $this->createQueryBuilder('courriel')
             ->andWhere('courriel.recepteur = :value')
@@ -89,7 +89,7 @@ class CourrielRepository extends ServiceEntityRepository
     
         ;
     }
-*/
+
 
 
 }

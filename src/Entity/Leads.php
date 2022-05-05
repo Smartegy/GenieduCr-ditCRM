@@ -227,9 +227,15 @@ class Leads
 
     /**
      * @ORM\OneToMany(targetEntity=Courriel::class,mappedBy="lead",cascade={"persist", "remove"})
-
+     
      */
+    
     private $courriels;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Sms::class, mappedBy="lead")
+     */
+    private $sms;
 
 
 
@@ -253,6 +259,7 @@ class Leads
         $this->filesLeads = new ArrayCollection();
         $this->emails = new ArrayCollection();
         $this->courriels = new ArrayCollection();
+        $this->sms = new ArrayCollection();
   
     
     }
@@ -786,6 +793,36 @@ class Leads
             // set the owning side to null (unless already changed)
             if ($courriel->getLead() === $this) {
                 $courriel->setLead(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sms[]
+     */
+    public function getSms(): Collection
+    {
+        return $this->sms;
+    }
+
+    public function addSms(Sms $sms): self
+    {
+        if (!$this->sms->contains($sms)) {
+            $this->sms[] = $sms;
+            $sms->setLead($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSms(Sms $sms): self
+    {
+        if ($this->sms->removeElement($sms)) {
+            // set the owning side to null (unless already changed)
+            if ($sms->getLead() === $this) {
+                $sms->setLead(null);
             }
         }
 

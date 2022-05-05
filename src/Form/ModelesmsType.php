@@ -15,7 +15,7 @@ class ModelesmsType extends AbstractType
     {
         $builder
             ->add('titre')
-            ->add('sujetsms')
+   
             ->add('message', TextareaType::class, [
                 'attr' => ['class' => 'tinymce'],
             ])

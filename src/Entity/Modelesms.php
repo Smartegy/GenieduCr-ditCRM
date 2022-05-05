@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ModelesmsRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,17 +23,14 @@ class Modelesms
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $titre;
+    public $titre;
+
+
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $sujetsms;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $message;
+    public $message;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -48,6 +47,11 @@ class Modelesms
      */
     private $datemodificationtable;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Sms::class, mappedBy="modele")
+     */
+    private $sms;
+
 
     public function __construct()
     {
@@ -59,6 +63,7 @@ class Modelesms
             }
         
             $this->datemodificationtable = new DateTime('now');
+            $this->datecreation = new ArrayCollection();
    
     }
 
@@ -79,17 +84,7 @@ class Modelesms
         return $this;
     }
 
-    public function getSujetsms(): ?string
-    {
-        return $this->sujetsms;
-    }
-
-    public function setSujetsms(string $sujetsms): self
-    {
-        $this->sujetsms = $sujetsms;
-
-        return $this;
-    }
+ 
 
     public function getMessage(): ?string
     {
@@ -135,6 +130,36 @@ class Modelesms
     public function setDatemodificationtable(\DateTimeInterface $datemodificationtable): self
     {
         $this->datemodificationtable = $datemodificationtable;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sms[]
+     */
+    public function getSms(): Collection
+    {
+        return $this->sms;
+    }
+
+    public function addSms(Sms $sms): self
+    {
+        if (!$this->sms->contains($sms)) {
+            $this->sms[] = $sms;
+            $sms->setModele($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDatecreation(Sms $datecreation): self
+    {
+        if ($this->datecreation->removeElement($datecreation)) {
+            // set the owning side to null (unless already changed)
+            if ($datecreation->getModele() === $this) {
+                $datecreation->setModele(null);
+            }
+        }
 
         return $this;
     }

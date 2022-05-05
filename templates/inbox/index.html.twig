@@ -160,7 +160,7 @@
                                         <div class="symbol-label bg-light-danger">
                                             <span class="text-danger">{{lead.nom|slice(0)[:1]}}</span>
                                         </div>
-                                    </div>
+                                </div>
                                 
                                
                             {% else  %}
@@ -197,7 +197,13 @@
                                     
                                          {% for userr in user %}
                                             {% if e.emetteur == userr.courriel %}
-                                            <a href="#" class="fw-bolder text-dark text-hover-primary">{{userr.nomutilisateur}}</a>
+                                        
+                                            {% if  userr.nomutilisateur == app.user.nomutilisateur %}
+                                                        <span class="fw-bolder text-dark text-hover-primary">De Vous</span>
+                                                        {% else %}
+
+                                                        <span class="fw-bolder text-dark text-hover-primary">{{userr.nomutilisateur}}</span>
+                                             {% endif %}
                                          
                                             {% endif %}
                                          <!--end::Name-->
@@ -220,20 +226,27 @@
                                         
 
                                             
-                                            {% if e.recepteur == lead.courriel %}
+                                        {% if e.recepteur == lead.courriel %}
 
                                             <span class="text-muted fw-bold">Envoyer à  {{lead.nom}}</span>
+
                                          
                                         
-                                     {% else  %}
+                                         {% else  %}
                                     
-                                         {% for userr in user %}
-                                            {% if e.recepteur == userr.courriel %}
-                                                 <span class="text-muted fw-bold">to   {{userr.nomutilisateur}}</span>
-                                         
-                                            {% endif %}
-                                         <!--end::Name-->
-                                         {% endfor %}
+                                                {% for userr in user %}
+                                                    {% if e.recepteur == userr.courriel %}
+                                                    
+                                                        {% if  userr.nomutilisateur == app.user.nomutilisateur %}
+                                                        <span class="text-muted fw-bold">Envoyer à Vous</span>
+                                                        {% else %}
+
+                                                        <span class="text-muted fw-bold">Envoyer à {{userr.nomutilisateur}}</span>
+                                                        {% endif %}
+
+                                                    {% endif %}
+                                                <!--end::Name-->
+                                                {% endfor %}
                                      {% endif %}
 
                                         
@@ -271,15 +284,23 @@
                                                    
                                                         {% for userr in user %}
                                                            {% if e.emetteur == userr.courriel %}
-                                                           <td>{{userr.nomutilisateur}}</td>
+                                                         
+
+                                                           {% if  userr.nomutilisateur == app.user.nomutilisateur %}
+                                                       <td>  Vous</td>
+                                                        {% else %}
+
+                                                        <span class="text-muted fw-bold">Envoyer à {{userr.nomutilisateur}}</span>
+                                                        {% endif %}
+
                                                         
                                                            {% endif %}
                                                         <!--end::Name-->
                                                         {% endfor %}
                                                     {% endif %}
                                                         
-
-
+                                                         
+                                                        
 
                                                         </tr>
                                                         <!--end::From-->
@@ -298,7 +319,7 @@
                                                         <!--begin::Reply-to-->
                                                         <tr>
                                                             <td class="text-muted">Réponse à</td>
-                                                            <td>{{e.emetteur}}</td>
+                                                            <td>{{e.recepteur}}</td>
                                                         </tr>
                                                         <!--end::Reply-to-->
                                                     </tbody>
@@ -442,7 +463,7 @@
                                            {% endfor %}
 
                                         </div>
-										<div class="row mb-6" >
+										<div class="row mb-6" style="display:none;" >
 							
                                             {{ form_label(form.recepteur, "Récepteur :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}  
                                                                                        , 'attr':{'disabled':'disabled'}}
@@ -454,7 +475,7 @@
                 
                                         </div>
                                         </div>
-										<div class="row mb-6" >
+										<div class="row mb-6"  style="display:none;">
 							
                                             {{ form_label(form.emetteur, "Emetteur :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
                                             
@@ -487,61 +508,35 @@
                                         </div>
                                     
 
-                                        
-                                 
-                                   {# {{ form_widget(form.sujet) }}
-
-                   
-
-                                      <div class="row mb-6">
-							
-                                            {{ form_label(form.sujet, "sujet :", {'label_attr': {'class':"col-lg-4 col-form-label   fw-bold fs-6"}}) }}
-                                            
-                                            <div class="col-lg-8 fv-row fv-plugins-icon-container">
-                                                {{ form_widget(form.sujet, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-                                                {{ form_errors(form.sujet) }}
-                
-                                        </div> 
-                                        </div> #}
-                                        {# <div class="row mb-6">
-							
-                                            {{ form_label(form.text, "text :", {'label_attr': {'class':"col-lg-4 col-form-label   fw-bold fs-6"}}) }}
-                                            
-                                            <div class="col-lg-8 fv-row fv-plugins-icon-container">
-                                                {{ form_widget(form.text , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-                                                {{ form_errors(form.text) }}
-                
-                                        </div>
-                                        </div> #}
 										<div style="display:none;"> {{ form_row(form.lead)}}</div>
                                  
                                         
-                                        
+                                             
 			   
-			<div class="card-footer d-flex justify-content-end py-6 px-9">
-				<button type="reset" class="btn btn-light btn-active-light-primary me-2">Annuler</button>
-                
-               
+                                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                                <button type="reset" class="btn btn-light btn-active-light-primary me-2">Annuler</button>
+                                                
+                                            
 
 
-			    <button type="submit" class="btn btn-primary"  id="kt_account_profile_details_submit" >
-				Ajouter
-				</button>
-			</div>
-			
-					{# Fermeture de la balise <form> du formulaire HTML #}
-					{{ form_end(form) }}
-                                        </div>
+                                                <button type="submit" class="btn btn-primary"  id="kt_account_profile_details_submit" >
+                                                Envoyer
+                                                </button>
+                                            </div>
+                                            
+                                                    {# Fermeture de la balise <form> du formulaire HTML #}
+                                                    {{ form_end(form) }}
+                                                                        </div>
 
- 
+                                
 
 
-									</div>
-									<!--end::Card body-->
-							 </di>
+                                                                    </div>
+                                                                    <!--end::Card body-->
+                                                            </di>
  				 
 				</div>
-				</div>
+				        </div>
 				</div>
 				</div>
  
@@ -629,7 +624,11 @@ $("#modele").on("change", function(e) {
                         if( clickvalue == myid )  
                         {
                             document.getElementById('sujet').value = mysujet;
-                            document.getElementById('text').value = mymessage; 
+                            //console.log(document.getElementById('text').value);
+                            //document.getElementById('text').innerHTML = mymessage; 
+                          
+                            CKEDITOR.instances["text"].insertHtml(mymessage);
+                           
                         }
                         
                         

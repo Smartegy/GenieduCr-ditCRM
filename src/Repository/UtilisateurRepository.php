@@ -108,4 +108,13 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
             ->getOneOrNullResult()
         ;
     }
+    public function findIdByTelephone($value): ?Utilisateur
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.telephone = :val')
+            ->setParameter('val', $value)
+            ->getQuery('id')
+            ->getOneOrNullResult()
+        ;
+    }
 }
