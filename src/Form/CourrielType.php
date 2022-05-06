@@ -53,10 +53,55 @@ class CourrielType extends AbstractType
                 'class' => Modeleemail ::class,
                 'choice_label' => 'titre',
                 'required' => true,
-                'multiple' => false , 
-                'placeholder' => 'choisir un modele',
-                ))
+                'multiple' => false ,
+                'query_builder' => function(ModeleemailRepository $repo)
+                {
+                    $modele  = $repo->findByMail(1);
+                    return $modele;
+                    },
               
+                 
+                'placeholder' => 'choisir un modele'
+                      
+                    ))
+               
+           
+
+
+
+               /* ->add('agents', EntityType::class,array(
+                    'class' => Agent::class,
+                    'choice_label' => 'utilisateur.nom', 
+                    'query_builder' => function(AgentRepository $repo)
+                    {
+                        $agents = $repo->fillAgents();
+                        return $agents;
+                        },
+                        
+                        'expanded' => false,
+                        'multiple' => true
+
+
+
+
+
+                        ////
+                         'query_builder' => function(ModeleemailRepository $repo)
+                {
+                    $modele = $repo->findByMail(1);
+                    return $modele;
+                    },
+              
+                   
+                'placeholder' => 'choisir un modele'
+                      
+                    ))*/
+
+
+
+
+
+
 
             ->add('lead', EntityType::class,array(
                 'class' => Leads ::class,

@@ -21,6 +21,11 @@ class ModeleemailController extends AbstractController
     #[Route('/', name: 'modeleemail_index', methods: ['GET'])]
     public function index(ModeleemailRepository $modeleemailRepository): Response
     {
+        $data=$modeleemailRepository->findByMail(1);
+        dump($data);
+        $data2 = $modeleemailRepository->findAll();
+        dump($data2);die;
+
         return $this->render('modeleemail/index.html.twig', [
             'modeleemails' => $modeleemailRepository->findAll(),
         ]);
@@ -80,11 +85,11 @@ class ModeleemailController extends AbstractController
     #[Route('delete/{id}', name: 'modeleemail_delete' )]
     public function delete(Request $request, Modeleemail $modeleemail, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$modeleemail->getId(), $request->request->get('_token'))) {
+      //  if ($this->isCsrfTokenValid('delete'.$modeleemail->getId(), $request->request->get('_token'))) {
             $entityManager->remove($modeleemail);
             $entityManager->flush();
-        }
+      //  }
 
-        return $this->redirectToRoute('modele', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('modeleemail_index');
     }
 }

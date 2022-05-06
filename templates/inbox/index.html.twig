@@ -95,6 +95,9 @@
                       <li class="nav-item mt-2">
                         <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">Courriel</a>
                     </li>
+                    <li class="nav-item mt-2">
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('sms', {'idlead' : lead.id})}}">Sms</a>
+                    </li>
                     <!--end::Nav item-->
 
                 </ul>
@@ -160,7 +163,7 @@
                                         <div class="symbol-label bg-light-danger">
                                             <span class="text-danger">{{lead.nom|slice(0)[:1]}}</span>
                                         </div>
-                                </div>
+                                    </div>
                                 
                                
                             {% else  %}
@@ -172,7 +175,7 @@
                                     <div class="symbol-label bg-light-primary">
                                         <span class="text-primary">{{userr.nomutilisateur|slice(0)[:1]}}</span>
                                     </div>
-                                </div>
+                                  </div>
                                 
                                    {% endif %}
                                 <!--end::Name-->
@@ -451,7 +454,7 @@
                                         </div> 
                                         <div >
                                            {% for mod in modelemail %}
- 
+                                             {% if mod.mail == 1 %}
                                                 <div class="credsEarned" >
                                                 <div class="js-user-rating" style="display:none;" >{{mod.id}}</div> 
                                                 
@@ -459,6 +462,7 @@
                                                 <div class="message-rating" style="display:none;">{{mod.message}}</div> 
                                                 
                                             </div>
+                                            {% endif %}
                                     
                                            {% endfor %}
 

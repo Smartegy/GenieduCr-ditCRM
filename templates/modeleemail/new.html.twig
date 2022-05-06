@@ -36,7 +36,7 @@
                                     <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
                                         <!--begin::Card title-->
                                         <div class="card-title m-0">
-                                            <h3 class="fw-bolder m-0">Ajout Modéle Courriel</h3>
+                                            <h3 class="fw-bolder m-0">Ajout Modéle </h3>
                                         </div>
                                         <!--end::Card title-->
                                     </div>
@@ -71,7 +71,7 @@
     
                                             <div class="row mb-6">
     
-                                                {{ form_label(form.sujetemail, "Sujet SMS :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+                                                {{ form_label(form.sujetemail, "Sujet :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
     
                                                 <div class="col-lg-8 fv-row fv-plugins-icon-container">
                                                     {{ form_widget(form.sujetemail, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
@@ -86,6 +86,16 @@
                                                     {{ form_widget(form.message, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
                                                 </div>
                                             </div>
+                                            <div class="row mb-6">
+                                                <div class="col-sm-4">
+                                                  {{ form_row(form.mail, {"label":"Courriel"}) }}
+                                                 </div>
+                                               <div class="col-sm-4">
+   
+                                               {{ form_row(form.sms, {"label":"Sms"}) }}
+                                               </div>
+                                             
+                                           </div>
     
     
                                            

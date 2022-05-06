@@ -121,6 +121,16 @@ $form->get('recepteur')->setData($tellead);
         array_push($mixhistory, $value);
        }
        
+
+
+
+
+       usort($mixhistory, function($a, $b)
+       {
+           if ($a->datecreation== $b->datecreation)
+               return (0);
+           return (($a->datecreation < $b->datecreation) ? -1 : 1);
+       });
        
              $tabuser=[];
              $tabmailing=[];
@@ -146,7 +156,7 @@ $form->get('recepteur')->setData($tellead);
                     }
 
                    
-                    if (( in_array($var2, $userr)) && (!in_array($var2, $tabmailing))){
+                    elseif (( in_array($var2, $userr)) && (!in_array($var2, $tabmailing))){
 
                       // dd('sucess');die;
                         

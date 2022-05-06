@@ -6,6 +6,7 @@ use App\Entity\Modeleemail;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,11 +17,12 @@ class ModeleemailType extends AbstractType
         $builder
             ->add('titre')
             ->add('sujetemail')
+            ->add('mail')
+            ->add('sms')
       
 
-            ->add('message', TextareaType::class, [
-                'attr' => ['class' => 'tinymce'],
-            ])
+            ->add('message', TextType::class, array(
+                'attr' => array('maxlength' => 4294967292)))
         
          ->add('user', HiddenType::class, [
                 'data' => 'agent',

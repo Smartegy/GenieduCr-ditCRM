@@ -60,5 +60,22 @@ class ModeleemailRepository extends ServiceEntityRepository
         ;
     }
 
+
+
+ 
+    public function findByMail($value)
+    {
+        return $this->createQueryBuilder('Modeleemail')
+            ->Where('Modeleemail.mail = :value')
+            ->setParameter('value', $value)
+            
+            ->getQuery()
+            ->getResult()
+    
+        ;
+    }
+
+
+
     
 }

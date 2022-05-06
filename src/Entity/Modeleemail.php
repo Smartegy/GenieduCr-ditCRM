@@ -32,7 +32,7 @@ class Modeleemail
     private $sujetemail;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text", length=255, length="4294967292")
      */
     private $message;
 
@@ -55,6 +55,16 @@ class Modeleemail
      * @ORM\OneToMany(targetEntity=Courriel::class, mappedBy="modele")
      */
     private $courriels;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $sms;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $mail;
 
     public function __construct()
     {
@@ -173,6 +183,30 @@ class Modeleemail
                 $courriel->setModele(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSms(): ?bool
+    {
+        return $this->sms;
+    }
+
+    public function setSms(?bool $sms): self
+    {
+        $this->sms = $sms;
+
+        return $this;
+    }
+
+    public function getMail(): ?bool
+    {
+        return $this->mail;
+    }
+
+    public function setMail(?bool $mail): self
+    {
+        $this->mail = $mail;
 
         return $this;
     }

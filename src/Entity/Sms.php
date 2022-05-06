@@ -21,11 +21,11 @@ class Sms
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $recepteur;
+    public $recepteur;
         /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $emetteur;
+    public $emetteur;
 
 
 
@@ -34,27 +34,27 @@ class Sms
  
     * @ORM\JoinColumn(referencedColumnName="id", nullable=true,onDelete="SET NULL")
      */
-    private $lead;
+    public $lead;
 
     /**
      * @ORM\ManyToOne(targetEntity=Modelesms::class, inversedBy="sms")
      */
-    private $modele;
+    public $modele;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $datecreation;
+    public $datecreation;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $datemodification;
+    public $datemodification;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $text;
+    public $text;
 
     public function __construct()
     {

@@ -93,7 +93,7 @@
                     </li>
 
                       <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('email', {'idlead' : lead.id})}}">Courriel</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('courriel', {'idlead' : lead.id})}}">Courriel</a>
                     </li>
                     <li class="nav-item mt-2">
                         <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">SMS</a>
@@ -216,15 +216,18 @@
                                                                     <!--begin::User-->
                                                                     <div class="d-flex align-items-center mb-2">
 
-                                                            <div class="symbol symbol-35px symbol-circle">
-                                                                <img alt="Pic" src="/metronic8/demo1/assets/media/avatars/300-25.jpg">
-                                                            </div>
+                                                                        <div class="symbol symbol-50 me-4">
+                                                                            <div class="symbol-label bg-light-danger">
+                                                                                <span class="text-danger">{{lead.nom|slice(0)[:1]}}</span>
+                                                                            </div>
+                                                                        </div>
                                                                  <div class="ms-3">
                                                                     <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1">{{lead.nom}} </a>
                                                                     <span class="text-muted fs-7 mb-1">{{e.datecreation ? e.datecreation|date('Y-m-d-h-s') : '' }}</span>
                                                                    </div>
-                                                                   <div class="p-5 rounded bg-light-info text-dark fw-bold mw-lg-400px text-start" data-kt-element="message-text">{{e.text}}</div>
                                                                 </div>
+                                                                   <div class="p-5 rounded bg-light-info text-dark fw-bold mw-lg-400px text-start" data-kt-element="message-text">{{e.text}}</div>
+                                                                
                                                                 <!--end::User-->
                                                                 <!--begin::Text-->
                                                                
@@ -235,6 +238,34 @@
                                                  {% else %}
                                                                 {% for userr in user %}
                                                                     {% if e.emetteur == userr.telephone %}
+                                                                    {% if  userr.nomutilisateur == app.user.nomutilisateur %}
+                                                                    <div class="d-flex justify-content-end mb-10">
+                                                                        <!--begin::Wrapper-->
+                                                                        <div class="d-flex flex-column align-items-end">
+                                                                            <!--begin::User-->
+                                                                            <div class="d-flex align-items-center mb-2">
+                                                                                <!--begin::Details-->
+                                                                                <div class="me-3">
+                                                                                    <span class="text-muted fs-7 mb-1">{{e.datecreation ? e.datecreation|date('Y-m-d-h-s') : '' }}</span>
+                                                                                    <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary ms-1">Vous</a>
+                                                                                </div>
+                                                                                <!--end::Details-->
+                                                                                <!--begin::Avatar-->
+                                                                                <div class="symbol symbol-50 me-4">
+                                                                                    <div class="symbol-label bg-light-primary">
+                                                                                        <span class="text-primary">{{userr.nomutilisateur|slice(0)[:1]}}</span>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                <!--end::Avatar-->
+                                                                            </div>
+                                                                            <!--end::User-->
+                                                                            <!--begin::Text-->
+                                                                            <div class="p-5 rounded bg-light-primary text-dark fw-bold mw-lg-400px text-end" data-kt-element="message-text">{{e.text}}</div>
+                                                                            <!--end::Text-->
+                                                                        </div>
+                                                                        <!--end::Wrapper-->
+                                                                    </div>
+                                                                    {% else %}
                                                                     <div class="d-flex justify-content-end mb-10">
                                                                         <!--begin::Wrapper-->
                                                                         <div class="d-flex flex-column align-items-end">
@@ -247,9 +278,11 @@
                                                                                 </div>
                                                                                 <!--end::Details-->
                                                                                 <!--begin::Avatar-->
-                                                                                <div class="symbol symbol-35px symbol-circle">
-                                                                                    <img alt="Pic" src="/metronic8/demo1/assets/media/avatars/300-1.jpg">
-                                                                                </div>
+                                                                                <div class="symbol symbol-50 me-4">
+                                                                                    <div class="symbol-label bg-light-primary">
+                                                                                        <span class="text-primary">{{userr.nomutilisateur|slice(0)[:1]}}</span>
+                                                                                    </div>
+                                                                                  </div>
                                                                                 <!--end::Avatar-->
                                                                             </div>
                                                                             <!--end::User-->
@@ -259,6 +292,7 @@
                                                                         </div>
                                                                         <!--end::Wrapper-->
                                                                     </div>
+                                                                    {% endif %}
                                                                     {% endif %}
                                                                 {% endfor %}
                                                       {% endif %}
