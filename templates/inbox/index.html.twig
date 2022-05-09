@@ -630,20 +630,29 @@ $("#modele").on("change", function(e) {
                             document.getElementById('sujet').value = mysujet;
                             //console.log(document.getElementById('text').value);
                             //document.getElementById('text').innerHTML = mymessage; 
-                          
-                            CKEDITOR.instances["text"].insertHtml(mymessage);
+                           
+                           // CKEDITOR.instances["text"].insertHtml(mymessage);
+                           CKEDITOR.instances["text"].updateElement();
+  
+                            CKEDITOR.instances["text"].setData(mymessage);
                            
                         }
                         
                         
-                        else{ }
+                        else{ 
+                            
+                        }
                     }
                     if (clickvalue == "" )
                     {
                         document.getElementById('sujet').value = " ";
-                        CKEDITOR.instances["text"].insertHtml(" ");
-                       
-                    }
+
+                      //  CKEDITOR.instances["text"].insertHtml('<p>');
+                            CKEDITOR.instances["text"].updateElement();
+  
+                            CKEDITOR.instances["text"].setData('');
+                        }
+                          
        
           });  
          

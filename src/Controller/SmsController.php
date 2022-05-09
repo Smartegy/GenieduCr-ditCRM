@@ -73,7 +73,7 @@ class SmsController extends AbstractController
 
 
     #[Route('/leads/sms/{idlead}', name: 'sms', methods: ['GET', 'POST'])]
-    public function sms(Request $request,  Security $security ,ModelesmsRepository $modele_s,SmsRepository $smsRepository, EntityManagerInterface $entityManager,LeadsRepository $leadsRepository,SendMailService $mail, MailerInterface $mailer ,UtilisateurRepository $utilisateur,NotifierInterface $notifier ): Response
+    public function sms(Request $request,  Security $security ,ModeleemailRepository $modele_s,SmsRepository $smsRepository, EntityManagerInterface $entityManager,LeadsRepository $leadsRepository,SendMailService $mail, MailerInterface $mailer ,UtilisateurRepository $utilisateur,NotifierInterface $notifier ): Response
     {
         //$Listedesemails = $mailRepository->findAll() ;
       //  dd($Listedesemails) ; die ;

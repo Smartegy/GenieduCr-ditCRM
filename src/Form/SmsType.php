@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Leads;
+use App\Entity\Modeleemail;
 use App\Entity\Modelesms;
 use App\Entity\Sms;
+use App\Repository\ModeleemailRepository;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -36,12 +38,21 @@ class SmsType extends AbstractType
           
 
             ->add('modele', EntityType::class,array(
-                'class' => Modelesms::class,
+                'class' => Modeleemail ::class,
                 'choice_label' => 'titre',
                 'required' => true,
-                'multiple' => false , 
-                'placeholder' => 'choisir un modele',
-                ))
+                'multiple' => false ,
+                'query_builder' => function(ModeleemailRepository $repo)
+                {
+                    $modele  = $repo->FindBySms(1);
+                    return $modele;
+                    },
+              
+                 
+                'placeholder' => 'choisir un modele'
+                      
+                    ))
+               
         ;
 
 

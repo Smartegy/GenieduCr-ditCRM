@@ -24,9 +24,11 @@ use App\Repository\ModelesmsRepository;
 use App\Repository\NotesRepository;
 use App\Repository\PartenaireRepository;
 use App\Repository\UtilisateurRepository;
+use DateTime;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManagerInterface;
+use EightPoints\Bundle\GuzzleBundle\Events\Event;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Text;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,6 +39,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Validator\Constraints\Date;
+
 /**
 * @IsGranted("IS_AUTHENTICATED_FULLY")
 */
@@ -441,6 +445,21 @@ class LeadsController extends AbstractController
     #[Route('/{id}', name: 'leads_show', methods: ['GET'])]
     public function show(Leads $lead): Response
     {
+     /* $date= new Date('now') ;
+      dd($date);die;
+
+ //  if ($lead->getRappel()==new DateTime('now'))
+ if ($lead->getRappel()== $date)
+    {
+       // dd('success');die;
+    }
+     //  dd($lead->getRappel());die;
+  //  dd($lead->getRappel());die;
+
+//  $event = new Event();
+  //dd();die;*/
+
+
         return $this->render('leads/show.html.twig', [
             'lead' => $lead,
         ]);

@@ -69,8 +69,17 @@ class ModeleemailRepository extends ServiceEntityRepository
             ->Where('Modeleemail.mail = :value')
             ->setParameter('value', $value)
             
-            ->getQuery()
-            ->getResult()
+     
+    
+        ;
+    }
+    public function findBySms($value)
+    {
+        return $this->createQueryBuilder('Modeleemail')
+            ->Where('Modeleemail.sms = :value')
+            ->setParameter('value', $value)
+            
+     
     
         ;
     }

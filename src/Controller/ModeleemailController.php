@@ -21,10 +21,7 @@ class ModeleemailController extends AbstractController
     #[Route('/', name: 'modeleemail_index', methods: ['GET'])]
     public function index(ModeleemailRepository $modeleemailRepository): Response
     {
-        $data=$modeleemailRepository->findByMail(1);
-        dump($data);
-        $data2 = $modeleemailRepository->findAll();
-        dump($data2);die;
+  
 
         return $this->render('modeleemail/index.html.twig', [
             'modeleemails' => $modeleemailRepository->findAll(),
