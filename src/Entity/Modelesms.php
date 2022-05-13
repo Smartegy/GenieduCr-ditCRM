@@ -47,11 +47,7 @@ class Modelesms
      */
     private $datemodificationtable;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Sms::class, mappedBy="modele")
-     */
-    private $sms;
-
+   
 
     public function __construct()
     {
@@ -142,15 +138,7 @@ class Modelesms
         return $this->sms;
     }
 
-    public function addSms(Sms $sms): self
-    {
-        if (!$this->sms->contains($sms)) {
-            $this->sms[] = $sms;
-            $sms->setModele($this);
-        }
-
-        return $this;
-    }
+   
 
     public function removeDatecreation(Sms $datecreation): self
     {

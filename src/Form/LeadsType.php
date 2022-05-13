@@ -20,6 +20,8 @@ use App\Repository\ModeleemailRepository;
 use App\Repository\ModelesmsRepository;
 use App\Repository\PartenaireRepository;
 use App\Repository\UtilisateurRepository;
+
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\DataTransformer\ChoicesToValuesTransformer;
@@ -55,6 +57,9 @@ class LeadsType extends AbstractType
             ->add('paiementmonsuel')
             ->add('date')
             ->add('rappel')
+            ->add('sujet')
+            ->add('text')
+            ->add('textsms')
             ->add('marque')
             ->add('modele')
             ->add('annee')
@@ -136,35 +141,6 @@ class LeadsType extends AbstractType
                                             ]
                                         )
 
-
-          
-           /*    ->add('emailleads',EntityType::class,[
-                    'class' => Modeleemail::class,
-                    'choice_label' => function ($email) {
-                       return $email->getTitre();
-                    },
-                    'expanded' => true,
-                    'multiple' => true,
-                    'required' => false,
-                    'by_reference' => false ,
-                    
-                      ])
-                  
-    
-                      ->add('smsleads',EntityType::class,[
-                        'class' => Modelesms::class,
-                        'choice_label' => function ($sms) {
-                           return $sms->getTitre();
-                        },
-                        'expanded' => true,
-                        'multiple' => true,
-                        'required' => false,
-                        'by_reference' => false ,
-                       
-                          ])*/
-                          
-    
-            
 
 
             ->add('statusleads',EntityType::class,array(

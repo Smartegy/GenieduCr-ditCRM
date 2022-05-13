@@ -377,64 +377,28 @@ class LeadsController extends AbstractController
       
         $form = $this->createForm(LeadsType::class, $lead);
      
-      /*  foreach ($originalTags as $tag) {
-            if (false === $task->getTags()->contains($tag)) {
-                // remove the Task from the Tag
-                $tag->getTasks()->removeElement($task);
-                $em->persist($tag);
-            }*/
-       
-        
-        
-       /* $part = $partenaire->findAll();
 
-        
-        $administrateur = $administrateur->findAll();
-        $concessionnaire = $concessionnaire->findAll();
-        $marchand = $marcha->findAll();
-      
-
-       
-        $form->get('vendeur')->setData($agent);
-        $form->get('partenaire')->setData($part);
-        $form->get('administrateur')->setData($administrateur);
-        $form->get('concessionnaire')->setData($concessionnaire);
-        $form->get('marchand')->setData($marchand);
-        $form->get('status')->setData($marchand);
-     //   $form->get('status')->getData();*/
-   /*  $emailleads = $email->findAll();
-    foreach ($emailleads as $email) {
-       // var_dump($email);die;
-        $lead->removeEmaillead($email);
-     
-
-        
-    } 
-    $sms = $sms->findAll();
-    foreach ($sms as $sm) {
-        $lead->removeSmslead($sm);
-        
-    } */
-   // $form->get('emailleads')->setData(NULL);
-  //  $form->get('smsleads')->setData(NULL);
         $form->handleRequest($request);
+        $modele=$email->FindAll();
+     
       
         if ($form->isSubmitted() && $form->isValid()) {
-            /*$agentt = $agent->findOneById($lead->getAgent()->getId());
-            $lead->setAgent($agentt);*/ 
-           
+ 
  
             $entityManager->persist($lead);
             $entityManager->flush();
-          // $agent_id=$form->get('agent')->getData();
+
 
             return $this->redirectToRoute('leads_index', [], Response::HTTP_SEE_OTHER);
         }
+     
 
         return $this->renderForm('leads/new.html.twig', [
            
             'lead' => $lead,
             'form' => $form,
+            'modelee'=>$modele,
+            
         ]);
     }
 
@@ -445,19 +409,6 @@ class LeadsController extends AbstractController
     #[Route('/{id}', name: 'leads_show', methods: ['GET'])]
     public function show(Leads $lead): Response
     {
-     /* $date= new Date('now') ;
-      dd($date);die;
-
- //  if ($lead->getRappel()==new DateTime('now'))
- if ($lead->getRappel()== $date)
-    {
-       // dd('success');die;
-    }
-     //  dd($lead->getRappel());die;
-  //  dd($lead->getRappel());die;
-
-//  $event = new Event();
-  //dd();die;*/
 
 
         return $this->render('leads/show.html.twig', [
@@ -466,10 +417,11 @@ class LeadsController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'leads_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Leads $lead, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Leads $lead, EntityManagerInterface $entityManager,ModeleemailRepository $email): Response
     {
         $form = $this->createForm(LeadsType::class, $lead);
         $form->handleRequest($request);
+        $modele=$email->FindAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -480,6 +432,7 @@ class LeadsController extends AbstractController
         return $this->renderForm('leads/edit.html.twig', [
             'lead' => $lead,
             'form' => $form,
+            'modelee'=>$modele,
         ]);
     }
 

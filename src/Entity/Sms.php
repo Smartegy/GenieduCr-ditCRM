@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\SmsRepository;
+use App\Repository\CourrielRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -36,9 +36,12 @@ class Sms
      */
     public $lead;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Modelesms::class, inversedBy="sms")
+       /**
+     * @ORM\ManyToOne(targetEntity=Modeleemail::class, inversedBy="courriels")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true,onDelete="SET NULL")
      */
+
+ 
     public $modele;
 
     /**
@@ -109,18 +112,17 @@ class Sms
         return $this;
     }
 
-    public function getModele(): ?Modelesms
+    public function getModele(): ?Modeleemail
     {
         return $this->modele;
     }
 
-    public function setModele(?Modelesms $modele): self
+    public function setModele(?Modeleemail $modele): self
     {
         $this->modele = $modele;
 
         return $this;
     }
-
     public function getDatecreation(): ?\DateTimeInterface
     {
         return $this->datecreation;

@@ -50,9 +50,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Mime\Email;
 use App\Service\SendMailService;
+
 use Twilio\Rest\Client;
+use Twilio\Rest\Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Notifier\NotifierInterface;
+use Twilio\TwiML\Voice\Client as VoiceClient;
 
 /**
 * @IsGranted("IS_AUTHENTICATED_FULLY")
@@ -60,9 +63,9 @@ use Symfony\Component\Notifier\NotifierInterface;
 class SmsController extends AbstractController
 {
     #[Route('/chat/messages', name: 'chat')]
-    public function index(CourrielRepository $mailRepository): Response
+    public function index(SmsRepository $smsRepository): Response
     {
-        $Listedesemails = $mailRepository->findAll() ; 
+        $Listedesemails = $smsRepository->findAll() ; 
 
        // dd($Listedesemails) ; die ; 
         
@@ -100,7 +103,7 @@ class SmsController extends AbstractController
 */
 $form->get('lead')->setData($onelead);
 $teluser="+14388174255";
-$tellead="+15145836799"; 
+$tellead="+15148341662"; 
 $form->get('emetteur')->setData($teluser);
 $form->get('recepteur')->setData($tellead);
 

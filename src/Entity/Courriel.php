@@ -29,7 +29,7 @@ class Courriel
     private $sujet;
 
     /**
-   * @ORM\Column(type="text", length=255, length="4294967292", nullable=true)
+    * @ORM\Column(type="text", length=255, length="4294967292", nullable=true)
      */
     private $text;
 

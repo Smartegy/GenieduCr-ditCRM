@@ -46,6 +46,8 @@ use App\Service\SendMailService;
 use Twilio\Rest\Client;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Twilio\TwiML\Voice\Client as VoiceClient;
+
 /**
 * @IsGranted("IS_AUTHENTICATED_FULLY")
 */
@@ -221,68 +223,11 @@ class EmailController extends AbstractController
          $data2=$title->getTitre();
          array_push($tab, $data2);
         }
-        //dd($tab);die;
 
-    //*************************************************rappel Programée********************* *//
-    for($i=0;$i<1;$i++)
-   {
-     $data1= new DateTime('now');
-     $data2= $data1;
-     if($data1 == $data2 )
-     {
-/*************Save in Data base ***********/
-  $emaile2 = new Courriel();
-  $onelead1=$leadsRepository->findOneById($paranfinal);
-  $emaile2->setText("Test depuis Génie du crédit");
-  $emaile2->setSujet("Test depuis Génie du crédit");
-  $emaile2->setEmetteur("jouini.imen123@gmail.com");
-  $emaile2->setRecepteur("etudiant.jouini.imen@uvt.tn");
-  $emaile2->setLead($onelead1);
-  $emaile2->setModele(NULL);
-  $entityManager->persist( $emaile2);
-  $entityManager->flush();
-  /*************Send Email ***********/
-   $emaile = (new Email())
-     ->from( 'jouini.imen123@gmail.com' )
-     ->to('etudiant.jouini.imen@uvt.tn')
-    // ->subject($subject)
-      ->subject('Test depuis Génie du crédit')
-     //->text($Message)
-     ->text('Test depauis Génie du crédit')
-  ;
-  $mailer->send($emaile);
-
-  /*************Send Sms ***********/ 
-  $sid = 'AC257e749334cf5bbde19c3c21294be554';
-  $token = 'dd0f223537f0a4cf572265ae71910436';
-  $client = new Client($sid, $token);
-
-  $client->messages->create(
-      // the number you'd like to send the message to
-    //  $tellead,
-    "--",
-      [
-          // A Twilio phone number you purchased at twilio.com/console
-          'from' => "+14388174255",
-         // 'from' => $teluser,
-          // the body of the text message you'd like to send
-         
-          'body' => "Test depuis Génie du crédit"
-      ]
-  );
-  echo("evoi email et sms");
-  
-
-
-
-}
-
-   }
-
-    //*************************************************rappel Programée********************* *//
+ 
         return $this->renderForm('inbox/index.html.twig', [
             'form' => $form,
-           // 'form1' =>$form1
+
 
            'modelemail'=>$datatitle,
            'lead'=> $onelead,

@@ -119,6 +119,7 @@ class Leads
     /**
      * @ORM\Column(type="date", nullable=true)
      */
+    
     private $rappel;
 
  
@@ -237,6 +238,20 @@ class Leads
      */
     private $sms;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $sujet;
+
+    /**
+     * @ORM\Column(type="text", length=255, length="4294967292", nullable=true)
+     */
+    private $text;
+    /**
+     * @ORM\Column(type="text", length=255, length="4294967292", nullable=true)
+     */
+    private $textsms;
+
 
 
   
@@ -260,6 +275,10 @@ class Leads
         $this->emails = new ArrayCollection();
         $this->courriels = new ArrayCollection();
         $this->sms = new ArrayCollection();
+       // $this->rappel->format('Y-m-d');
+
+  
+      
   
     
     }
@@ -825,6 +844,42 @@ class Leads
                 $sms->setLead(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSujet(): ?string
+    {
+        return $this->sujet;
+    }
+
+    public function setSujet(?string $sujet): self
+    {
+        $this->sujet = $sujet;
+
+        return $this;
+    }
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(?string $text): self
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    public function getTextsms(): ?string
+    {
+        return $this->textsms;
+    }
+
+    public function setTextsms(?string $textsms): self
+    {
+        $this->textsms = $textsms;
 
         return $this;
     }
