@@ -70,8 +70,9 @@ class NotesController extends AbstractController
             'note' => $note,
             'form' => $form,
             'notes' => $result,
-            'lead' => $leadsRepository->findAll(),
+            'lead' => $onelead,
             'question_id' => $paranfinal,
+
         ]);
     }
 

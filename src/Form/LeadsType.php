@@ -62,7 +62,12 @@ class LeadsType extends AbstractType
             ->add('textsms')
             ->add('marque')
             ->add('modele')
-            ->add('annee')
+            ->add('annee',
+            'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
+            'choices' => $this->getYears(1960),
+            'required' => false , 
+            'placeholder' => ' '
+            ])
             ->add('type')
            
 
@@ -157,6 +162,21 @@ class LeadsType extends AbstractType
                 'mapped'=>true,
   
             ))
+
+            ->add('modele_vente')
+            ->add('anne_vente',
+            'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
+            'choices' => $this->getYears(1960),
+            'required' => false , 
+            'placeholder' => ' '
+            
+        ])
+            ->add('kilometrage_vente')
+            ->add('etatcarossrie_vente')
+   
+            ->add('remplacer_vehicule')
+
+            ->add('etatpneus_vente')
            
         ;
     }

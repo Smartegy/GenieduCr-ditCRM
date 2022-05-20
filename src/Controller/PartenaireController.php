@@ -102,9 +102,9 @@ class PartenaireController extends AbstractController
                 $media->setLien($lien);
 
                 //Ajoute le type du média
-                $type = $this->TypemediaRepository->gettype('photo');
+                //$type = $this->TypemediaRepository->gettype('photo');
 
-                $media->setType($type);
+                //$media->setType($type);
 
 
 

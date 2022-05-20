@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% set page_title = 'Ajout Lead' %}
+{% set page_title = "Ajout Lead d'achat" %}
 {% set P_page_title = 'Liste des Leads' %}
 {% set P_path = '/leads' %} 
   
@@ -38,12 +38,10 @@
 				   
 						  {% endfor %}
                         <div class="row mb-6">
-							<div class="col-lg-6 fv-row fv-plugins-icon-container">
-                               {{ form_row(form.type, {"label":"Achat "}) }}
-						    </div>
+							<div style="display:none;"> {{ form_row(form.type)}}</div>
 							<div class="row mb-6">
 							
-								{{ form_label(form.rappel, "Rappel :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+								{{ form_label(form.rappel, "Rappel :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
 								
 								<div class="col-lg-8 fv-row fv-plugins-icon-container">
 									{{ form_widget(form.rappel , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
@@ -57,6 +55,7 @@
 					
 
 						
+						
 							<div class="col mb-6">
 								
 								<button class="badge badge-light-success fw-bolder me-auto px-4 py-3" id="choixm" name="scales" >Programmer un courriel</button>
@@ -64,62 +63,64 @@
 								
 							
 							</div>
-						<div class="border border-dashed border-gray-300  min-w-125px rounded pt-4 pb-2 my-3" id="sectionmail" style="display:none">
-							<div class="row mb 6"  id="formail" style="display:none">
-							
-								<label class="col-lg-4 col-form-label  fw-bold fs-6"> Modéle Courriel :</label>
-								
-								<div class="col-lg-8 fv-row fv-plugins-icon-container">
-									<select  class=' col mb-6 form-control form-control-lg form-control-solid text-center' id="modele">
-										<option> Choisir un modéle </option>
-										
-										{% for model in modelee %}
-						
-												{% if model.mail == 1 %}
-												<option>{{model.titre }}</option>
-												{% endif %}
-											
-						
-										{% endfor %}
-									</select>
-							 </div>
-							</div>
-					
-							<div class="row mb-6">
-							
-								{{ form_label(form.sujet, "sujet Courriel :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-								
-								<div class="col-lg-8 fv-row fv-plugins-icon-container">
-									{{ form_widget(form.sujet , {'id': 'sujet','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-									
-								
-	
-							 </div>
-							</div>
-
-
-							<div class="row mb-6">
-							
-								{{ form_label(form.text, "text Courriel :", {'label_attr': {'class':"col-lg-4 col-form-label fw-bold fs-6"}}) }}
-								
-								<div class="col-lg-8 fv-row fv-plugins-icon-container">
-									{{ form_widget(form.text , {'id': 'text','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-									
-								
-	
-							 </div>
-							</div>
-						</div>
+                            <div class="border border-dashed border-gray-300  min-w-125px rounded pt-4 pb-2 my-3" id="sectionmail" style="display:none">
+                                <div  class="d-flex flex-wrap mb-5"  id="formail" style="display:none">
+                                
+                                    <label class="py-3 col-lg-4 col-form-label fw-bold fs-6"> Modéle Courriel :</label>
+                                    
+                                    <div class="py-3  col-lg-6 col-form-label fw-bold fs-6">
+                                        <select  class=' form-control form-control-lg form-control-solid' id="modele">
+                                            <option> Choisir un modéle </option>
+                                            
+                                            {% for model in modelee %}
+                            
+                                                    {% if model.mail == 1 %}
+                                                    <option>{{model.titre }}</option>
+                                                    {% endif %}
+                                                
+                            
+                                            {% endfor %}
+                                        </select>
+                                 </div>
+                                </div>
+                        
+                                <div class="row mb-6">
+                                
+                                    {{ form_label(form.sujet, "sujet Courriel :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+                                    
+                                    <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                        {{ form_widget(form.sujet , {'id': 'sujet','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+                                        
+                                    
+        
+                                 </div>
+                                </div>
+    
+    
+                                <div class="row mb-6">
+                                
+                                    {{ form_label(form.text, "text Courriel :", {'label_attr': {'class':"col-lg-4 col-form-label fw-bold fs-6"}}) }}
+                                    
+                                    <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                        {{ form_widget(form.text , {'id': 'text','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+                                        
+                                    
+        
+                                 </div>
+                                </div>
+                            </div>
 						<div class="col mb-6">
 					
 							<button  id="choixs" name="scales" class="badge badge-light-primary fw-bolder me-auto px-4 py-3" id="choixm" name="scales" >Programmer un sms</button>
 						</div>
 						<div class="border border-dashed border-gray-300   min-w-125px rounded pt-4 pb-2 my-3"  style="display:none" id="sectionsms">
-							<div class="row mb-6"  style="display:block">
+						
+                    
+                            <div class="d-flex flex-wrap mb-5"  style="display:none">
 							
-								<span class="col-lg-4 col-form-label  fw-bold fs-6" > Modéle SMS :</span>
+								<span class="py-3 col-lg-4 col-form-label fw-bold fs-6" > Modéle SMS :</span>
 								
-								<div class="col-lg-8 fv-row fv-plugins-icon-container ">
+								<div class="py-3  col-lg-6 col-form-label fw-bold fs-6 ">
 									<select  class='form-control form-control-lg form-control-solid'id="modelesms" >
 										<option> Choisir un modéle </option>
 										{% for model in modelee %}
@@ -146,10 +147,11 @@
                          </div>
 
 
+
  							
 							<div class="row mb-6">
 							
-								{{ form_label(form.statusleads, "Status lead :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+								{{ form_label(form.statusleads, "Status lead :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
 								
 								<div class="col-lg-8 fv-row fv-plugins-icon-container">
 									{{ form_widget(form.statusleads , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
@@ -159,7 +161,7 @@
 							</div>
 							<div class="row mb-6">
 								
-								{{ form_label(form.sourcesleads, "Sources Lead :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+								{{ form_label(form.sourcesleads, "Sources Lead :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
 								
 								<div class="col-lg-8 fv-row fv-plugins-icon-container">
 									{{ form_widget(form.sourcesleads , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
@@ -167,217 +169,7 @@
 	
 							 </div>
 							</div>
-
-			 
-						<div class="row mb-6">
-							
-							{{ form_label(form.datenaissance, "Date de Naissance :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.datenaissance , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-							
-
-						 </div>
-		
-						</div>
-							
-							{{ form_label(form.nom, "Nom  :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.nom, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.nom) }}
-						</div>
-						</div>
-						<div class="row mb-6">
-							
-							{{ form_label(form.courriel, "Courriel :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.courriel, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.courriel) }}
-
-						</div>
-						</div>
-					
-				
-
-						<div class="row mb-6">
-							
-							{{ form_label(form.commantaire, "commentaire :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.commantaire, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.commantaire) }}
-
-						</div>
-						</div>
-
-						<div class="row mb-6">
-							
-							{{ form_label(form.telephone, "Télephone :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.telephone, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.telephone) }}
-
-						</div>
-						</div>
-                        <div class="row mb-6">
-							
-							{{ form_label(form.numserie, "Numéro de Série :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.numserie, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.numserie) }}
-
-						    </div>
-							</div>
-						<div class="row mb-6">
-							
-							{{ form_label(form.statusvehicule, "status véhicule :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.statusvehicule, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.statusvehicule) }}
-
-						 </div>
-						</div>
-						</div>
-                        <div class="row mb-6">
-							
-							{{ form_label(form.budgetmonsuelle, "Budget monsuelle :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.budgetmonsuelle, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.budgetmonsuelle) }}
-
-						 </div>
-						</div>
-                        <div class="row mb-6">
-							
-							{{ form_label(form.statutprofessionnel, "Statut Professionnel :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.statutprofessionnel, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.statutprofessionnel) }}
-
-						 </div>
-						</div>
-                        <div class="row mb-6">
-							
-							{{ form_label(form.revenumensuel, "Revenu mensuel :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.revenumensuel, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.revenumensuel) }}
-
-						 </div>
-						</div>
-						<div class="row mb-6">
-							
-							{{ form_label(form.depuisquand, "Depuis Quand :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.depuisquand , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-							
-
-						 </div>
-						</div>
-                        <div class="row mb-6">
-							
-							{{ form_label(form.nomcompagnie, "Nom Compagnie :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.nomcompagnie, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.nomcompagnie) }}
-
-						 </div>
-						</div>
-                        <div class="row mb-6">
-							
-							{{ form_label(form.occupationposte, "Occupation Poste :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.occupationposte, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.occupationposte) }}
-
-						 </div>
-						</div>
-
-                        <div class="row mb-6">
-							
-							{{ form_label(form.adressedomicile, "Adresse Domicile :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.adressedomicile, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.adressedomicile) }}
-
-						 </div>
-						</div>
-                        
-                        <div class="row mb-6">
-							
-							{{ form_label(form.locationproprietaire, "Location Propriétaire :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.locationproprietaire, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.locationproprietaire) }}
-
-						 </div>
-						</div>
-                        <div class="row mb-6">
-							
-							{{ form_label(form.paiementmonsuel, "Paiement Monsuel :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.paiementmonsuel, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.paiementmonsuel) }}
-
-						 </div>
-						</div>
-						<div class="row mb-6">
-							
-							{{ form_label(form.date, "Annee :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.date , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								
-
-						 </div>
-						</div>
-                        <div class="row mb-6">
-							
-							{{ form_label(form.marque, "Marque :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.marque, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.marque) }}
-
-						 </div>
-						</div>
-                        <div class="row mb-6">
-							
-							{{ form_label(form.modele, "Modele :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.modele, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.modele) }}
-
-						 </div>
-						</div>
-						<div class="row mb-6">
-							
-							{{ form_label(form.annee, "anneé :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
-							
-							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.annee, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-								{{ form_errors(form.annee) }}
-
-						 </div>
-						</div>
-						
-
-                        
+                                                
                         <div class="row mb-6">
 							
 							{{ form_label(form.agent, "Agent :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
@@ -439,6 +231,281 @@
 
 						 </div>
 						</div>
+			 
+						<div class="row mb-6">
+							
+							{{ form_label(form.datenaissance, "Date de Naissance :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.datenaissance , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+							
+
+						 </div>
+		
+						</div>
+							
+							{{ form_label(form.nom, "Nom  :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.nom, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.nom) }}
+						</div>
+						</div>
+						<div class="row mb-6">
+							
+							{{ form_label(form.courriel, "Courriel :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.courriel, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.courriel) }}
+
+						</div>
+						</div>
+					
+				
+
+						<div class="row mb-6">
+							
+							{{ form_label(form.commantaire, "commentaire :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.commantaire, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.commantaire) }}
+
+						</div>
+						</div>
+
+						<div class="row mb-6">
+							
+							{{ form_label(form.telephone, "Télephone :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.telephone, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.telephone) }}
+
+						</div>
+						</div>
+                        <div class="row mb-6">
+							
+							{{ form_label(form.numserie, "Numéro de Série :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.numserie, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.numserie) }}
+
+						    </div>
+							</div>
+						<div class="row mb-6">
+							
+							{{ form_label(form.statusvehicule, "status véhicule :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.statusvehicule, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.statusvehicule) }}
+
+						 </div>
+						</div>
+						</div>
+                        <div class="row mb-6">
+							
+							{{ form_label(form.budgetmonsuelle, "Budget monsuelle :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.budgetmonsuelle, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.budgetmonsuelle) }}
+
+						 </div>
+						</div>
+                        <div class="row mb-6">
+							
+							{{ form_label(form.statutprofessionnel, "Statut Professionnel :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.statutprofessionnel, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.statutprofessionnel) }}
+
+						 </div>
+						</div>
+                        <div class="row mb-6">
+							
+							{{ form_label(form.revenumensuel, "Revenu mensuel :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.revenumensuel, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.revenumensuel) }}
+
+						 </div>
+						</div>
+						<div class="row mb-6">
+							
+							{{ form_label(form.depuisquand, "Depuis Quand :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.depuisquand , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+							
+
+						 </div>
+						</div>
+                        <div class="row mb-6">
+							
+							{{ form_label(form.nomcompagnie, "Nom Compagnie :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.nomcompagnie, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.nomcompagnie) }}
+
+						 </div>
+						</div>
+                        <div class="row mb-6">
+							
+							{{ form_label(form.occupationposte, "Occupation Poste :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.occupationposte, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.occupationposte) }}
+
+						 </div>
+						</div>
+
+                        <div class="row mb-6">
+							
+							{{ form_label(form.adressedomicile, "Adresse Domicile :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.adressedomicile, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.adressedomicile) }}
+
+						 </div>
+						</div>
+                        
+                        <div class="row mb-6">
+							
+							{{ form_label(form.locationproprietaire, "Location Propriétaire :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.locationproprietaire, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.locationproprietaire) }}
+
+						 </div>
+						</div>
+                        <div class="row mb-6">
+							
+							{{ form_label(form.paiementmonsuel, "Paiement Monsuel :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.paiementmonsuel, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.paiementmonsuel) }}
+
+						 </div>
+						</div>
+						<div class="row mb-6">
+							
+							{{ form_label(form.date, "Annee :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.date , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								
+
+						 </div>
+						</div>
+
+				
+                        <div class="row mb-6">
+							
+							{{ form_label(form.marque, "Marque :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.marque, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.marque) }}
+
+						 </div>
+						</div>
+                        <div class="row mb-6">
+							
+							{{ form_label(form.modele, "Modele :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.modele, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.modele) }}
+
+						 </div>
+						</div>
+						<div class="row mb-6">
+							
+							{{ form_label(form.annee, "anneé :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.annee, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_errors(form.annee) }}
+
+						 </div>
+						</div>
+						<div class="row mb-6">
+							
+                            {{ form_label(form.remplacer_vehicule, "Remplacement Véhicule:", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6 "}}) }}
+                            
+                            <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                {{ form_widget(form.remplacer_vehicule, {'id': 'remplacer','checked':false }) }}
+                                {{ form_errors(form.remplacer_vehicule) }}
+
+                         </div>
+                        </div>
+						<div style="display:none;" id="complementere">
+							<div class="row mb-6" >
+								
+								{{ form_label(form.modele_vente, "Modéle de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+								
+								<div class="col-lg-8 fv-row fv-plugins-icon-container">
+									{{ form_widget(form.modele_vente, {'id':'modele_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+									{{ form_errors(form.modele_vente) }}
+	
+							 </div>
+							</div>
+							<div class="row mb-6" >
+								
+								{{ form_label(form.anne_vente, "Année de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+								
+								<div class="col-lg-8 fv-row fv-plugins-icon-container">
+									{{ form_widget(form.anne_vente, {'id':'anne_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+									{{ form_errors(form.anne_vente) }}
+	
+							 </div>
+							</div>
+							<div class="row mb-6" >
+								
+								{{ form_label(form.kilometrage_vente, "Kilométrage de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+								
+								<div class="col-lg-8 fv-row fv-plugins-icon-container">
+									{{ form_widget(form.kilometrage_vente, {'id':'kilometrage_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+									{{ form_errors(form.kilometrage_vente) }}
+	
+							 </div>
+							</div>
+							<div class="row mb-6" >
+								
+								{{ form_label(form.etatcarossrie_vente, "Etat de Carroserie de Véhicule à vendre:", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+								
+								<div class="col-lg-8 fv-row fv-plugins-icon-container">
+									{{ form_widget(form.etatcarossrie_vente, {'id':'etatcarossrie_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+									{{ form_errors(form.etatcarossrie_vente) }}
+	
+							 </div>
+							</div>
+							<div class="row mb-6" >
+								
+								{{ form_label(form.etatpneus_vente, "Etat des pneus de Véhicule à vendre:", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+								
+								<div class="col-lg-8 fv-row fv-plugins-icon-container">
+									{{ form_widget(form.etatpneus_vente, {'id':'etatpneus_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+									{{ form_errors(form.etatpneus_vente) }}
+	
+							 </div>
+							</div>
+				
+						
+						</div>
+
+   
 					
                        
    
@@ -575,6 +642,53 @@ for(var i = 0;i<contexts.length;i++){
 
 });
 
+</script>
+<script>
+
+
+
+$("#remplacer").on("change", function(e) {
+
+e.preventDefault(); 
+remplacement = document.getElementById('remplacer').value;
+complementere= document.getElementById('complementere');
+
+
+
+
+
+
+if( $("#remplacer").is(':checked'))  
+
+{
+
+ complementere.style.display = "block"; 
+
+
+}
+else
+{
+
+ $("#type").attr('checked', false);
+
+   complementere.style.display = "none";
+
+
+   modele_vente = document.getElementById('modele_vente').value = "";
+   anne_vente = document.getElementById('anne_vente').value ="";
+   //console.log(anne_vente);
+
+
+   kilometrage_vente  = document.getElementById('kilometrage_vente').value = "";
+   etatcarossrie_vente  = document.getElementById('etatcarossrie_vente').value = "";
+   etatpneus_vente = document.getElementById('etatpneus_vente').value = "";
+   
+
+}
+
+
+
+});	
 </script>
 
 {% endblock %}

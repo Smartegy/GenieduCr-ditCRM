@@ -167,14 +167,37 @@
                                         </div>
                                         <!--end::Col-->
                                     </div>
+                                    {% if modeleemail.mail == 1 %}
                                     <!--end::Input group-->
                                     <!--begin::Input group-->
-                                   
-                           
+                                    <div class="row mb-7">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-4 fw-bold text-muted">Modéle Courriel </label>
+                                        <!--end::Label-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8">
+                                            <span class="fw-bold text-gray-800 fs-6">oui</a>
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    {% endif %}
                                
                                     <!--end::Input group-->
                                     <!--begin::Input group-->
-
+                                    {% if modeleemail.sms == 1 %}
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="row mb-7">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-4 fw-bold text-muted">Modéle SMS </label>
+                                        <!--end::Label-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8">
+                                            <span class="fw-bold text-gray-800 fs-6">oui</a>
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    {% endif %}
 
                                 </div>
                                 <!--end::Card body-->

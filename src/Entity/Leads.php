@@ -147,7 +147,7 @@ class Leads
     private $modele;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $annee;
 
@@ -159,7 +159,7 @@ class Leads
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $type;
+    public $type;
 
 
 
@@ -213,44 +213,74 @@ class Leads
       * @ORM\OneToMany(targetEntity=Notes::class,mappedBy="lead",cascade={"persist", "remove"})
 
      */
-    private $note;
+    public $note;
 
     /**
      * @ORM\OneToMany(targetEntity=FilesLead::class,mappedBy="lead",cascade={"persist", "remove"})
    
      */
-    private $filesLeads;
+    public $filesLeads;
 
     /**
      * @ORM\ManyToMany(targetEntity=Email::class, mappedBy="lead", cascade={"persist", "remove"})
      */
-    private $emails;
+    public $emails;
 
     /**
      * @ORM\OneToMany(targetEntity=Courriel::class,mappedBy="lead",cascade={"persist", "remove"})
      
      */
     
-    private $courriels;
+    public $courriels;
 
     /**
      * @ORM\OneToMany(targetEntity=Sms::class, mappedBy="lead")
      */
-    private $sms;
+    public $sms;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $sujet;
+    public $sujet;
 
     /**
      * @ORM\Column(type="text", length=255, length="4294967292", nullable=true)
      */
-    private $text;
+    public $text;
     /**
      * @ORM\Column(type="text", length=255, length="4294967292", nullable=true)
      */
-    private $textsms;
+    public $textsms;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    public $modele_vente;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    public $anne_vente;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    public $kilometrage_vente;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    public $etatcarossrie_vente;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    public $remplacer_vehicule;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    public $etatpneus_vente;
 
 
 
@@ -586,19 +616,26 @@ class Leads
         return $this;
     }
 
-    public function getAnnee(): ?string
+    public function getAnnee(): ?int
     {
         return $this->annee;
     }
 
-    public function setAnnee(?string $annee): self
+    public function setAnnee(?int $annee): self
     {
         $this->annee = $annee;
 
         return $this;
     }
 
-   
+
+
+
+    
+
+
+
+
 
 
     public function getType(): ?bool
@@ -880,6 +917,81 @@ class Leads
     public function setTextsms(?string $textsms): self
     {
         $this->textsms = $textsms;
+
+        return $this;
+    }
+
+    public function getModeleVente(): ?string
+    {
+        return $this->modele_vente;
+    }
+
+    public function setModeleVente(?string $modele_vente): self
+    {
+        $this->modele_vente = $modele_vente;
+
+        return $this;
+    }
+
+    public function getAnneVente(): ?int
+    {
+        return $this->anne_vente;
+    }
+
+    public function setAnneVente( ?int $anne_vente): self
+    {
+        $this->anne_vente = $anne_vente;
+
+        return $this;
+    }
+
+ 
+   
+
+    public function getKilometrageVente(): ?string
+    {
+        return $this->kilometrage_vente;
+    }
+
+    public function setKilometrageVente(?string $kilometrage_vente): self
+    {
+        $this->kilometrage_vente = $kilometrage_vente;
+
+        return $this;
+    }
+
+    public function getEtatcarossrieVente(): ?string
+    {
+        return $this->etatcarossrie_vente;
+    }
+
+    public function setEtatcarossrieVente(?string $etatcarossrie_vente): self
+    {
+        $this->etatcarossrie_vente = $etatcarossrie_vente;
+
+        return $this;
+    }
+
+    public function getRemplacerVehicule(): ?bool
+    {
+        return $this->remplacer_vehicule;
+    }
+
+    public function setRemplacerVehicule(?bool $remplacer_vehicule): self
+    {
+        $this->remplacer_vehicule = $remplacer_vehicule;
+
+        return $this;
+    }
+
+    public function getEtatpneusVente(): ?string
+    {
+        return $this->etatpneus_vente;
+    }
+
+    public function setEtatpneusVente(?string $etatpneus_vente): self
+    {
+        $this->etatpneus_vente = $etatpneus_vente;
 
         return $this;
     }

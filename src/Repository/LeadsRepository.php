@@ -117,6 +117,24 @@ class LeadsRepository extends ServiceEntityRepository
       
     }
 
+    public function findachat() 
+    {
+        return $this->createQueryBuilder('lead')
+            ->andWhere('lead.type = :val')
+            ->setParameter('val','1')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    public function findvente()
+    {
+        return $this->createQueryBuilder('lead')
+            ->andWhere('lead.type = :val')
+            ->setParameter('val','0')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 
 }

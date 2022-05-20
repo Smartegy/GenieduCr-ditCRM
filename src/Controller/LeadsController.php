@@ -62,7 +62,7 @@ class LeadsController extends AbstractController
         //dump($tomorrow ) ; dump($yesterday) ; die ; 
         //dd($yesterday) ; die ; 
         $time = date('d/m/Y');
-        $leadss = $leadsRepository ->findAll() ;
+        $leadss = $leadsRepository ->findachat() ;
         $output = array();
         $yestR = array();
         $tomworrowR = array();
@@ -150,7 +150,7 @@ class LeadsController extends AbstractController
     // $size = count($output);
       
 
-        $leads = $leadsRepository ->findAll();
+        $leads = $leadsRepository ->findachat();
         $form = $this->createFormBuilder()
 
       // -> add('nom', null , array('required' => false))
@@ -303,7 +303,7 @@ class LeadsController extends AbstractController
            $cmd .= '  } ' ;
            $cmd .= ' else {  $phe = false ;}   ' ;
            $i =0 ;
-           $filterr = $leadsRepository -> findAll() ;
+           $filterr = $leadsRepository -> findachat() ;
           // dd($cmd) ; die () ;
           // dd($cmd) ; die() ;
            if(!empty($condition))
@@ -328,7 +328,7 @@ class LeadsController extends AbstractController
                  }
                   // dd('End') ;
              }
-             else {$filterr = $leadsRepository -> findAll() ;}
+             else {$filterr = $leadsRepository -> findachat() ;}
          
  
           //   dd($filterr); die() ;
@@ -353,14 +353,14 @@ class LeadsController extends AbstractController
     public function Notes(NotesRepository $notesRepository,Request $request,NotesRepository $notes,LeadsRepository $leadsRepository): Response
     { 
         //dd('hello');die;
-        $llead=$leadsRepository->findAll();
+        $llead=$leadsRepository->findachat();
         $question_id = $request->query->get('id');
         $result= $notes->findNotesByLead($question_id );
         //dd($result);die();
 
         return $this->render('leads/index.html.twig', [
             'notess' => $result,
-            'leads' => $leadsRepository->findAll(),
+            'leads' => $leadsRepository->findachat(),
         ]);
     }
     /**
@@ -376,11 +376,11 @@ class LeadsController extends AbstractController
        
       
         $form = $this->createForm(LeadsType::class, $lead);
-     
+        $form->get('type')->setData(true);
 
         $form->handleRequest($request);
-        $modele=$email->FindAll();
-     
+        $modele=$email->findAll();
+ 
       
         if ($form->isSubmitted() && $form->isValid()) {
  
@@ -421,7 +421,8 @@ class LeadsController extends AbstractController
     {
         $form = $this->createForm(LeadsType::class, $lead);
         $form->handleRequest($request);
-        $modele=$email->FindAll();
+        
+        $modele=$email->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();

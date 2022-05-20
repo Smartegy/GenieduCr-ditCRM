@@ -249,7 +249,7 @@ class ConcessionnaireController extends AbstractController
 
 
 
-        if($form->isSubmitted() && $form->isValid()){
+        if($form->isSubmitted() ){
 
             $vendeurs =$form->get('concessionnairemarchand')->get('vendeurs')->getData();
 
@@ -277,14 +277,14 @@ class ConcessionnaireController extends AbstractController
                 //Définit les valeurs
                 $media->setNom($name);
                 $media->setLien($lien);
-
-
+  
+                 //dd($media);die;
 
 
                 //Ajoute le type du média
-            $type = $repository->gettype('photo');
+        //    $type = $repository->gettype('photo');
              
-            $media->setType($type);
+           // $media->setType($type);
             }
            
             ////////

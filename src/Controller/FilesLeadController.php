@@ -110,7 +110,7 @@ class FilesLeadController extends AbstractController
             'file' => $fille,
             'form' => $form,
             'files' => $result,
-            'lead' => $leadsRepository->findAll(),
+            'lead' => $onelead,
             'question_id' => $paranfinal,
         ]);
     

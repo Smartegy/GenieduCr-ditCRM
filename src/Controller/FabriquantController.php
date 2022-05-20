@@ -156,9 +156,9 @@ class FabriquantController extends AbstractController
                 //Ajoute le type du média
 
                 /* $type = 'photo';*/
-                $type = $repository->gettype('photo');
+               // $type = $repository->gettype('photo');
 
-                $media->setType($type);
+                //$media->setType($type);
 
             }
 
