@@ -8,6 +8,8 @@ use App\Entity\Concessionnaire;
 use App\Entity\Leads;
 use App\Entity\Marchand;
 use App\Entity\Notes;
+use App\Entity\OperationAchat;
+use App\Entity\Operations;
 use App\Entity\Partenaire;
 use App\Entity\Status;
 use App\Entity\Utilisateur;
@@ -24,6 +26,7 @@ use App\Repository\ModelesmsRepository;
 use App\Repository\NotesRepository;
 use App\Repository\PartenaireRepository;
 use App\Repository\UtilisateurRepository;
+use App\Repository\VehiculeRepository;
 use DateTime;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Doctrine\DBAL\Types\TextType;
@@ -369,7 +372,7 @@ class LeadsController extends AbstractController
     
 
     #[Route('/new', name: 'leads_new', methods: ['GET', 'POST'])]
-    public function new(LeadsRepository $leads,ModeleemailRepository $email,ModelesmsRepository $sms,Request $request, EntityManagerInterface $entityManager , UtilisateurRepository $u, AgentRepository $agent ,PartenaireRepository $partenaire , AdministrateurRepository $administrateur , ConcessionnaireRepository $concessionnaire , MarchandRepository $marcha): Response
+    public function new(LeadsRepository $leads,LeadsRepository $leadrep,ModeleemailRepository $email,ModelesmsRepository $sms,Request $request, EntityManagerInterface $entityManager , UtilisateurRepository $u, AgentRepository $agent ,PartenaireRepository $partenaire , AdministrateurRepository $administrateur , ConcessionnaireRepository $concessionnaire , MarchandRepository $marcha ,VehiculeRepository $vehicule): Response
     {
    
         $lead = new Leads();
@@ -377,16 +380,47 @@ class LeadsController extends AbstractController
       
         $form = $this->createForm(LeadsType::class, $lead);
         $form->get('type')->setData(true);
+        $form->get('isCLient')->setData(false);
+    
 
         $form->handleRequest($request);
         $modele=$email->findAll();
- 
+
+
       
         if ($form->isSubmitted() && $form->isValid()) {
  
  
             $entityManager->persist($lead);
             $entityManager->flush();
+            
+          if($form->get('statusleads')->getData() == "Livrés")
+          {  
+             //ALFA552226
+             
+  
+              $numserie=$form->get('numserie')->getData(); 
+              $onecar= $vehicule->findOneByVin($numserie);
+              $name=$form->get('nom')->getData();
+              $namelead=$leadrep->findOneByNom($name);
+
+              $operationA= new OperationAchat();
+          
+              $operationA->setNumserie($numserie);
+              $operationA->setNumserie($numserie);
+              $operationA->setVehicule($onecar);
+              $operationA->setLeads($namelead);
+         
+            
+                 $entityManager->persist($operationA);
+                 $entityManager->flush();
+              
+
+                 
+            //  dd('this lead should be livreded');die;
+
+          }
+
 
 
             return $this->redirectToRoute('leads_index', [], Response::HTTP_SEE_OTHER);
@@ -417,15 +451,49 @@ class LeadsController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'leads_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Leads $lead, EntityManagerInterface $entityManager,ModeleemailRepository $email): Response
+    public function edit(Request $request, Leads $lead,LeadsRepository $leadrep,VehiculeRepository $vehicule, EntityManagerInterface $entityManager,ModeleemailRepository $email): Response
     {
         $form = $this->createForm(LeadsType::class, $lead);
         $form->handleRequest($request);
         
         $modele=$email->findAll();
-
+      
+             
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+        //  dd($form->get('numserie')->getData());die; 
+       
+
+          if($form->get('statusleads')->getData() == "Livrés")
+            {  
+           $numserie=$form->get('numserie')->getData(); 
+           $prix_achat=$form->get('prix_achat')->getData(); 
+           $prix_vente=$form->get('prix_vente')->getData(); 
+           $modelevente=$form->get('modele_vente')->getData();  
+            $marquevente=$form->get('marquevente')->getData(); 
+
+                $onecar= $vehicule->findOneByVin($numserie);
+                $name=$form->get('nom')->getData();
+                $namelead=$leadrep->findOneByNom($name);
+ 
+                $operationA= new OperationAchat();
+                
+             
+                $operationA->setNumserie($numserie);
+                $operationA->setVehicule($onecar);
+                $operationA->setLeads($namelead);
+                $operationA->setPrixAchat($prix_achat);
+                $operationA->setPrixVente($prix_vente);
+                $operationA->setModele($modelevente);
+                $operationA->setMarque($marquevente);
+           
+                   
+              
+                   $entityManager->persist($operationA);
+                   $entityManager->flush();
+
+            }
+
 
             return $this->redirectToRoute('leads_index', [], Response::HTTP_SEE_OTHER);
         }

@@ -128,7 +128,7 @@ class Leads
      * @ORM\JoinColumn(nullable=false)
      */
     
-    private $statusleads;
+    public $statusleads;
 
     /**
      * @ORM\ManyToOne(targetEntity=SourcesLeads::class,inversedBy="leads")
@@ -151,10 +151,7 @@ class Leads
      */
     private $annee;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Operations::class, mappedBy="lead", orphanRemoval=true)
-     */
-    private $operations;
+  
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -198,7 +195,7 @@ class Leads
     private $marchand;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $statusvehicule;
 
@@ -284,6 +281,36 @@ class Leads
 
 
 
+    /**
+     * @ORM\OneToMany(targetEntity=OperationAchat::class, mappedBy="leads")
+     */
+    private $operationAchats;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    public $isCLient;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $prix_achat;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $prix_vente;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $marquevente;
+
+
+
+  
+
+
   
     
 
@@ -305,7 +332,9 @@ class Leads
         $this->emails = new ArrayCollection();
         $this->courriels = new ArrayCollection();
         $this->sms = new ArrayCollection();
-       // $this->rappel->format('Y-m-d');
+
+       $this->operationAchats = new ArrayCollection();
+ 
 
   
       
@@ -995,6 +1024,90 @@ class Leads
 
         return $this;
     }
+
+
+
+    /**
+     * @return Collection<int, OperationAchat>
+     */
+    public function getOperationAchats(): Collection
+    {
+        return $this->operationAchats;
+    }
+
+    public function addOperationAchat(OperationAchat $operationAchat): self
+    {
+        if (!$this->operationAchats->contains($operationAchat)) {
+            $this->operationAchats[] = $operationAchat;
+            $operationAchat->setLeads($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOperationAchat(OperationAchat $operationAchat): self
+    {
+        if ($this->operationAchats->removeElement($operationAchat)) {
+            // set the owning side to null (unless already changed)
+            if ($operationAchat->getLeads() === $this) {
+                $operationAchat->setLeads(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getIsCLient(): ?bool
+    {
+        return $this->isCLient;
+    }
+
+    public function setIsCLient(?bool $isCLient): self
+    {
+        $this->isCLient = $isCLient;
+
+        return $this;
+    }
+
+    public function getPrixAchat(): ?float
+    {
+        return $this->prix_achat;
+    }
+
+    public function setPrixAchat(?float $prix_achat): self
+    {
+        $this->prix_achat = $prix_achat;
+
+        return $this;
+    }
+
+    public function getPrixVente(): ?float
+    {
+        return $this->prix_vente;
+    }
+
+    public function setPrixVente(?float $prix_vente): self
+    {
+        $this->prix_vente = $prix_vente;
+
+        return $this;
+    }
+
+    public function getMarquevente(): ?string
+    {
+        return $this->marquevente;
+    }
+
+    public function setMarquevente(?string $marquevente): self
+    {
+        $this->marquevente = $marquevente;
+
+        return $this;
+    }
+
+
+
+
 
    
 

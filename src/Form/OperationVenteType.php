@@ -14,6 +14,7 @@ class OperationVenteType extends AbstractType
         $builder
             ->add('numserie')
             ->add('lead')
+            ->add('vehicule')
         ;
     }
 

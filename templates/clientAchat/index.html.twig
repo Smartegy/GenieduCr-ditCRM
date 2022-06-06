@@ -5,9 +5,9 @@
 
 
 {% extends 'base.html.twig' %}
-{% set page_title = 'Leads vente' %}
+{% set page_title = 'clients  d\'achat' %}
 {% set P_page_title = '' %}
-{% set P_path = '/leadsvente/' %} 
+{% set P_path = '/clients_achat/' %} 
 
  
 {% block body %}
@@ -284,7 +284,7 @@
 																	</div>
 																	<!--end::Progress-->
 																	<!--begin::Action-->
-																	<a href="{{path("leads_show",{ 'id' : rappel.id})}}" class="btn btn-sm btn-light btn-active-light-primary">View</a>
+																	<a href="{{path("clients_edit",{ 'id' : rappel.id})}}" class="btn btn-sm btn-light btn-active-light-primary">View</a>
 																	<!--end::Action-->
 																</div>
 																<!--end::Record-->
@@ -573,7 +573,7 @@
 													  Filtre
 											 </button>
 											<!--begin::Add Lead-->
-											<a href="{{path("leadsvente_new")}}" class="btn btn-primary">Ajouter Lead</a>
+											
 											<!--end::Add Lead-->
 										</div>
 
@@ -744,7 +744,7 @@
 											<tbody class="fw-bold text-gray-600">
 												<!--begin::Table row-->
 												{% for lead in leads %}
-												{% if lead.isClient == 0 %}
+												{% if lead.isCLient == 1 %}
 												<tr>
 													<!--begin::Checkbox-->
 													 
@@ -754,7 +754,7 @@
 														<div class="d-flex align-items-center">
 															 
 															<div class="flex-grow-1 me-2">
-															   <a href="{{path("leads_show",{ 'id' : lead.Id})}}" class="text-gray-800 text-hover-primary fs-6 fw-bolder"data-kt-ecommerce-product-filter="product_name">{{lead.nom}}</a>
+															   <a href="{{path("clients_show",{ 'id' : lead.Id})}}" class="text-gray-800 text-hover-primary fs-6 fw-bolder"data-kt-ecommerce-product-filter="product_name">{{lead.nom}}</a>
 														     	<span class="text-muted fw-bold d-block fs-7">
 														        	<br> 
 															    <div class="ms-5"><a href="{{path('courriel' , { 'idlead' : lead.Id} )}}">
@@ -842,7 +842,7 @@
 													</td>
 												 
 													<td class="text-center">
-														  <a href="{{path("leadsvente_show", {'id' : lead.id})}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+														  <a href="{{path("clients_show",{ 'id' : lead.Id})}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 																	<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
 																	<span class="svg-icon svg-icon-3">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"  data-bs-toggle="tooltip" data-bs-placement="top" title="Consulter un lead">
@@ -852,14 +852,26 @@
 																	</span>
 																	<!--end::Svg Icon-->
 														 </a>
+														
+														<a href="{{path('clients_transaction', {'idlead' : lead.id})}}" class="badge badge-light-success fs-8 fw-bolder">
+													    	<span class="svg-icon svg-icon-2">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" data-bs-toggle="tooltip" data-bs-placement="top"  title="Ajouter une nouvelle transaction">
+																	<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"></rect>
+																	<rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)" fill="currentColor"></rect>
+																	<rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor"></rect>
+																</svg>
+															</span>
+												       	</a>
 
 
-                                                        <form  method="POST" style="display:inline-block"  id="myform" action="{{path('leadsvente_delete', {'id' : lead.id})}}" onsubmit="returne">
+
+
+                                                        <form  method="POST" style="display:inline-block"  id="myform" action="{{path('leads_delete', {'id' : lead.id})}}" onsubmit="returne">
 															<input type="hidden" name="_method" value="delete">
 															<input type="hidden" name="_token" value="{{csrf_token('SUP' ~ lead.id)}}">
-										                    <a href="{{path('leadsvente_delete', {'id' : lead.id})}}" class="confirmModalLink btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+										                    <a href="{{path('leads_delete', {'id' : lead.id})}}" class="confirmModalLink btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 																	<span class="svg-icon svg-icon-3">
-																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"  data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer un lead">
+																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"  data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer un client">
 																			<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black" />
 																			<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black" />
 																			<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black" />
@@ -899,6 +911,7 @@
 												{% endif %}
 												{% endfor %}
 												<!--end::Table row-->
+											
 										 
 											</tbody>
 											<!--end::Table body-->

@@ -9,6 +9,8 @@ use App\Entity\Leads;
 use App\Entity\Marchand;
 use App\Entity\Modeleemail;
 use App\Entity\Modelesms;
+use App\Entity\OperationAchat;
+use App\Entity\Operations;
 use App\Entity\Partenaire;
 use App\Entity\SourcesLeads;
 use App\Entity\Status;
@@ -69,6 +71,7 @@ class LeadsType extends AbstractType
             'placeholder' => ' '
             ])
             ->add('type')
+            ->add('isCLient')
            
 
 
@@ -80,6 +83,16 @@ class LeadsType extends AbstractType
                 'mapped'=>true,
                   
                 ))
+
+
+                ->add('operationAchats', EntityType::class,array(     	
+                    'class' => OperationAchat::class,
+                    'choice_label' => 'numserie',
+                    'required' => false,
+                    'multiple' => true ,
+                    'mapped'=>true,
+                      
+                    ))
                 ->add('vendeurr', EntityType::class,array(
                     'class' => Vendeurr::class,
                     'choice_label' => 'utilisateur.nomutilisateur',
@@ -164,6 +177,8 @@ class LeadsType extends AbstractType
             ))
 
             ->add('modele_vente')
+            ->add('marquevente')
+            
             ->add('anne_vente',
             'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
             'choices' => $this->getYears(1960),
@@ -177,6 +192,9 @@ class LeadsType extends AbstractType
             ->add('remplacer_vehicule')
 
             ->add('etatpneus_vente')
+            ->add('prix_achat')
+            ->add('prix_vente')
+         
            
         ;
     }

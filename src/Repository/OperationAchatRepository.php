@@ -47,4 +47,59 @@ class OperationAchatRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findOperationsByLead($value){
+
+        return $this->createQueryBuilder('OperationAchat')
+        ->addSelect('OperationAchat')   
+        ->innerjoin('OperationAchat.leads', 'l')  
+       ->where('l.id = :val')
+       ->setParameter('val', $value)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+    public function findOperationsAchatByLead($value){
+
+        return $this->createQueryBuilder('OperationAchat')
+        ->addSelect('OperationAchat')   
+        ->innerjoin('OperationAchat.leads', 'l')  
+       ->where('l.id = :val')
+       ->andWhere('OperationAchat.prix_vente is null')
+       ->setParameter('val', $value)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+
+    public function findOperationsVenteByLead($value){
+
+        return $this->createQueryBuilder('OperationAchat')
+        ->addSelect('OperationAchat')   
+        ->innerjoin('OperationAchat.leads', 'l')  
+       ->where('l.id = :val')
+       ->andWhere('OperationAchat.prix_vente is not null')
+       ->andWhere('OperationAchat.prix_achat is null')                     
+       ->setParameter('val', $value)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+    public function findOperationsEchangeByLead($value){
+
+        return $this->createQueryBuilder('OperationAchat')
+        ->addSelect('OperationAchat')   
+        ->innerjoin('OperationAchat.leads', 'l')  
+       ->where('l.id = :val')
+       ->andWhere('OperationAchat.prix_achat is not null')
+       ->andWhere('OperationAchat.prix_vente is not null')
+       ->setParameter('val', $value)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+
 }

@@ -502,10 +502,7 @@ class Vehicule
      */
     private $liquidation;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Operations::class, mappedBy="vehicule", cascade={"persist", "remove"})
-     */
-    private $operations;
+  
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -1730,27 +1727,7 @@ class Vehicule
         return $this;
     }
 
-    public function getOperations(): ?Operations
-    {
-        return $this->operations;
-    }
 
-    public function setOperations(?Operations $operations): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($operations === null && $this->operations !== null) {
-            $this->operations->setVehicule(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($operations !== null && $operations->getVehicule() !== $this) {
-            $operations->setVehicule($this);
-        }
-
-        $this->operations = $operations;
-
-        return $this;
-    }
 
     public function getTrim(): ?string
     {

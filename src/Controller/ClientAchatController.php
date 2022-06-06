@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller;
 
 use App\Entity\Administrateur;
@@ -10,13 +9,13 @@ use App\Entity\Leads;
 use App\Entity\Marchand;
 use App\Entity\Notes;
 use App\Entity\OperationAchat;
+use App\Entity\Operations;
 use App\Entity\Partenaire;
 use App\Entity\Status;
 use App\Entity\Utilisateur;
 use App\Entity\Vendeurr;
 use App\Form\AgentType;
-
-use App\Form\LeadsventeType;
+use App\Form\LeadsType;
 use App\Repository\AdministrateurRepository;
 use App\Repository\AgentRepository;
 use App\Repository\LeadsRepository;
@@ -46,15 +45,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Validator\Constraints\Date;
 
 
-#[Route('/leadsvente')]
-class LeadsventeController extends AbstractController
+#[Route('/clients_achat')]
+class ClientAchatController extends AbstractController
 {
-    #[Route('/', name: 'leadsvente_index', methods: ['GET'])]
-    public function index(LeadsRepository $leadsRepository,Request $request): Response
-    {
-      
-       
 
+
+    #[Route('/client', name: 'clients_index',)]
+   
+    public function index(LeadsRepository $leadsRepository, NotesRepository $notes ,Request $request): Response
+    {
+       
+       
         $today = date("F j, Y, g:i a");          
         $tomorrow  = date('Y-m-d',strtotime("+1 days"));         // March 10, 2001, 5:16 pm
         $yesterday  = date('Y-m-d',strtotime("-1 days"));         // March 10, 2001, 5:16 pm
@@ -62,7 +63,7 @@ class LeadsventeController extends AbstractController
         //dump($tomorrow ) ; dump($yesterday) ; die ; 
         //dd($yesterday) ; die ; 
         $time = date('d/m/Y');
-        $leadss = $leadsRepository ->findvente() ;
+        $leadss = $leadsRepository ->findachat() ;
         $output = array();
         $yestR = array();
         $tomworrowR = array();
@@ -150,9 +151,8 @@ class LeadsventeController extends AbstractController
     // $size = count($output);
       
 
-        $leads = $leadsRepository ->findvente();
+        $leads = $leadsRepository ->findachat();
         $form = $this->createFormBuilder()
-    
 
       // -> add('nom', null , array('required' => false))
        // ->add('telephone', null , array('required' => false))
@@ -304,7 +304,7 @@ class LeadsventeController extends AbstractController
            $cmd .= '  } ' ;
            $cmd .= ' else {  $phe = false ;}   ' ;
            $i =0 ;
-           $filterr = $leadsRepository -> findvente() ;
+           $filterr = $leadsRepository -> findachat() ;
           // dd($cmd) ; die () ;
           // dd($cmd) ; die() ;
            if(!empty($condition))
@@ -329,16 +329,16 @@ class LeadsventeController extends AbstractController
                  }
                   // dd('End') ;
              }
-             else {$filterr = $leadsRepository -> findvente() ;}
+             else {$filterr = $leadsRepository -> findachat() ;}
          
  
           //   dd($filterr); die() ;
 
 
-//  dd($filterr);die;
+
                                  
       //  dd(filterr);die;
-        return $this->render('leadsvente/index.html.twig', [
+        return $this->render('clientAchat/index.html.twig', [
          
             'form' => $form->createView(),
             'leads' => $filterr , 
@@ -351,108 +351,45 @@ class LeadsventeController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'leadsvente_new', methods: ['GET', 'POST'])]
-    public function new(LeadsRepository $leads,ModeleemailRepository $email,ModelesmsRepository $sms,Request $request, EntityManagerInterface $entityManager , UtilisateurRepository $u, AgentRepository $agent ,PartenaireRepository $partenaire , AdministrateurRepository $administrateur , ConcessionnaireRepository $concessionnaire , MarchandRepository $marcha): Response
-    {
-      
-   
-        $lead = new Leads();
-       // dd($lead);
-      
-        $form = $this->createForm(LeadsventeType::class, $lead);
-
-     
-        
-        $form->get('type')->setData(false);
-        $form->get('isCLient')->setData(false);
-        $form->handleRequest($request);
-        $modele=$email->findAll();
-        
-      
-      
-        if ($form->isSubmitted() && $form->isValid()) {
- 
-       
-            $entityManager->persist($lead);
-            $entityManager->flush();
 
 
-            return $this->redirectToRoute('leadsvente_index', [], Response::HTTP_SEE_OTHER);
-        }
-     
 
-        return $this->renderForm('leadsvente/new.html.twig', [
-           
-            'lead' => $lead,
-            'form' => $form,
-            'modelee'=>$modele,
-            
-        ]);
-    }
-
-    #[Route('/{id}/show', name: 'leadsvente_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'clients_show', methods: ['GET'])]
     public function show(Leads $lead): Response
     {
-       // dd($lead);
-        return $this->render('leadsvente/show.html.twig', [
-            'lead' => $lead,
 
+
+        return $this->render('clientAchat/show.html.twig', [
+            'lead' => $lead,
         ]);
     }
-  
 
-    #[Route('/{id}/modif', name: 'leadsvente_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Leads $lead,LeadsRepository $leadrep,ModeleemailRepository $email,EntityManagerInterface $entityManager,VehiculeRepository $vehicule)
+    #[Route('/{id}/edit', name: 'clients_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Leads $lead,LeadsRepository $leadrep,VehiculeRepository $vehicule, EntityManagerInterface $entityManager,ModeleemailRepository $email): Response
     {
-        $form = $this->createForm(LeadsventeType::class, $lead);
+        $form = $this->createForm(LeadsType::class, $lead);
         $form->handleRequest($request);
+        
         $modele=$email->findAll();
+            
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-           // $numserie=$form->get('numserie')->getData(); 
-          
-           if($form->get('statusleads')->getData() == "Livrés")
-           { 
-        
-            $name=$form->get('nom')->getData();
-            $modele=$form->get('modele_vente')->getData();
-           
-         
-            $namelead=$leadrep->findOneByNom($name);
+     
+       
 
-            $operationA= new OperationAchat();
-        
-           
-            $operationA->setModele($modele);
-          
-            $operationA->setNumserie('NULL');
-                $operationA->setVehicule(NULL);
-                $operationA->setLeads($namelead);
-          
-               $entityManager->persist($operationA);
-               $entityManager->flush(); 
-           }
-            return $this->redirectToRoute('leadsvente_index', [], Response::HTTP_SEE_OTHER);
+
+            return $this->redirectToRoute('clients_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('leadsvente/edit.html.twig', [
+        return $this->renderForm('clientAchat/edit.html.twig', [
             'lead' => $lead,
             'form' => $form,
             'modelee'=>$modele,
         ]);
     }
 
-
-   
-
-
-
-
-
-
-    #[Route('/{id}/delete', name: 'leadsvente_delete')]
-  
+    #[Route('/delete/{id}', name: 'clients_delete')]
     public function delete(Request $request, Leads $lead, EntityManagerInterface $entityManager): Response
     {
       // dd('hello');die;
@@ -460,6 +397,12 @@ class LeadsventeController extends AbstractController
             $entityManager->flush();
         
 
-        return $this->redirectToRoute('leadsvente_index');
+        return $this->redirectToRoute('clients_index');
     }
+
+
+
+
+
+    
 }

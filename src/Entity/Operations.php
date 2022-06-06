@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OperationsRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,16 +23,9 @@ class Operations
      */
     private $numserie;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Leads::class, inversedBy="operations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $lead;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Vehicule::class, inversedBy="operations", cascade={"persist", "remove"})
-     */
-    private $vehicule;
+
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -41,7 +35,34 @@ class Operations
     /**
      * @ORM\Column(type="datetime")
      */
+
     private $datetimemodificationtable;
+
+
+
+
+
+
+
+    public function __construct()
+    {
+
+
+        if($this->datecreationtable == null){
+            $this->datecreationtable = new DateTime('now');
+        }
+        
+        $this->datetimemodificationtable = new DateTime('now');
+  
+    }
+
+
+
+
+
+
+
+
 
     public function getId(): ?int
     {
@@ -60,29 +81,9 @@ class Operations
         return $this;
     }
 
-    public function getLead(): ?Leads
-    {
-        return $this->lead;
-    }
 
-    public function setLead(?Leads $lead): self
-    {
-        $this->lead = $lead;
 
-        return $this;
-    }
 
-    public function getVehicule(): ?Vehicule
-    {
-        return $this->vehicule;
-    }
-
-    public function setVehicule(?Vehicule $vehicule): self
-    {
-        $this->vehicule = $vehicule;
-
-        return $this;
-    }
 
     public function getDatecreationtable(): ?\DateTimeInterface
     {
@@ -107,4 +108,7 @@ class Operations
 
         return $this;
     }
+
+
+
 }
