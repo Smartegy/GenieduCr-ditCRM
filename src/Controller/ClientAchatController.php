@@ -63,7 +63,7 @@ class ClientAchatController extends AbstractController
         //dump($tomorrow ) ; dump($yesterday) ; die ; 
         //dd($yesterday) ; die ; 
         $time = date('d/m/Y');
-        $leadss = $leadsRepository ->findachat() ;
+        $leadss = $leadsRepository ->findClientachat()  ;
         $output = array();
         $yestR = array();
         $tomworrowR = array();
@@ -151,7 +151,7 @@ class ClientAchatController extends AbstractController
     // $size = count($output);
       
 
-        $leads = $leadsRepository ->findachat();
+        $leads = $leadsRepository ->findClientachat() ;
         $form = $this->createFormBuilder()
 
       // -> add('nom', null , array('required' => false))
@@ -304,7 +304,7 @@ class ClientAchatController extends AbstractController
            $cmd .= '  } ' ;
            $cmd .= ' else {  $phe = false ;}   ' ;
            $i =0 ;
-           $filterr = $leadsRepository -> findachat() ;
+           $filterr = $leadsRepository -> findClientachat();
           // dd($cmd) ; die () ;
           // dd($cmd) ; die() ;
            if(!empty($condition))
@@ -329,7 +329,7 @@ class ClientAchatController extends AbstractController
                  }
                   // dd('End') ;
              }
-             else {$filterr = $leadsRepository -> findachat() ;}
+             else {$filterr = $leadsRepository -> findClientachat()  ;}
          
  
           //   dd($filterr); die() ;

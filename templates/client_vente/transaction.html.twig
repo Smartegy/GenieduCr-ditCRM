@@ -1,6 +1,8 @@
+
+  
 {% extends 'base.html.twig' %}
 {% set page_title = 'transaction' %}
-{% set P_page_title = 'Liste des Clients' %}
+{% set P_page_title = 'Liste des Clients de vente' %}
 {% set P_path = '/Clients' %} 
   
 
@@ -98,7 +100,7 @@
                                     <!--end::Nav item-->
                                     <!--begin::Nav item-->
                                     <li class="nav-item mt-2">
-                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path("clientsvente_edit",{ 'id' : lead.Id})}}">Modification</a>
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path("leads_edit",{ 'id' : lead.Id})}}">Modification</a>
                                     </li>
                                     <!--end::Nav item-->
                                  
@@ -107,7 +109,7 @@
                                         <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('notes_index', {'idlead' : lead.id})}}">Notes</a>
                                     </li>
                                     <li class="nav-item mt-2">
-                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('files_index', {'idlead' : lead.id})}}">Documents Attaché</a>
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('files_index', {'idlead' : lead.id})}}">Doc Attaché</a>
                                     </li>
 
                                     <li class="nav-item mt-2">
@@ -121,7 +123,7 @@
                                         <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('clients_operations', {'idlead' : lead.id})}}">Operations</a>
                                     </li>
                                     <li class="nav-item mt-2">
-                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('clientvente_transaction', {'idlead' : lead.id})}}">Transaction</a>
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('clients_transaction', {'idlead' : lead.id})}}">Transaction</a>
                                     </li>
 
                                 </ul>
@@ -149,7 +151,7 @@
                            
 
     
-                <div style="display:block;" id="divachat">        
+                <div style="display:none;" id="divachat" >        
                             <div class="row mb-6">
 				
                                 {{ form_label(form.vehicule, "Numéro de Série :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
@@ -157,6 +159,16 @@
                                 <div class="col-lg-8 fv-row fv-plugins-icon-container">
                                     {{ form_widget(form.vehicule, {'id':'vehicule','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
                                     {{ form_errors(form.vehicule) }}
+                
+                             </div>
+                            </div>
+                            <div class="row mb-6" style="display:none;">
+				
+                                {{ form_label(form.numserie, " Numéro de serie:", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+                                
+                                <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                    {{ form_widget(form.numserie, {'id':'numserie','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+                                    {{ form_errors(form.numserie) }}
                 
                              </div>
                             </div>
@@ -171,7 +183,7 @@
                              </div>
                             </div>
                  </div>    
-                <div style="display:block;" id="divvente">         
+                <div style="display:none;" id="divvente">         
                             <div class="row mb-6">
 				
                                 {{ form_label(form.marque, " Marque :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
@@ -204,7 +216,8 @@
                              </div>
                             </div>
                             <div style="display:none;">{{ form_row(form.leads)}} </div>
-                            <div style="display:none;">{{ form_row(form.numserie)}} </div>
+                           
+                       
               </div> 
                  
       
@@ -300,7 +313,7 @@
 <script>
  $("#opexchange").on("click", function(e) {
 
-e.preventDefault();   
+e.preventDefault(); 
 
 divachat= document.getElementById('divachat');
 divvente = document.getElementById('divvente');
@@ -308,31 +321,80 @@ divvente = document.getElementById('divvente');
 divachat.style.display = "block";
 divvente.style.display = "block";
 
+
+
 });
 $("#opachat").on("click", function(e) {
 
 e.preventDefault();   
+  
 
 divachat= document.getElementById('divachat');
 divvente = document.getElementById('divvente');
+vehicule = document.getElementById('vehicule').value="";
+ numserie= document.getElementById('numserie').value="";  
+  prix_achat= document.getElementById('prix_achat').value=""; 
 
 divachat.style.display = "block";
 divvente.style.display = "none";
 
+
+
+
+
+
 });
+
+$("#vehicule").on("click", function(e) {
+
+e.preventDefault();   
+  
+vehicule= document.getElementById('vehicule').value;
+numserie= document.getElementById('numserie').value;
+document.getElementById('numserie').value = vehicule;
+
+
+
+});
+
+
+
+
 $("#opvente").on("click", function(e) {
 
 e.preventDefault();   
 
 divachat= document.getElementById('divachat');
 divvente = document.getElementById('divvente');
+marque=document.getElementById('marque').value="";
+modele=document.getElementById('modele').value="";
+prix_vente=document.getElementById('prix_vente').value="";
 
 divachat.style.display = "none";
 divvente.style.display = "block";
 
+
 });
 
+/*if( $("#remplacer").is(':checked'))  
 
+{
+
+ complementere.style.display = "block"; 
+
+
+}
+else
+{
+
+ $("#type").attr('checked', false);*/
 
 </script>
+
+
+
+
+
+
 {% endblock %}
+ 

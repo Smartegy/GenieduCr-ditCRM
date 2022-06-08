@@ -1881,7 +1881,10 @@ class Vehicule
    
 
    
-
+    public function __toString()
+    {
+        return $this->getVin();
+    }
    
 
    

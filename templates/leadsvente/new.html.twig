@@ -58,7 +58,7 @@
 					   {% endfor %}
 					</div>   
 					<div class="row mb-6">
-						<div style="display:block;"> {{ form_widget(form.type, {'id':'type','attr': {'class': 'form-control form-control-lg form-control-solid'}})}}</div>
+						<div style="display:none;"> {{ form_widget(form.type, {'id':'type','attr': {'class': 'form-control form-control-lg form-control-solid'}})}}</div>
 						<div  style="display:none;">
 							
 					
@@ -585,71 +585,6 @@ for(var i = 0;i<contexts.length;i++){
 });
 
 </script>
-<script>
 
-
-
-$("#remplacer").on("change", function(e) {
-
-e.preventDefault(); 
-remplacement = document.getElementById('remplacer').value;
-complementere= document.getElementById('complementere');
-
-
-
-
-
-
-if( $("#remplacer").is(':checked'))  
-
-{
-
-
- $("#type").attr('checked', true);
-
-
-}
-else
-{
-
- $("#type").attr('checked', false);
-
-   /*complementere.style.display = "none";
-
-
-   modele_vente = document.getElementById('modele_vente').value = "";
-   anne_vente = document.getElementById('anne_vente').value ="";
-   //console.log(anne_vente);
-
-
-   kilometrage_vente  = document.getElementById('kilometrage_vente').value = "";
-   etatcarossrie_vente  = document.getElementById('etatcarossrie_vente').value = "";
-   etatpneus_vente = document.getElementById('etatpneus_vente').value = "";
-   prix_vente= document.getElementById('prix_vente').value = "";*/
-   
-
-}
-
-
-
-});	
-$("#statuslead").on("click", function(e) {
-
-e.preventDefault(); 
-statuslead = document.getElementById('statuslead').value;
-
-if(statuslead == 2) 
-{
-	$("#isClient").attr('checked', true);
-
-}else
-{
-	$("#isClient").attr('checked', false);
-}
-
-});
-
-
-</script>
 		{% endblock %}
 

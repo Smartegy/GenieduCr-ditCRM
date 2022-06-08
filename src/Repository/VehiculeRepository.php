@@ -93,6 +93,19 @@ class VehiculeRepository extends ServiceEntityRepository
     }
     
 
+
+    public function findListActif()
+    {
+        return $this->createQueryBuilder('vehicule')
+            ->Where('vehicule.actif = :val')
+            ->setParameter('val', '1')
+        ;
+    }
+
+   
+
+
+
     // public function findByYears($value): ?Vehicule
     // {
     //     return $this->createQueryBuilder('vehicule')

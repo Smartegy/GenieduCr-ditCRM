@@ -58,7 +58,7 @@
 					   {% endfor %}
 					</div>   
 					<div class="row mb-6">
-						<div style="display:none;" id="type"> {{ form_row(form.type)}}</div>
+						<div style="display:none;" >{{ form_widget(form.type, {'id': 'type','checked':false }) }} </div>
 						<div  style="display:none;">
 							
 					
@@ -291,151 +291,154 @@
 
 	
     </div>
-	<div class="fw-bolder text-success me-2">Les données du véhicule à acheter</div>
-	<div class="border border-dashed border-gray-300  min-w-125px rounded pt-4 pb-2 my-3" >
-			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
-				
-				{{ form_label(form.numserie, "Numéro de Série :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-				
-				<div class="col-lg-8 fv-row fv-plugins-icon-container">
-					{{ form_widget(form.numserie, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-					{{ form_errors(form.numserie) }}
-
-				</div>
-			</div>
-			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
-				
-				{{ form_label(form.prix_achat, "prix d'achat :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-				
-				<div class="col-lg-8 fv-row fv-plugins-icon-container">
-					{{ form_widget(form.prix_achat, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-					{{ form_errors(form.prix_achat) }}
-
-				</div>
-			</div>
-			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
-				
-				{{ form_label(form.statusvehicule, "status véhicule :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-				
-				<div class="col-lg-8 fv-row fv-plugins-icon-container">
-					{{ form_widget(form.statusvehicule, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-					{{ form_errors(form.statusvehicule) }}
-
-			 </div>
-			</div>
-		
-	
-			
-			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
-				
-				{{ form_label(form.marque, "Marque :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-				
-				<div class="col-lg-8 fv-row fv-plugins-icon-container">
-					{{ form_widget(form.marque, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-					{{ form_errors(form.marque) }}
-
-			 </div>
-			</div>
-			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
-				
-				{{ form_label(form.modele, "Modele :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-				
-				<div class="col-lg-8 fv-row fv-plugins-icon-container">
-					{{ form_widget(form.modele, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-					{{ form_errors(form.modele) }}
-
-			 </div>
-			</div>
-	
-	</div>		
 	<div class="fw-bolder text-success me-2">Les données du véhicule à vendre</div>
 	<div class="border border-dashed border-gray-300  min-w-125px rounded pt-4 pb-2 my-3" >   
-			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
-							
-				{{ form_label(form.remplacer_vehicule, "Remplacement Véhicule:", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6 "}}) }}
+	
+		<div style="display:block;" id="complementere">
+			
+			<div class="row mb-6"  style="margin-left:10px;padding-right:100px">
+				
+				{{ form_label(form.marquevente, "Marque de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
 				
 				<div class="col-lg-8 fv-row fv-plugins-icon-container">
-					{{ form_widget(form.remplacer_vehicule, {'id': 'remplacer','checked':false }) }}
-					{{ form_errors(form.remplacer_vehicule) }}
+					{{ form_widget(form.marquevente, {'id':'modele_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+					{{ form_errors(form.marquevente) }}
 
 			 </div>
 			</div>
-			<div style="display:block;" id="complementere">
+			<div class="row mb-6"  style="margin-left:10px;padding-right:100px">
 				
-				<div class="row mb-6"  style="margin-left:10px;padding-right:100px">
-					
-					{{ form_label(form.marquevente, "Marque de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-					
-					<div class="col-lg-8 fv-row fv-plugins-icon-container">
-						{{ form_widget(form.marquevente, {'id':'modele_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-						{{ form_errors(form.marquevente) }}
+				{{ form_label(form.modele_vente, "Modéle de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+				
+				<div class="col-lg-8 fv-row fv-plugins-icon-container">
+					{{ form_widget(form.modele_vente, {'id':'modele_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+					{{ form_errors(form.modele_vente) }}
 
-				 </div>
-				</div>
-				<div class="row mb-6"  style="margin-left:10px;padding-right:100px">
-					
-					{{ form_label(form.modele_vente, "Modéle de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-					
-					<div class="col-lg-8 fv-row fv-plugins-icon-container">
-						{{ form_widget(form.modele_vente, {'id':'modele_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-						{{ form_errors(form.modele_vente) }}
-
-				 </div>
-				</div>
-				<div class="row mb-6" style="margin-left:10px;padding-right:100px" >
-					
-					{{ form_label(form.prix_vente, "Prix de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-					
-					<div class="col-lg-8 fv-row fv-plugins-icon-container">
-						{{ form_widget(form.prix_vente, {'id':'prix_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-						{{ form_errors(form.prix_vente) }}
-
-				 </div>
-				</div>
-				<div class="row mb-6" style="margin-left:10px;padding-right:100px">
-					
-					{{ form_label(form.anne_vente, "Année de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-					
-					<div class="col-lg-8 fv-row fv-plugins-icon-container">
-						{{ form_widget(form.anne_vente, {'id':'anne_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-						{{ form_errors(form.anne_vente) }}
-
-				 </div>
-				</div>
-				<div class="row mb-6" style="margin-left:10px;padding-right:100px" >
-					
-					{{ form_label(form.kilometrage_vente, "Kilométrage de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-					
-					<div class="col-lg-8 fv-row fv-plugins-icon-container">
-						{{ form_widget(form.kilometrage_vente, {'id':'kilometrage_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-						{{ form_errors(form.kilometrage_vente) }}
-
-				 </div>
-				</div>
-				<div class="row mb-6" style="margin-left:10px;padding-right:100px">
-					
-					{{ form_label(form.etatcarossrie_vente, "Etat de Carroserie de Véhicule à vendre:", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-					
-					<div class="col-lg-8 fv-row fv-plugins-icon-container">
-						{{ form_widget(form.etatcarossrie_vente, {'id':'etatcarossrie_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-						{{ form_errors(form.etatcarossrie_vente) }}
-
-				 </div>
-				</div>
-				<div class="row mb-6" style="margin-left:10px;padding-right:100px">
-					
-					{{ form_label(form.etatpneus_vente, "Etat des pneus de Véhicule à vendre:", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-					
-					<div class="col-lg-8 fv-row fv-plugins-icon-container">
-						{{ form_widget(form.etatpneus_vente, {'id':'etatpneus_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-						{{ form_errors(form.etatpneus_vente) }}
-
-				 </div>
-				</div>
-	
-			
+			 </div>
 			</div>
-	</div>		
+			<div class="row mb-6" style="margin-left:10px;padding-right:100px" >
+				
+				{{ form_label(form.prix_vente, "Prix de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+				
+				<div class="col-lg-8 fv-row fv-plugins-icon-container">
+					{{ form_widget(form.prix_vente, {'id':'prix_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+					{{ form_errors(form.prix_vente) }}
+
+			 </div>
+			</div>
+			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+				
+				{{ form_label(form.anne_vente, "Année de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+				
+				<div class="col-lg-8 fv-row fv-plugins-icon-container">
+					{{ form_widget(form.anne_vente, {'id':'anne_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+					{{ form_errors(form.anne_vente) }}
+
+			 </div>
+			</div>
+			<div class="row mb-6" style="margin-left:10px;padding-right:100px" >
+				
+				{{ form_label(form.kilometrage_vente, "Kilométrage de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+				
+				<div class="col-lg-8 fv-row fv-plugins-icon-container">
+					{{ form_widget(form.kilometrage_vente, {'id':'kilometrage_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+					{{ form_errors(form.kilometrage_vente) }}
+
+			 </div>
+			</div>
+			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+				
+				{{ form_label(form.etatcarossrie_vente, "Etat de Carroserie de Véhicule à vendre:", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+				
+				<div class="col-lg-8 fv-row fv-plugins-icon-container">
+					{{ form_widget(form.etatcarossrie_vente, {'id':'etatcarossrie_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+					{{ form_errors(form.etatcarossrie_vente) }}
+
+			 </div>
+			</div>
+			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+				
+				{{ form_label(form.etatpneus_vente, "Etat des pneus de Véhicule à vendre:", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+				
+				<div class="col-lg-8 fv-row fv-plugins-icon-container">
+					{{ form_widget(form.etatpneus_vente, {'id':'etatpneus_vente','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+					{{ form_errors(form.etatpneus_vente) }}
+
+			 </div>
+			</div>
+
+		
+		</div>
+</div>
+<div class="fw-bolder text-success me-2">Les données du véhicule à acheter</div>	
+
+	
+	<div class="border border-dashed border-gray-300  min-w-125px rounded pt-4 pb-2 my-3" >
+		<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+						
+			{{ form_label(form.remplacer_vehicule, "Remplacement Véhicule:", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6 "}}) }}
+			
+			<div class="col-lg-8 fv-row fv-plugins-icon-container">
+				{{ form_widget(form.remplacer_vehicule, {'id': 'remplacer' }) }}
+				{{ form_errors(form.remplacer_vehicule) }}
+
+		 </div>
+		</div>
+		<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+			
+			{{ form_label(form.numserie, "Numéro de Série :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+			
+			<div class="col-lg-8 fv-row fv-plugins-icon-container">
+				{{ form_widget(form.numserie, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+				{{ form_errors(form.numserie) }}
+
+			</div>
+		</div>
+		<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+			
+			{{ form_label(form.prix_achat, "prix d'achat :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+			
+			<div class="col-lg-8 fv-row fv-plugins-icon-container">
+				{{ form_widget(form.prix_achat, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+				{{ form_errors(form.prix_achat) }}
+
+			</div>
+		</div>
+		<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+			
+			{{ form_label(form.statusvehicule, "status véhicule :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+			
+			<div class="col-lg-8 fv-row fv-plugins-icon-container">
+				{{ form_widget(form.statusvehicule, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+				{{ form_errors(form.statusvehicule) }}
+
+		 </div>
+		</div>
+	
+
+		
+		<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+			
+			{{ form_label(form.marque, "Marque :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+			
+			<div class="col-lg-8 fv-row fv-plugins-icon-container">
+				{{ form_widget(form.marque, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+				{{ form_errors(form.marque) }}
+
+		 </div>
+		</div>
+		<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+			
+			{{ form_label(form.modele, "Modele :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+			
+			<div class="col-lg-8 fv-row fv-plugins-icon-container">
+				{{ form_widget(form.modele, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+				{{ form_errors(form.modele) }}
+
+		 </div>
+		</div>
+
+</div>	
 
 			<div style="display:none"> {{ form_row(form.operationAchats)}}}	</div>
 		
@@ -588,17 +591,9 @@ for(var i = 0;i<contexts.length;i++){
 <script>
 
 
-
 $("#remplacer").on("change", function(e) {
 
 e.preventDefault(); 
-remplacement = document.getElementById('remplacer').value;
-complementere= document.getElementById('complementere');
-
-
-
-
-
 
 
 if( $("#remplacer").is(':checked'))  
@@ -606,9 +601,31 @@ if( $("#remplacer").is(':checked'))
 {
 
 	$("#type").attr('checked', true);
-
-
 }
+else
+{
+
+ $("#type").attr('checked', false);
+}
+
+
+
+});
+$("#statuslead").on("click", function(e) {
+
+e.preventDefault(); 
+statuslead = document.getElementById('statuslead').value;
+
+if(statuslead == 2) 
+{
+	$("#isClient").attr('checked', true);
+
+}else
+{
+	$("#isClient").attr('checked', false);
+}
+
+});
 /*else
 {
 
@@ -632,7 +649,7 @@ if( $("#remplacer").is(':checked'))
 
 
 
-});	
+
 $("#statuslead").on("click", function(e) {
 
 e.preventDefault(); 

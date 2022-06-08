@@ -415,7 +415,7 @@ class LeadsventeController extends AbstractController
            if($form->get('statusleads')->getData() == "Livrés")
            { 
         
-            $name=$form->get('nom')->getData();
+          /*  $name=$form->get('nom')->getData();
             $modele=$form->get('modele_vente')->getData();
            
          
@@ -432,6 +432,50 @@ class LeadsventeController extends AbstractController
           
                $entityManager->persist($operationA);
                $entityManager->flush(); 
+
+
+               $onecar->setActif('0');
+               $entityManager->persist($onecar);
+               $entityManager->flush();*/
+               $numserie=$form->get('numserie')->getData(); 
+               $prix_achat=$form->get('prix_achat')->getData(); 
+            
+               $modelevente=$form->get('modele_vente')->getData();  
+                $marquevente=$form->get('marquevente')->getData(); 
+                $prix_vente=$form->get('prix_vente')->getData(); 
+    
+                    $onecar= $vehicule->findOneByVin($numserie);
+                    $name=$form->get('nom')->getData();
+                    $namelead=$leadrep->findOneByNom($name);
+     
+                    $operationA= new OperationAchat();
+                    
+                    if( $numserie != null )
+                    {
+                    $operationA->setNumserie($numserie);
+                    $operationA->setVehicule($onecar);
+              
+                    $operationA->setPrixAchat($prix_achat);
+
+                  
+                    $onecar->setActif('0');
+                    $entityManager->persist($onecar);
+                    $entityManager->flush();
+                    
+
+                    }
+                    $operationA->setPrixVente($prix_vente);
+                    $operationA->setModele($modelevente);
+                    $operationA->setMarque($marquevente);
+                    $operationA->setLeads($namelead);
+               
+                       
+                  
+                       $entityManager->persist($operationA);
+                       $entityManager->flush();
+                 
+                       
+                     
            }
             return $this->redirectToRoute('leadsvente_index', [], Response::HTTP_SEE_OTHER);
         }

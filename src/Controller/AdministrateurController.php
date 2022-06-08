@@ -32,6 +32,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
 * @IsGranted("IS_AUTHENTICATED_FULLY")
 */
+
+
 class AdministrateurController extends AbstractController  
 {
     

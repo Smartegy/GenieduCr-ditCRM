@@ -7,6 +7,7 @@ use App\Entity\OperationAchat;
 use App\Form\OperationAchatType;
 use App\Repository\LeadsRepository;
 use App\Repository\OperationAchatRepository;
+use App\Repository\VehiculeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -48,10 +49,11 @@ class OperationController extends AbstractController
             $uri = $request->getUri();
           
             
-
+         
           
             return $this->redirectToRoute('clients_operations',array('idlead' => $idlead));
         }*/
+     //   dd($resultvente);die;
 
 
         return $this->render('clientAchat/operation.html.twig', [
@@ -65,21 +67,24 @@ class OperationController extends AbstractController
         ]);
     }
     #[Route('transaction/{idlead}', name: 'clients_transaction', methods: ['GET', 'POST'])]
-    public function transaction(Request $request, EntityManagerInterface $entityManager,OperationAchatRepository $operation,LeadsRepository $leadsRepository): Response
+    public function transaction(Request $request, EntityManagerInterface $entityManager,OperationAchatRepository $operation,LeadsRepository $leadsRepository,VehiculeRepository $vehicule): Response
     {
 
         $question_id = $request->getpathInfo();
          $res= explode('/',$question_id,3);
          $param=$res[2];
          $idlead= intval($param);
-        $onelead=$leadsRepository->findOneById($idlead); 
-        $result=$operation->findOperationsByLead($idlead);
-       //dd($result) ;die;
-       $operations = new OperationAchat();
+         $onelead=$leadsRepository->findOneById($idlead); 
+         $result=$operation->findOperationsByLead($idlead);
+        //dd($result) ;die;
+        $operations = new OperationAchat();
         $form = $this->createForm(OperationAchatType::class, $operations);
         $form->get('leads')->setData($onelead);  
+        $numcar= $form->get('numserie')->getData(); 
+        $onecar= $vehicule->findOneByVin($numcar);
+      
         $form->handleRequest($request);
-        //dd($form);die;
+       // dd($form);die;
    
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($operations);
@@ -87,10 +92,15 @@ class OperationController extends AbstractController
            
            // $uri = $request->getUri();
           
-            
-
+           if($numcar!= null)
+           {
+           $onecar->setActif('0');
+           $entityManager->persist($onecar);
+           $entityManager->flush();
+           }
+         
           
-            return $this->redirectToRoute('clients_transaction',array('idlead' => $idlead));
+            return $this->redirectToRoute('clients_operations',array('idlead' => $idlead));
         }
 
 
@@ -105,8 +115,8 @@ class OperationController extends AbstractController
     
 
 
-    #[Route('transaction/{idlead}', name: 'clientvente_transaction', methods: ['GET', 'POST'])]
-    public function transactionvente(Request $request, EntityManagerInterface $entityManager,OperationAchatRepository $operation,LeadsRepository $leadsRepository): Response
+    #[Route('transactions/{idlead}', name: 'clientvente_transaction', methods: ['GET', 'POST'])]
+    public function transactionvente(Request $request, EntityManagerInterface $entityManager,OperationAchatRepository $operation,LeadsRepository $leadsRepository,VehiculeRepository $vehicule): Response
     {
 
         $question_id = $request->getpathInfo();
@@ -120,6 +130,14 @@ class OperationController extends AbstractController
         $form = $this->createForm(OperationAchatType::class, $operations);
         $form->get('leads')->setData($onelead);  
         $form->handleRequest($request);
+
+        $numcar= $form->get('numserie')->getData(); 
+      //  dd($numcar);die;
+      
+       //$vehicule=$veh->findListActif();
+       // dd($vehicule);
+        //$form->get('vehicule')->setData($vehicule);
+
         //dd($form);die;
    
         if ($form->isSubmitted() && $form->isValid()) {
@@ -128,10 +146,19 @@ class OperationController extends AbstractController
            
            // $uri = $request->getUri();
           
-            
-
+           if($numcar != null)
+           {
+           $onecar= $vehicule->findOneByVin($numcar);
+           $onecar->setActif('0');
+           $entityManager->persist($onecar);
+           $entityManager->flush();
+           $onelead->setType('1');
+           $entityManager->persist($onelead);
+           $entityManager->flush();
           
-            return $this->redirectToRoute('clients_transaction',array('idlead' => $idlead));
+       }
+          
+            return $this->redirectToRoute('clients_operations',array('idlead' => $idlead));
         }
 
 

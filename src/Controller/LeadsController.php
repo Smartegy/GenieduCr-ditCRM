@@ -491,6 +491,14 @@ class LeadsController extends AbstractController
               
                    $entityManager->persist($operationA);
                    $entityManager->flush();
+             
+                   
+                  $onecar->setActif('0');
+                   $entityManager->persist($onecar);
+                   $entityManager->flush();
+                 //  dd($car);die;
+
+                   
 
             }
 

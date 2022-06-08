@@ -479,7 +479,7 @@
 
 			 </div>
 			</div>
-			<div style="display:none;" id="complementere">
+			<div style="display:block;" id="complementere">
 				<div class="row mb-6"  style="margin-left:10px;padding-right:100px">
 					
 					{{ form_label(form.marquevente, "Marque de Véhicule à vendre :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
@@ -703,70 +703,6 @@ for(var i = 0;i<contexts.length;i++){
 });
 
 </script>
-<script>
 
-
-
-$("#remplacer").on("change", function(e) {
-
-e.preventDefault(); 
-remplacement = document.getElementById('remplacer').value;
-complementere= document.getElementById('complementere');
-
-
-
-
-
-
-if( $("#remplacer").is(':checked'))  
-
-{
-
- complementere.style.display = "block"; 
-
-
-}
-else
-{
-
- $("#type").attr('checked', false);
-
-   complementere.style.display = "none";
-
-
-   modele_vente = document.getElementById('modele_vente').value = "";
-   anne_vente = document.getElementById('anne_vente').value ="";
-   //console.log(anne_vente);
-
-
-   kilometrage_vente  = document.getElementById('kilometrage_vente').value = "";
-   etatcarossrie_vente  = document.getElementById('etatcarossrie_vente').value = "";
-   etatpneus_vente = document.getElementById('etatpneus_vente').value = "";
-   prix_vente= document.getElementById('prix_vente').value = "";
-   
-
-}
-
-
-
-});	
-$("#statuslead").on("click", function(e) {
-
-e.preventDefault(); 
-statuslead = document.getElementById('statuslead').value;
-
-if(statuslead == 2) 
-{
-	$("#isClient").attr('checked', true);
-
-}else
-{
-	$("#isClient").attr('checked', false);
-}
-
-});
-
-
-</script>
 		{% endblock %}
 

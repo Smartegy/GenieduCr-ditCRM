@@ -121,7 +121,9 @@ class LeadsRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('lead')
             ->andWhere('lead.type = :val')
+            ->andWhere('lead.isCLient = :val2')
             ->setParameter('val','1')
+            ->setParameter('val2','0')
             ->getQuery()
             ->getResult()
         ;
@@ -130,11 +132,38 @@ class LeadsRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('lead')
             ->andWhere('lead.type = :val')
+            ->andWhere('lead.isCLient = :val2')
             ->setParameter('val','0')
+            ->setParameter('val2','0')
             ->getQuery()
             ->getResult()
         ;
     }
+
+
+   public function findClientachat() 
+    {
+         return $this->createQueryBuilder('lead')
+            ->andWhere('lead.type = :val')
+            ->andWhere('lead.isCLient = :val2')
+            ->setParameter('val','1')
+            ->setParameter('val2','1')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    public function findClientvente()
+    {
+       return $this->createQueryBuilder('lead')
+            ->andWhere('lead.type = :val')
+            ->andWhere('lead.isCLient = :val2')
+            ->setParameter('val','0')
+            ->setParameter('val2','1')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
 
 }
