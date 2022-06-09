@@ -29,8 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
-
+use Symfony\Component\Security\Core\Security;
 
 /**
 * @IsGranted("IS_AUTHENTICATED_FULLY")
@@ -60,10 +59,33 @@ class ConcessionnaireController extends AbstractController
         
     }
 
+
     #[Route('/concessionnaire', name: 'concessionnaire')]
-    public function index(ConcessionnaireRepository $repository): Response
+    public function index(ConcessionnaireRepository $repository,Security $security): Response
     {
-        $concessionnaires = $repository -> findAll();
+          /** @var User $user */
+          $user = $security->getUser();
+          $userrole = $user->getRoles();
+        //  $usernom= $user->getNomutilisateur();
+          $usernom= $user->getId();
+         // dd($userrole[0]);
+         
+  
+        
+        
+         
+       if($userrole[0] == 'ROLE_ADMIN' )
+       {
+          $concessionnaires = $repository -> findAll();
+         // dd($concessionnaires);die;
+
+       }
+       if($userrole[0] == 'ROLE_CONCESSIONNAIRE' )
+       {
+          $concessionnaires = $repository -> findIdByUtilisateur($usernom);
+         
+         
+       }
        
        
         return $this->render('concessionnaire/index.html.twig', [

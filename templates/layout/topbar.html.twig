@@ -701,15 +701,18 @@
 												<!--begin::Menu item-->
 
 												{# {{ render(controller( 'App\\Controller\\ArticleController::recentArticles', { 'max': 3 } )) }} #}
-
+											
 												<div class="menu-item px-5 my-1">
 													<a href="{{path("modification_administrateur",{ 'id' : app.user.id})}}" class="menu-link px-5">Account Settings</a>
 												</div>
+											
 												<!--end::Menu item-->
 												<!--begin::Menu item-->
+											
 												<div class="menu-item px-5">
-													<a href="{{path("app_logout")}}" class="menu-link px-5">Sign Out</a>
+													<a href="{{path("logout")}}" class="menu-link px-5">Déconnexion</a>
 												</div>
+										
 												<!--end::Menu item-->
 												<!--begin::Menu separator-->
 												<div class="separator my-2"></div>

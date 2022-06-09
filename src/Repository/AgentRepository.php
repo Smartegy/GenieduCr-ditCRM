@@ -194,8 +194,7 @@ class AgentRepository extends ServiceEntityRepository
         ;
     }
 
-
-
+   
 
 
 }

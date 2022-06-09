@@ -38,8 +38,13 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
-        # - { path: ^/profile, roles: ROLE_USER }
-     
+          - { path: ^/admin, roles: ROLE_ADMIN  }
+          - { path: ^/profilconcessionnaire, roles: ROLE_CONCESSIONNAIRE }
+          - { path: ^/profilmarchand, roles: ROLE_MARCHAND }
+          - { path: ^/profilpartenaire, roles: ROLE_PARTENAIRE }
+          - { path: ^/profilagent, roles: ROLE_AGENT }
+        
+
+
      
      

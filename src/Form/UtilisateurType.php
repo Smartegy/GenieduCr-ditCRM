@@ -13,12 +13,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
-
-
-
-
-
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class UtilisateurType extends AbstractType
 {
@@ -43,7 +38,23 @@ class UtilisateurType extends AbstractType
 
             
             //->add('plainPassword', PasswordType::class); 
-          /* -> add('roles')*/
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'admin' => 'ROLE_ADMIN',
+                    'concessionnaire' => 'ROLE_CONCESSIONNAIRE',
+                    'marchand' => 'ROLE_MARCHAND',
+                    'partenaire' => 'ROLE_PARTENAIRE',
+                    'agent' => 'ROLE_AGENT',
+                 
+
+                ],
+                'expanded' => true,
+                'multiple' => true,
+                'label' => 'Rôles' 
+            ])
+
+
+
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

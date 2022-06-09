@@ -42,6 +42,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\Date;
 
 /**
@@ -54,9 +55,9 @@ class LeadsController extends AbstractController
 
     #[Route('/', name: 'leads_index',)]
    
-    public function index(LeadsRepository $leadsRepository, NotesRepository $notes ,Request $request): Response
+    public function index(LeadsRepository $leadsRepository,Security $security, NotesRepository $notes ,Request $request,AgentRepository $agent ): Response
     {
-       
+         
        
         $today = date("F j, Y, g:i a");          
         $tomorrow  = date('Y-m-d',strtotime("+1 days"));         // March 10, 2001, 5:16 pm
@@ -369,12 +370,14 @@ class LeadsController extends AbstractController
     /**
      * @Route("/hello-page", name="hello_page")
      */
-    
-
-    #[Route('/new', name: 'leads_new', methods: ['GET', 'POST'])]
-    public function new(LeadsRepository $leads,LeadsRepository $leadrep,ModeleemailRepository $email,ModelesmsRepository $sms,Request $request, EntityManagerInterface $entityManager , UtilisateurRepository $u, AgentRepository $agent ,PartenaireRepository $partenaire , AdministrateurRepository $administrateur , ConcessionnaireRepository $concessionnaire , MarchandRepository $marcha ,VehiculeRepository $vehicule): Response
-    {
    
+    #[Route('/new', name: 'leads_new', methods: ['GET', 'POST'])]
+    public function new(LeadsRepository $leads,Security $security,LeadsRepository $leadrep,ModeleemailRepository $email,ModelesmsRepository $sms,Request $request, EntityManagerInterface $entityManager , UtilisateurRepository $u, AgentRepository $agent ,PartenaireRepository $partenaire , AdministrateurRepository $administrateur , ConcessionnaireRepository $concessionnaire , MarchandRepository $marcha ,VehiculeRepository $vehicule): Response
+    {
+       
+
+      //  $this->denyAccessUnlessGranted('ROLE_ADMIN');
+      
         $lead = new Leads();
        
       
@@ -418,14 +421,14 @@ class LeadsController extends AbstractController
 
                  
             //  dd('this lead should be livreded');die;
-
+        
           }
 
 
 
             return $this->redirectToRoute('leads_index', [], Response::HTTP_SEE_OTHER);
         }
-     
+    
 
         return $this->renderForm('leads/new.html.twig', [
            

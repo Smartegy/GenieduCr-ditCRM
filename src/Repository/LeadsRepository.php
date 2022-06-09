@@ -117,6 +117,28 @@ class LeadsRepository extends ServiceEntityRepository
       
     }
 
+
+   /* public function findachatagent($nom) 
+    {
+        return $this->createQueryBuilder('lead')
+            ->andWhere('lead.type = :val')
+            ->andWhere('lead.isCLient = :val2')
+            ->andWhere('lead.agent = valagent')
+            ->orWhere('lead.concessionnaire = valcons')
+            ->orWhere('lead.marchand = valmar')
+            ->orWhere('lead.partenaire = valpart')
+
+            ->setParameter('val','1')
+            ->setParameter('val2','0')
+            ->orsetParameter('valagent',$nom) 
+            ->orsetParameter('valcons',$nom)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+*/
+
+
     public function findachat() 
     {
         return $this->createQueryBuilder('lead')

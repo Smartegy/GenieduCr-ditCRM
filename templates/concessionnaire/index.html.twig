@@ -6,6 +6,7 @@
 
 {% set P_page_title = '' %}
 {% block body %}
+
     <!--begin::Body-->
     <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
     <!--begin::Main-->
@@ -39,6 +40,7 @@
 
                                             <!--end::Export-->
                                             <!--begin::Add user-->
+                                            {% if is_granted('ROLE_ADMIN') %}
                                             <button type="button" class="btn btn-primary" >
                                                 <a href="{{path("add_concessionnaire")}}" >
                                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
@@ -52,12 +54,13 @@
 												</span>
 
                                                 </a>
+                                               
                                                 <a href="{{path("add_concessionnaire")}}" style="color:#ffffff;">Ajouter</a>
 
                                                 <!--end::Svg Icon-->
-
+                                              
                                             </button>
-
+                                            {% endif %}
 
                                         </div>
 
@@ -112,6 +115,7 @@
                                         <!--end::Card toolbar-->
                                     </div>
                                     <!--end::Card header-->
+                                 
                                     <!--begin::Card body-->
                                     <div class="card-body py-4">
                                         <!--begin::Table-->
@@ -175,7 +179,7 @@
 											
 																	   
 																		
-																		
+                                              {% if is_granted('ROLE_ADMIN') %}					
 												    <a href="{{path('suppression_concessionnaire', {'id' : concessionnaire.id})}}" class="confirmModalLink btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 															
 																			
@@ -190,6 +194,7 @@
                                                                 <!--end::Svg Icon-->
 
                                                             </a>
+                                               {% endif %}             
                                                         </form>
 
                                                            <div class="modal fade" tabindex="-1" id="kt_modal_1">
@@ -327,4 +332,6 @@
 
 </script>
     </body>
+
 {% endblock %}
+

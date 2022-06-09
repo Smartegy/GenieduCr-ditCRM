@@ -18,7 +18,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  * @IsGranted("IS_AUTHENTICATED_FULLY")
  */
 
- 
 
 class Administrateur 
 {

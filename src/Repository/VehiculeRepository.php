@@ -102,7 +102,15 @@ class VehiculeRepository extends ServiceEntityRepository
         ;
     }
 
-   
+    public function findListbyCompagnie($val)
+    {
+        return $this->createQueryBuilder('vehicule')
+            ->Where('vehicule.utilisateur = :val')
+            ->setParameter('val', $val)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 
 

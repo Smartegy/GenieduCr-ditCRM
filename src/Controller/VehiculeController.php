@@ -46,6 +46,7 @@ use App\Entity\Status;
 use App\Entity\Utilisateur;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 
 /**
 * @IsGranted("IS_AUTHENTICATED_FULLY")
@@ -78,10 +79,21 @@ class VehiculeController extends AbstractController
  
 
     #[Route('/vehicule', name: 'vehicule')]
-    public function filter( ModeleRepository $MRep , VehiculeRepository $repository,FabriquantRepository $Frep,  StatusRepository $Rstatus , Request $request , UtilisateurRepository $Users)
+    public function filter( ModeleRepository $MRep ,Security $security, VehiculeRepository $repository,FabriquantRepository $Frep,  StatusRepository $Rstatus , Request $request , UtilisateurRepository $Users,ConcessionnaireRepository $consi)
     {
+        
+        /** @var User $user */
+        $user = $security->getUser();
+        $userrole = $user->getRoles();
+      //  $usernom= $user->getNomutilisateur();
+        $userId= $user->getId();
+       // dd($userrole[0]);
+      $con= $consi->findIdByNom($userId);
+      // $data= $consi->findIdByNom(14);
+      //dd($con);die;
+        $data=$repository->findListbyCompagnie($con);
+    
 
-   
         $form = $this->createFormBuilder()
         ->add('Year',
             'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[

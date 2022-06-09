@@ -28,7 +28,7 @@ class Concessionnaire
      * @Assert\Valid()
  
      */
-    private $Concessionnairemarchand;
+    public $Concessionnairemarchand;
 
     /**
      * @ORM\OneToMany(targetEntity=Leads::class, mappedBy="concessionnaire")

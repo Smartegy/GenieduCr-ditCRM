@@ -573,8 +573,10 @@
 													  Filtre
 											 </button>
 											<!--begin::Add Lead-->
+											{% if is_granted('ROLE_ADMIN') %}
 											<a href="{{path("leads_new")}}" class="btn btn-primary">Ajouter Lead</a>
 											<!--end::Add Lead-->
+											{% endif %}
 										</div>
 
                                         <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
