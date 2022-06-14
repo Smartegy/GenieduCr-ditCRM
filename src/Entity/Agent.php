@@ -202,11 +202,6 @@ class Agent
 
         return $this;
     }
-
-
-
-
-
     /**
      * @return Collection|Partenaire[]
      */

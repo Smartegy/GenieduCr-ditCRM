@@ -205,6 +205,23 @@ class Concessionnairemarchand
     {
         return $this->vendeurrs;
     }
+    public function addVendeur(Vendeurr $vendeur): self
+    {
+        if (!$this->vendeurrs->contains($vendeur)) {
+            $this->vendeurrs[] = $vendeur;
+        }
+
+        return $this;
+    }
+
+    public function removeVendeur(Vendeurr $vendeur): self
+    {
+        $this->vendeurrs->removeElement($vendeur);
+
+        return $this;
+    }
+
+
 
     /**
      * @return Collection|Agent[]

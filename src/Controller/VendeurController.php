@@ -6,16 +6,21 @@ use App\Entity\Vendeurr;
 use App\Entity\Utilisateur;
 use App\Form\EditVendeurType;
 use App\Form\VendeurrType;
+use App\Form\SecUtilisateurType;
 use App\Repository\VendeurrRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use App\Form\SecUtilisateurType;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
+
+/**
+ * @IsGranted("IS_AUTHENTICATED_FULLY")
+ */
 class VendeurController extends AbstractController
 {
     public function __construct(VendeurrRepository $vendeurrRepository,
@@ -29,7 +34,7 @@ class VendeurController extends AbstractController
     #[Route('/vendeur', name: 'vendeur')]
     public function index(VendeurrRepository $repository): Response
     {
-        $vendeur = $repository -> findAll();
+        $vendeur = $repository->findAll();
         return $this->render('vendeur/index.html.twig', [
             'vendeur' => $vendeur,
         ]);
@@ -38,25 +43,14 @@ class VendeurController extends AbstractController
     #[Route('/vendeur/add-vendeur', name: 'add_vendeur')]
     public function ajout_modification(Vendeurr $vendeurr = null, UserPasswordHasherInterface $userPasswordHasher, ObjectManager $objectManager, Request $request)
     {
-
         if (!$vendeurr) {
             $vendeurr = new Vendeurr();
 
         }
-
-
         $form = $this->createForm(VendeurrType::class, $vendeurr);
         $form->handleRequest($request);
-
         $user = new Utilisateur();
-
-
-        //dd($form->getData());
-
         if ($form->isSubmitted() && $form->isValid()) {
-            // if($form->isSubmitted()){
-
-
             // encode the plain password
             $vendeurr->getUtilisateur()->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -64,9 +58,7 @@ class VendeurController extends AbstractController
                     $form->get('utilisateur')->get('password')->getData()
                 )
             );
-
             $modif = $vendeurr->getId() !== null;
-
             $objectManager->persist($vendeurr);
             $objectManager->flush();
             $this->addFlash("success", ($modif) ? "La modification a été effectuée" : "L'ajout a été effectuée");
@@ -129,4 +121,38 @@ class VendeurController extends AbstractController
         $objectManager->flush();
         return $this->redirectToRoute("vendeur");
     }
+
+    #[Route('/secure-vendeur/{id}', name: 'secure_vendeur', methods:'GET|POST')]
+    public function secure(UserPasswordHasherInterface $userPasswordHasher, ObjectManager $objectManager, Request $request, $id)
+    {
+
+        $vendeur = $this->VendeurrRepository->findOneById($id);
+
+        $user= $vendeur->getUtilisateur();
+        $form = $this->createForm(SecUtilisateurType::class,$user);
+        $form -> handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+            $objectManager->persist($user);
+            $objectManager->flush();
+            return $this->redirectToRoute("vendeur");
+        }
+
+
+
+        return $this->render('vendeur/security.html.twig', [
+            'utilisateur' => $user,
+            'form' => $form->createView()
+
+
+        ]);
+
+    }
+
 }
