@@ -31,13 +31,7 @@ class PartenaireType extends AbstractType
             
             ->add('agents', EntityType::class,array(
                 'class' => Agent::class,
-                'choice_label' => 'utilisateur.nom', 
-                'query_builder' => function(AgentRepository $repo)
-                {
-                    $agents = $repo->fillAgents();
-                    return $agents;
-                    },
-                    
+                'choice_label' => 'utilisateur.nom',
                     'expanded' => false,
                     'multiple' => true
                   
@@ -45,11 +39,7 @@ class PartenaireType extends AbstractType
                 ->add('vendeurs', EntityType::class,array(
                     'class' => Agent::class,
                     'choice_label' => 'utilisateur.nom', 
-                    'query_builder' => function(AgentRepository $repo)
-                    {
-                        $vendeurs = $repo->fillVendeurs();
-                        return $vendeurs;
-                        },
+
                         
                         'expanded' => false,
                         'multiple' => true,

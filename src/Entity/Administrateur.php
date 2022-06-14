@@ -26,12 +26,12 @@ class Administrateur
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="boolean",nullable=true)
      */
-    private $authenvoiemails;
+      private $authenvoiemails;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)

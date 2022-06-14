@@ -66,6 +66,12 @@ class Concessionnairemarchand
     private $agents;
 
     /**
+     * @ORM\ManyToMany(targetEntity=Vendeurr::class, inversedBy="concessionnairemarchand")
+     * @Assert\Valid()
+     */
+    private $vendeurrs;
+
+    /**
      * @ORM\OneToOne(targetEntity=Medias::class, cascade={"persist", "remove"})
      * @Assert\Valid()
     
@@ -97,6 +103,7 @@ class Concessionnairemarchand
     {
         $this->fabriquants = new ArrayCollection();
         $this->agents = new ArrayCollection();
+        $this->vendeurrs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,6 +197,13 @@ class Concessionnairemarchand
         }
 
         return $this;
+    }
+    /**
+     * @return Collection|Vendeurr[]
+     */
+    public function getVendeurrs(): Collection
+    {
+        return $this->vendeurrs;
     }
 
     /**

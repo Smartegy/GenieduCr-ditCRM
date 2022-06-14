@@ -96,6 +96,11 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private $concessionnairemarchand;
 
     /**
+     * @ORM\OneToOne(targetEntity=Vendeurr::class, mappedBy="utilisateur", cascade={"persist", "remove"})
+     */
+    private $vendeur;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $addresse;
@@ -316,6 +321,23 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->agent = $agent;
+
+        return $this;
+    }
+
+    public function getVendeur(): ?Vendeurr
+    {
+        return $this->vendeur;
+    }
+
+    public function setVendeur(Vendeurr $vendeur): self
+    {
+        // set the owning side of the relation if necessary
+        if ($vendeur->getUtilisateur() !== $this) {
+            $vendeur->setUtilisateur($this);
+        }
+
+        $this->vendeur = $vendeur;
 
         return $this;
     }

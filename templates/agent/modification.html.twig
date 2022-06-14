@@ -242,25 +242,7 @@
 													{{ form_widget(form.utilisateur.telephone, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
 											</div>
 											</div>
-											
-												    {# {% for typeagent in form.typeagent %} #}
-													<div class="row mb-6">
-												    {{ form_label(form.typeagent, "Type Agent :", {'label_attr': {'class':"col-lg-4 col-form-label fw-bold fs-6"}}) }}
-												  <div class="col-lg-8 fv-row fv-plugins-icon-container">
-													{{ form_widget(form.typeagent, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-											      {# {% endfor %} #}
-											</div>
-											</div>
-					
-										
-								
-										
-							
 
-
-										{# Génération automatique des champs pas encore écrits.
-										Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfonyy !)
-										et tous les champs cachés (type « hidden »). #}
 									{{ form_rest(form) }}
 								   
 								<div class="card-footer d-flex justify-content-end py-6 px-9">

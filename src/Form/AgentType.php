@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Agent;
-use App\Entity\Typeagent;
 use App\Form\UtilisateurType;
 use App\Form\Type;
 use App\Form\ConcessionnairemarchandType;
@@ -40,18 +39,7 @@ class AgentType extends AbstractType
         
             ])
            /* ->add('concessionnairemarchands', ConcessionnairemarchandType::class)*/
-            //->add('typeagent',)
-            ->add('typeagent',EntityType::class,[
-                'class' => Typeagent::class,
-                'choice_label' => function ($ag) {
-                  # return sprintf('<img src="%s"/>', $fab->getMedia()->getLien());
-                 
-                   return $ag->gettype();
-                },
-                'expanded' => false , 
-                'required' => True
-                
-            ])
+
         
             
             ->add('utilisateur', UtilisateurType::class)

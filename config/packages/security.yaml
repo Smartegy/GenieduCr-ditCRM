@@ -43,6 +43,7 @@ security:
           - { path: ^/profilmarchand, roles: ROLE_MARCHAND }
           - { path: ^/profilpartenaire, roles: ROLE_PARTENAIRE }
           - { path: ^/profilagent, roles: ROLE_AGENT }
+          - { path: ^/profilvendeur, roles: ROLE_VENDEUR }
         
 
 

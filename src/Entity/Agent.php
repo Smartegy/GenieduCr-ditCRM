@@ -61,14 +61,6 @@ class Agent
      */
     private $utilisateur;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Typeagent::class, inversedBy="agents")
-     * @ORM\JoinColumn(nullable=false)
-    
-     
-     */
-    
-    private $typeagent;
 
     /**
      * @ORM\ManyToMany(targetEntity=Partenaire::class, mappedBy="agents")
@@ -211,17 +203,9 @@ class Agent
         return $this;
     }
 
-    public function getTypeagent(): ?Typeagent
-    {
-        return $this->typeagent;
-    }
 
-    public function setTypeagent(?Typeagent $typeagent): self
-    {
-        $this->typeagent = $typeagent;
 
-        return $this;
-    }
+
 
     /**
      * @return Collection|Partenaire[]

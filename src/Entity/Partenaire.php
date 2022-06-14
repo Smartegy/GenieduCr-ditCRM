@@ -49,6 +49,12 @@ class Partenaire
      * @ORM\OneToMany(targetEntity=Leads::class, mappedBy="partenaire")
      */
     private $leads;
+    /**
+     * @ORM\ManyToMany(targetEntity=Vendeurr::class, inversedBy="partenaire")
+
+
+     */
+    private $vendeurrs;
 
   
     
@@ -59,6 +65,7 @@ class Partenaire
     public function __construct()
     {
         $this->agents = new ArrayCollection();
+        $this->vendeurrs = new ArrayCollection();
         $this->vehicules = new ArrayCollection();
         $this->leads = new ArrayCollection();
     }
@@ -92,6 +99,25 @@ class Partenaire
     public function removeAgent(Agent $agent): self
     {
         $this->agents->removeElement($agent);
+        return $this;
+    }
+    /**
+     * @return Collection|Vendeurr[]
+     */
+    public function getVendeurrs(): Collection
+    {
+        return $this->vendeurrs;
+    }
+    public function addVendeurr(Vendeurr $vendeurrs): self
+    {
+        if (!$this->vendeurrs->contains($vendeurrs)) {
+            $this->vendeurrs[] = $vendeurrs;
+        }
+        return $this;
+    }
+    public function removeVendeurr(Vendeurr $vendeurrs): self
+    {
+        $this->vendeurrs->removeElement($vendeurrs);
         return $this;
     }
     public function getDescription(): ?string
