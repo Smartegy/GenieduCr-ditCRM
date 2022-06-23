@@ -14,6 +14,7 @@
         
         <div class="card mb-5 mb-xl-10">
             <div class="card-body pt-9 pb-0">
+		
                 <!--begin::Details-->
                 <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
                    
@@ -92,7 +93,7 @@
                     </li>
 
                       <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">Courriel</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('courriel', {'idlead' : lead.id})}}">Courriel</a>
                     </li>
                     <li class="nav-item mt-2">
                         <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('sms', {'idlead' : lead.id})}}">Sms</a>
@@ -112,6 +113,11 @@
 							<div id="kt_content_container" class="container-xxl">
 								<!--begin::Card-->
 								<div class="card">
+									{% for message in app.flashes('success') %}
+									<div class="alert alert-success">
+										{{ message }}
+									</div>
+									 {% endfor %}
 									<!--begin::Card header-->
 									<h3 class="fw-bolder m-0">Liste des Documents</h3>
 									<!--end::Card header-->
@@ -156,6 +162,7 @@
 																			   {# <i class="fa fa-download"></i> #}
 																			  	 {# <img alt="" class="w-30px me-3" src="/media/svg/files/download.gif"> #}
 																			   <!--begin::Svg Icon | path: assets/media/icons/duotune/files/fil021.svg-->
+																			   
                                                                               <span class="svg-icon svg-icon-3">
 																			  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                                               <path opacity="0.5" d="M19 15C20.7 15 22 13.7 22 12C22 10.3 20.7 9 19 9C18.9 9 18.9 9 18.8 9C18.9 8.7 19 8.3 19 8C19 6.3 17.7 5 16 5C15.4 5 14.8 5.2 14.3 5.5C13.4 4 11.8 3 10 3C7.2 3 5 5.2 5 8C5 8.3 5 8.7 5.1 9H5C3.3 9 2 10.3 2 12C2 13.7 3.3 15 5 15H19Z" fill="black"/>
@@ -179,6 +186,33 @@
 														                                 </span>
 														                            </a>
 										                                     	</form>
+																				
+																				 <div class="modal fade" tabindex="-1" id="kt_modal_1">
+																					<div class="modal-dialog">
+																						<div class="modal-content">
+																							<div class="modal-header">
+																								<h5 class="modal-title">Confirmation de suppresion</h5>
+																				
+																								
+																								<!--begin::Close-->
+																								<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+																									<span class="svg-icon svg-icon-2x"></span>
+																								</div>
+																								<!--end::Close-->
+																							</div>
+																				
+																							<div class="modal-body">
+																								<p>Voulez-vous vraiment supprimer ce fichier ?</p>
+																							</div>
+																				
+																							<div class="modal-footer">
+																								<button type="button" class="btn btn-light" data-bs-dismiss="modal" id="confirmModalNo">Annuler</button>
+																								<button type="submit"  class="btn btn-primary" id="confirmModalYes">Supprimer</button>
+																							
+																						</div>
+																					</div>
+																					</div>
+																				</div>
 																			</div>
 																		 
 																		</div>

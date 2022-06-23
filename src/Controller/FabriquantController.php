@@ -108,6 +108,7 @@ class FabriquantController extends AbstractController
             $om->persist($fabriquants);
            
             $om->flush();
+            $this->addFlash("success", "Ce fabriquant est modifié avec succès");
             return $this->redirectToRoute("fabriquant");
         }
         return $this->render('fabriquant/updateF.html.twig', [
@@ -161,7 +162,7 @@ class FabriquantController extends AbstractController
                 //$media->setType($type);
 
             }
-
+            $this->addFlash('success', 'Un nouvel fabriquant est ajouté avec succès');
             $om->persist($fabriquants);
 
             $om->flush();

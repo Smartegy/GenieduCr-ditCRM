@@ -81,5 +81,30 @@ class ConcessionnaireRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
             ;
     }
+        
+    public function findByAgent($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.Concessionnairemarchand', 'b')
+            ->innerJoin('b.agents', 'a')
+            ->andwhere('a.id = :idcons')
+            ->setParameter('idcons', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+        
+    public function findByvendeur($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.Concessionnairemarchand', 'b')
+            ->innerJoin('b.vendeurrs', 'a')
+            ->andwhere('a.id = :idcons')
+            ->setParameter('idcons', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     
 }

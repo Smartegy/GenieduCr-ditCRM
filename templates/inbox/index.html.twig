@@ -114,6 +114,11 @@
           <div class="card-body pt-9 pb-0">
                 <div class="d-flex flex-wrap flex-sm-nowrap mb-3">          
                     <div class="card-body">
+                        {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                         {% endfor %}
                         <!--begin::Title-->
                         <div class="d-flex flex-wrap gap-2 justify-content-between mb-8">
                             <div class="d-flex align-items-center flex-wrap gap-2">
@@ -421,6 +426,7 @@
 							<div id="kt_content_container" class="container-xxl">
 								<!--begin::Card-->
 								<div class="card">
+                                 
 									<!--begin::Card header-->
 								
                                     <a  name="haut"  class="fw-bolder m-0">Envoyer Courriel</a>

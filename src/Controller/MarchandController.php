@@ -25,6 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Security;
 
 /**
 * @IsGranted("IS_AUTHENTICATED_FULLY")
@@ -55,10 +56,27 @@ class MarchandController extends AbstractController
     }
 
     #[Route('/marchand', name: 'marchand')]
-    public function index(MarchandRepository $repository): Response
+    public function index(MarchandRepository $repository,Security $security): Response
     {
-        $marchands = $repository -> findAll();
-       
+          /** @var User $user */
+          $user = $security->getUser();
+          $userrole = $user->getRoles();
+        //  $usernom= $user->getNomutilisateur();
+          $usernom= $user->getId();
+         
+            
+          if($userrole[0] == 'ROLE_ADMIN' )
+          {
+             $marchands = $repository -> findAll();
+            // dd($concessionnaires);die;
+   
+          }
+          if($userrole[0] == 'ROLE_MARCHAND' )
+          {
+             $marchands = $repository -> findIdByUtilisateur($usernom);
+            
+            
+          }
        
         return $this->render('marchand/index.html.twig', [
             'marchands' => $marchands
@@ -66,11 +84,12 @@ class MarchandController extends AbstractController
     }
 
 
-    #[Route('/marchand/{id}', name: 'suppression_marchand', methods:'delete')]
+    #[Route('/marchand/{id}', name: 'suppression_marchand')]
     public function suppression(Marchand $marchands, Request $request){
 
        $om=$this->om;
       //  if($this->isCsrfTokenValid("SUP". $marchands->getId(),$request->get('_token'))){
+       
             $om->remove($marchands);
             $om->flush();
             return $this->redirectToRoute("marchand");
@@ -109,23 +128,13 @@ class MarchandController extends AbstractController
 
         //On recupere le concessmarchand
         $concessvalue = $form->get('concessionnairemarchand')->getData();
-        if($concessvalue != null){
-        //On recupere les vendeurs liés au Marchand
-       $vdrs = $this->AgentRepository->fillVendeursbyConcessionnairemarchand($concessvalue->getId());
-        //On ajoute les valeurs selected dans la select list Vendeurs
-        $form->get('concessionnairemarchand')->get('vendeurs')->setData($vdrs);
-        }
+    
         $form -> handleRequest($request);
 
 
-        if($form->isSubmitted() && $form->isValid()){
+        if($form->isSubmitted()){
 
-            $vendeurs =$form->get('concessionnairemarchand')->get('vendeurs')->getData();
-            //Ajoute la liste des vendeurs (unmapped)
-            foreach ($vendeurs as $vendeur){
-                $marchand->getConcessionnairemarchand()->addAgent($vendeur);
-                 
-            }
+            
             //Récupère l'image
             $media = $form->getData()->getConcessionnairemarchand()->getMedia();
             //Récupère le fichier image
@@ -143,12 +152,13 @@ class MarchandController extends AbstractController
             }
             //Ajoute le type du média
            
-            $type = $repository->gettype('photo');
+           // $type = $repository->gettype('photo');
            
            // $media->setType($type);
-
+         
            $this->om->persist($marchand);
             $om->flush();
+            $this->addFlash("success", "Cet Utilisateur est modifié avec succeés");
             return $this->redirectToRoute("marchand");
         }
         
@@ -191,13 +201,8 @@ class MarchandController extends AbstractController
         $form = $this->createForm(MarchandType::class, $marchand);
         //On recupere le concessmarchand
         $concessvalue = $form->get('concessionnairemarchand')->getData();
-        if($concessvalue != null){
-            //On recupere les vendeurs liés au Marchand
-            $vdrs = $this->AgentRepository->fillVendeursbyConcessionnairemarchand($concessvalue->getId());
-            //On ajoute les valeurs selected dans la select list Vendeurs
-            $form->get('concessionnairemarchand')->get('vendeurs')->setData($vdrs);
-        }
-
+ 
+        $form->get('concessionnairemarchand')->get('utilisateur')->get('roles')->setData(["ROLE_MARCHAND"]);
         $form -> handleRequest($request);
         $user= new Utilisateur();
         if($form->isSubmitted() && $form->isValid()){
@@ -209,13 +214,10 @@ class MarchandController extends AbstractController
                 )
             );
 
-            $vendeurs =$form->get('concessionnairemarchand')->get('vendeurs')->getData();
+           // $vendeurs =$form->get('concessionnairemarchand')->get('vendeurs')->getData();
 
             //Ajoute la liste des vendeurs (unmapped)
-            foreach ($vendeurs as $vendeur){
-                $marchand->getConcessionnairemarchand()->addAgent($vendeur);
-            }
-
+ 
 
             //Récupère l'image
             $media = $form->getData()->getConcessionnairemarchand()->getMedia();
@@ -234,10 +236,10 @@ class MarchandController extends AbstractController
             }
             //Ajoute le type du média
 
-            $type = $repository->gettype('photo');
+           // $type = $repository->gettype('photo');
 
             //$media->setType($type);
-
+            $this->addFlash('success', 'L\'ajout a été effectuée avec succeès');
             $this->om->persist($marchand);
             $om->flush();
             return $this->redirectToRoute("marchand");
@@ -259,13 +261,9 @@ class MarchandController extends AbstractController
     public function consultation(Marchand $marchand, MarchandRepository $marchandRepository ): Response
     {
 //On récupère le marchand
-        $marchand_value = $marchandRepository ->findOneById($marchand->getId());
+        $marchand = $marchandRepository ->findOneById($marchand->getId());
         //On récupère le concessionnairemarchand
-        $concessmarchandvalue = $this->concessionnairemarchandRepository->findConcessionnairemarchandbymarchand($marchand_value);
-//On récupère la liste des agents qui sont liés au concessionnairemarchand
-        $agents = $this->AgentRepository-> fillAgentsbyConcessionnairemarchand($concessmarchandvalue->getId());
-//On récupère la liste des vendeurs qui sont liés au concessionnairemarchand
-        $vendeurs = $this->AgentRepository-> fillVendeursbyConcessionnairemarchand($concessmarchandvalue->getId());
+   
 
 
 
@@ -274,9 +272,7 @@ class MarchandController extends AbstractController
 
         return $this->render('marchand/consultation.html.twig', [
             'marchand' => $marchand,
-            'vendeurs' => $vendeurs,
-            'agents' => $agents
-
+       
         ]);
     }
 
@@ -303,8 +299,8 @@ class MarchandController extends AbstractController
                 )
             );
 
-
-
+        
+            $this->addFlash('success', 'le mot de passe a été changé avec succès');
             $objectManager->persist($user);
             $objectManager->flush();
 

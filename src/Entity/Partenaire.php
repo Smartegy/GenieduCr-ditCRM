@@ -28,7 +28,7 @@ class Partenaire
   
 
      */
-    private $agents;
+    public $agents;
    
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -54,7 +54,7 @@ class Partenaire
 
 
      */
-    private $vendeurrs;
+    public $vendeurrs;
 
   
     

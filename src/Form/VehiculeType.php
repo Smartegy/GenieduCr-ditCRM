@@ -269,17 +269,7 @@ class VehiculeType extends AbstractType
             ->add('utilisateur', EntityType::class,array(
                 'class' => Utilisateur::class,
                 'choice_label' => 'nom', 
-                'query_builder' => function(UtilisateurRepository $repo)
-                    {
-                        $companies = $repo->fillCompanies();
-                       
-                        return $companies;
-                        },
-                        
-                        'expanded' => false,
-                        'multiple' => false
-                      
-                    ))
+            ))
 
             
                     ->add('liquidation')

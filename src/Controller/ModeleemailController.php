@@ -38,7 +38,7 @@ class ModeleemailController extends AbstractController
         $entityManager->persist($modeleemail);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           
+            $this->addFlash('success', 'L\'ajout d\'un nouveau modéle a été effectuée avec succès'); 
             $entityManager->persist($modeleemail);
             $entityManager->flush();
 
@@ -69,7 +69,7 @@ class ModeleemailController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
            
             $entityManager->flush();
-
+            $this->addFlash("success", "Ce modèle est modifié avec succès");
             return $this->redirectToRoute('modeleemail_index', [], Response::HTTP_SEE_OTHER);
         }
 

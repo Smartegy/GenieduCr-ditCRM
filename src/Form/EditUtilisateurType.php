@@ -25,6 +25,7 @@ class EditUtilisateurType extends AbstractType
                     'marchand' => 'ROLE_MARCHAND',
                     'partenaire' => 'ROLE_PARTENAIRE',
                     'agent' => 'ROLE_AGENT',
+                    'vendeur'=>'ROLE_VENDEUR',
                  
 
                 ],

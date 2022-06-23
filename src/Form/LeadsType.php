@@ -58,7 +58,10 @@ class LeadsType extends AbstractType
             ->add('locationproprietaire')
             ->add('paiementmonsuel')
             ->add('date')
-            ->add('rappel')
+            ->add('rappel', null, [
+                'required'   => false,
+               
+            ]) 
             ->add('sujet')
             ->add('text')
             ->add('textsms')

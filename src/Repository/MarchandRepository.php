@@ -68,6 +68,40 @@ class MarchandRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findIdByUtilisateur($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.Concessionnairemarchand', 'b')
+            ->innerJoin('b.Utilisateur', 'a')
+            ->where('a.id = :idcons')
+            ->setParameter('idcons', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function findByAgent($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.Concessionnairemarchand', 'b')
+            ->innerJoin('b.agents', 'a')
+            ->andwhere('a.id = :idcons')
+            ->setParameter('idcons', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function findByVendeur($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.Concessionnairemarchand', 'b')
+            ->innerJoin('b.vendeurrs', 'a')
+            ->andwhere('a.id = :idcons')
+            ->setParameter('idcons', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }
 
 

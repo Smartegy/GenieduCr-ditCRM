@@ -103,7 +103,7 @@ class Vendeurr
     {
         if (!$this->concessionnairemarchands->contains($concessionnairemarchand)) {
             $this->concessionnairemarchands[] = $concessionnairemarchand;
-            $concessionnairemarchand->addVendeur($this);
+            $concessionnairemarchand->addVendeurr($this);
         }
 
         return $this;
@@ -112,7 +112,7 @@ class Vendeurr
     public function removeConcessionnairemarchand(Concessionnairemarchand $concessionnairemarchand): self
     {
         if ($this->concessionnairemarchands->removeElement($concessionnairemarchand)) {
-            $concessionnairemarchand->removeVendeur($this);
+            $concessionnairemarchand->removeVendeurr($this);
         }
 
         return $this;

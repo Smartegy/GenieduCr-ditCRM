@@ -2,6 +2,7 @@
 namespace App\Form;
 use App\Entity\Partenaire;
 use App\Entity\Agent;
+use App\Entity\Vendeurr;
 use App\Form\UtilisateurType;
 use App\Form\EditUtilisateurType;
 use App\Repository\AgentRepository;
@@ -32,15 +33,15 @@ class EditPartenaireType extends AbstractType
                     'multiple' => true
                   
                 ))
-                ->add('vendeurs', EntityType::class,array(
-                    'class' => Agent::class,
-                    'choice_label' => 'utilisateur.nom',
+                ->add('vendeurrs', EntityType::class,array(
+                    'class' => Vendeurr::class,
+                    'choice_label' => 'utilisateur.nom', 
+
                         
                         'expanded' => false,
                         'multiple' => true,
-                        'mapped' => false
-                    )
-				)
+                        'mapped' => true
+                    ))
                     
                  ->add('media', MediasType::class,['required' => false])
         ;

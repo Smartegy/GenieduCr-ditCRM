@@ -24,9 +24,11 @@
 	<div id="kt_account_settings_profile_details" class="collapse show">
 			 {{ form_start(form, {'attr': {'class': 'form fv-plugins-bootstrap5 fv-plugins-framework needs-validation" ' ,
 													 novalidate : 'novalidate' } 
-										  })   }} 	
-	 <div class="fw-bolder text-success   me-2">Traitement du Lead</div>
-<div class="border border-dashed border-gray-300  min-w-125px rounded pt-4 pb-2 my-3" >
+
+																								  })   }} 	
+	
+  {% if is_granted('ROLE_ADMIN') %}																							  <div class="fw-bolder text-success   me-2">Traitement du Lead</div>
+    <div class="border border-dashed border-gray-300  min-w-125px rounded pt-4 pb-2 my-3" >
 				<div class="row mb-6 " style="margin-left:10px;padding-right:100px">
 					{{ form_label(form.sourcesleads, "Sources Lead :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
 					<div class="col-lg-8 fv-row fv-plugins-icon-container ">
@@ -178,6 +180,299 @@
 
 
 </div>	
+{% elseif is_granted('ROLE_AGENT') %}
+<div class="fw-bolder text-success   me-2">Traitement du Lead</div>
+<div class="border border-dashed border-gray-300  min-w-125px rounded pt-4 pb-2 my-3" >
+			<div class="row mb-6 " style="margin-left:10px;padding-right:100px">
+				{{ form_label(form.sourcesleads, "Sources Lead :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+				<div class="col-lg-8 fv-row fv-plugins-icon-container ">
+				{{ form_widget(form.sourcesleads , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+				</div>
+			</div>
+			
+			<div class="row mb-6 " style="margin-left:10px;padding-right:100px">
+				{{ form_label(form.statusleads, "Status Lead :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+				<div class="col-lg-8 fv-row fv-plugins-icon-container ">
+				{{ form_widget(form.statusleads , {'id': 'statuslead','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+				</div>
+			</div>	
+				
+										  
+				<div class="row mb-6">
+
+					{% for mod in modelee %}
+			
+					<div class="credsEarned" >
+					<div class="js-user-rating" style="display:none;" >{{mod.id}}</div> 
+					<div class="js-titre-rating" style="display:none;" >{{mod.titre}}</div> 
+					<div class="sujet-rating" style="display:none;" >{{mod.sujetemail}}</div> 
+					<div class="message-rating" style="display:none;">{{mod.message}}</div> 
+					
+					</div>
+				
+		
+				   {% endfor %}
+				</div>   
+				<div class="row mb-6">
+					<div style="display:none;" >{{ form_widget(form.type, {'id': 'type','checked':false }) }} </div>
+					<div  style="display:none;">
+						
+				
+						{{ form_widget(form.isCLient, {'id': 'isClient','checked':false }) }}
+
+					</div>
+					<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+					
+						{{ form_label(form.rappel, "Rappel :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+						
+						<div class="col-lg-8 fv-row fv-plugins-icon-container">
+							{{ form_widget(form.rappel , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+							
+						
+
+					  </div>
+					</div>
+				</div>	
+			
+				
+			
+
+				
+				
+					<div class="col mb-6" style="margin-left:10px;padding-right:100px" >
+									
+						<button class="badge badge-light-success fw-bolder me-auto px-4 py-3" id="choixm" name="scales" >Programmer un courriel</button>
+						
+						<button  id="choixs" name="scales" class="badge badge-light-primary fw-bolder me-auto px-4 py-3" id="choixm" name="scales" >Programmer un sms</button>
+					
+					</div>
+					<div  id="sectionmail" style="display:none">
+						<div  class="d-flex flex-wrap mb-5"  id="formail" style="display:none" >
+						
+							<label class="py-3 col-lg-4 col-form-label fw-bold fs-6" style="margin-left:20px"> Modéle Courriel :</label>
+							
+							<div class="py-3  col-lg-6 col-form-label fw-bold fs-6">
+								<select  class=' form-control form-control-lg form-control-solid' id="modele">
+									<option> Choisir un modéle </option>
+									
+									{% for model in modelee %}
+					
+											{% if model.mail == 1 %}
+											<option>{{model.titre }}</option>
+											{% endif %}
+										
+					
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+				
+						<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+						
+							{{ form_label(form.sujet, "sujet Courriel :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.sujet , {'id': 'sujet','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								
+							
+
+							</div>
+						</div>
+
+
+						<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+						
+							{{ form_label(form.text, "text Courriel :", {'label_attr': {'class':"col-lg-4 col-form-label fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.text , {'id': 'text','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								
+							
+
+						   </div>
+						</div>
+					</div>
+			
+				 <div  style="display:none" id="sectionsms" >
+				
+			
+					<div class="d-flex flex-wrap mb-5"  style="display:none" >
+					
+						<span class="py-3 col-lg-4 col-form-label fw-bold fs-6" style="margin-left:20px"> Modéle SMS :</span>
+						
+						<div class="py-3  col-lg-6 col-form-label fw-bold fs-6 " >
+							<select  class='form-control form-control-lg form-control-solid'id="modelesms" >
+								<option> Choisir un modéle </option>
+								{% for model in modelee %}
+								{% if model.sms == 1 %}
+								<option> {{model.titre }}</option>
+								{% endif %}
+								{% endfor %}
+							</select>
+						
+
+					</div>
+					</div>
+					<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+					
+						{{ form_label(form.textsms, "Text sms :", {'label_attr': {'class':"col-lg-4 col-form-label fw-bold fs-6"}}) }}
+						
+						<div class="col-lg-8 fv-row fv-plugins-icon-container">
+							{{ form_widget(form.textsms , {'id': 'textsms','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+							
+						
+
+					</div>
+					</div>
+				</div>
+{% else %}
+<div class="fw-bolder text-success   me-2" style="display:none;">Traitement du Lead</div>
+<div class="border border-dashed border-gray-300  min-w-125px rounded pt-4 pb-2 my-3" style="display:none;" >
+					<div class="row mb-6 " style="margin-left:10px;padding-right:100px">
+						{{ form_label(form.sourcesleads, "Sources Lead :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+						<div class="col-lg-8 fv-row fv-plugins-icon-container ">
+						{{ form_widget(form.sourcesleads , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+						</div>
+					</div>
+					
+					<div class="row mb-6 " style="margin-left:10px;padding-right:100px">
+						{{ form_label(form.statusleads, "Status Lead :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+						<div class="col-lg-8 fv-row fv-plugins-icon-container ">
+						{{ form_widget(form.statusleads , {'id': 'statuslead','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+						</div>
+					</div>	
+				
+										  
+					<div class="row mb-6">
+
+						{% for mod in modelee %}
+				
+						<div class="credsEarned" >
+						<div class="js-user-rating" style="display:none;" >{{mod.id}}</div> 
+						<div class="js-titre-rating" style="display:none;" >{{mod.titre}}</div> 
+						<div class="sujet-rating" style="display:none;" >{{mod.sujetemail}}</div> 
+						<div class="message-rating" style="display:none;">{{mod.message}}</div> 
+						
+						</div>
+					
+			
+					{% endfor %}
+					</div>   
+					<div class="row mb-6">
+						<div style="display:none;" >{{ form_widget(form.type, {'id': 'type','checked':false }) }} </div>
+						<div  style="display:none;">
+							
+					
+							{{ form_widget(form.isCLient, {'id': 'isClient','checked':false }) }}
+
+						</div>
+						<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+						
+							{{ form_label(form.rappel, "Rappel :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.rappel , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								
+							
+
+						</div>
+						</div>
+					</div>	
+			
+				
+			
+
+				
+				
+					<div class="col mb-6" style="margin-left:10px;padding-right:100px" >
+									
+						<button class="badge badge-light-success fw-bolder me-auto px-4 py-3" id="choixm" name="scales" >Programmer un courriel</button>
+						
+						<button  id="choixs" name="scales" class="badge badge-light-primary fw-bolder me-auto px-4 py-3" id="choixm" name="scales" >Programmer un sms</button>
+					
+					</div>
+					<div  id="sectionmail" style="display:none">
+						<div  class="d-flex flex-wrap mb-5"  id="formail" style="display:none" >
+						
+							<label class="py-3 col-lg-4 col-form-label fw-bold fs-6" style="margin-left:20px"> Modéle Courriel :</label>
+							
+							<div class="py-3  col-lg-6 col-form-label fw-bold fs-6">
+								<select  class=' form-control form-control-lg form-control-solid' id="modele">
+									<option> Choisir un modéle </option>
+									
+									{% for model in modelee %}
+					
+											{% if model.mail == 1 %}
+											<option>{{model.titre }}</option>
+											{% endif %}
+										
+					
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+				
+						<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+						
+							{{ form_label(form.sujet, "sujet Courriel :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.sujet , {'id': 'sujet','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								
+							
+
+							</div>
+						</div>
+
+
+						<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+						
+							{{ form_label(form.text, "text Courriel :", {'label_attr': {'class':"col-lg-4 col-form-label fw-bold fs-6"}}) }}
+							
+							<div class="col-lg-8 fv-row fv-plugins-icon-container">
+								{{ form_widget(form.text , {'id': 'text','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								
+							
+
+						   </div>
+						</div>
+					</div>
+			
+				 <div  style="display:none" id="sectionsms" >
+				
+			
+					<div class="d-flex flex-wrap mb-5"  style="display:none" >
+					
+								<span class="py-3 col-lg-4 col-form-label fw-bold fs-6" style="margin-left:20px"> Modéle SMS :</span>
+								
+								<div class="py-3  col-lg-6 col-form-label fw-bold fs-6 " >
+									<select  class='form-control form-control-lg form-control-solid'id="modelesms" >
+										<option> Choisir un modéle </option>
+										{% for model in modelee %}
+										{% if model.sms == 1 %}
+										<option> {{model.titre }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								
+
+								</div>
+				    	</div>
+					<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+					
+						{{ form_label(form.textsms, "Text sms :", {'label_attr': {'class':"col-lg-4 col-form-label fw-bold fs-6"}}) }}
+						
+						<div class="col-lg-8 fv-row fv-plugins-icon-container">
+							{{ form_widget(form.textsms , {'id': 'textsms','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+							
+						
+
+					</div>
+					</div>
+				</div>
+</div>				
+{% endif %}
+
 <div class="fw-bolder text-success me-2">Les Acteur du Lead</div>
 <div class="border border-dashed border-gray-300  min-w-125px rounded pt-4 pb-2 my-3" >
 	        	<div class="row mb-6" style="margin-left:10px;padding-right:100px">

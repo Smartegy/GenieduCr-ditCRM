@@ -2,6 +2,7 @@
 namespace App\Form;
 use App\Entity\Partenaire;
 use App\Entity\Agent;
+use App\Entity\Vendeurr;
 use App\Form\UtilisateurType;
 use App\Form\MediasType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -26,7 +27,8 @@ class PartenaireType extends AbstractType
                     ],'required' => false
                 ])
             
-            ->add('utilisateur', UtilisateurType::class)
+
+            ->add('utilisateur', UtilisateurType::class ,  [ 'required' => True     ] )
             
             
             ->add('agents', EntityType::class,array(
@@ -36,14 +38,14 @@ class PartenaireType extends AbstractType
                     'multiple' => true
                   
                 ))
-                ->add('vendeurs', EntityType::class,array(
-                    'class' => Agent::class,
+                ->add('vendeurrs', EntityType::class,array(
+                    'class' => Vendeurr::class,
                     'choice_label' => 'utilisateur.nom', 
 
                         
                         'expanded' => false,
                         'multiple' => true,
-                        'mapped' => false
+                        'mapped' => true
                     ))
                     
                     

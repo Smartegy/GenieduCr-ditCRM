@@ -26,6 +26,11 @@
                 <div id="kt_content_container" class="container-xxl">
                     <!--begin::Card-->
                     <div class="card">
+                        {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                         {% endfor %}
                         <!--begin::Card header-->
                         <div class="card-header border-0 pt-6">
                             <div><h1>Liste des Vendeurs</h1></div>
@@ -36,6 +41,7 @@
 
 
                                     <!--end::Export-->
+                                 {% if is_granted('ROLE_ADMIN') %}
                                     <!--begin::Add user-->
                                     <button type="button" class="btn btn-primary">
                                         <a href="{{ path("add_vendeur") }}">
@@ -58,7 +64,7 @@
                                         <!--end::Svg Icon-->
 
                                     </button>
-
+                                {% endif %}
 
                                 </div>
 
@@ -173,8 +179,8 @@
                                                     <input type="hidden" name="_method" value="delete">
                                                     <input type="hidden" name="_token"
                                                            value="{{ csrf_token('SUP' ~ vendeur.id) }}">
-
-                                                    <a href="{{ path('deletevendeur', {'id' : vendeur.id}) }}"
+                                        {% if is_granted('ROLE_ADMIN') %}		
+                                            <a href="{{ path('deletevendeur', {'id' : vendeur.id}) }}"
                                                        class="confirmModalLink btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 
                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
@@ -195,7 +201,7 @@
                                                         <!--end::Svg Icon-->
 
                                                     </a>
-
+                                        {% endif %}
 
                                                     <div class="modal fade" tabindex="-1" id="kt_modal_1">
                                                         <div class="modal-dialog">

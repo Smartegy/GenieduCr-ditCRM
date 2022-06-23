@@ -47,7 +47,7 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
  
      
 
-
+/*
     public function fillCompanies(){
 
         $qb = $this->om->createQueryBuilder();
@@ -71,7 +71,7 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
        
 
     }
-
+*/
 
     // public function findOneByIdJoinedToUser(int $UserID): ?Utilisateur
     // {
@@ -118,7 +118,48 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
         ;
     }
 
- 
+    public function findOneById($value): ?Utilisateur
+    {
+        return $this->createQueryBuilder('utilisateur')
+            ->andWhere('utilisateur.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+  
+    public function findOneByConcessionnaire($value): ?Utilisateur
+    {
+        return $this->createQueryBuilder('user')
+            ->innerjoin('user.concessionnairemarchand', 'c')
+            ->innerJoin('c.concessionnaire','cu')
+            ->andwhere('cu.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+    public function findOneByMarchand($value): ?Utilisateur
+    {
+        return $this->createQueryBuilder('user')
+            ->innerjoin('user.concessionnairemarchand', 'c')
+            ->innerJoin('c.marchand','cu')
+            ->andwhere('cu.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+    public function findOneByPartenaire($value): ?Utilisateur
+    {
+        return $this->createQueryBuilder('user')
+            ->innerjoin('user.partenaire', 'c')
+            ->andwhere('c.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 
 
 }

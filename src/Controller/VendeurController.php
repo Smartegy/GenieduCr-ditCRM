@@ -15,6 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Security;
 
 
 
@@ -32,9 +33,29 @@ class VendeurController extends AbstractController
     }
 
     #[Route('/vendeur', name: 'vendeur')]
-    public function index(VendeurrRepository $repository): Response
+    public function index(VendeurrRepository $repository,Security $security): Response
     {
-        $vendeur = $repository->findAll();
+        
+     /** @var User $user */
+     $user = $security->getUser();
+     $userrole = $user->getRoles();
+     $usernom= $user->getId();
+   //  $vendeur = $repository ->findIdByUtilisateur($usernom);
+    // dd($vendeur);die;
+         
+  if($userrole[0] == 'ROLE_ADMIN' )
+  {
+     $vendeur = $repository -> findAll();
+    // dd($concessionnaires);die;
+
+  }
+  if($userrole[0] == 'ROLE_VENDEUR' )
+  {
+     $vendeur = $repository ->findIdByUtilisateur($usernom);
+    
+  }
+
+     
         return $this->render('vendeur/index.html.twig', [
             'vendeur' => $vendeur,
         ]);
@@ -48,6 +69,10 @@ class VendeurController extends AbstractController
 
         }
         $form = $this->createForm(VendeurrType::class, $vendeurr);
+     
+        $form->get('utilisateur')->get('roles')->setData(["ROLE_VENDEUR"]);
+      
+        
         $form->handleRequest($request);
         $user = new Utilisateur();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -59,9 +84,10 @@ class VendeurController extends AbstractController
                 )
             );
             $modif = $vendeurr->getId() !== null;
+              $this->addFlash('success', 'L\'ajout a été effectuée avec succeés');
             $objectManager->persist($vendeurr);
             $objectManager->flush();
-            $this->addFlash("success", ($modif) ? "La modification a été effectuée" : "L'ajout a été effectuée");
+           
             return $this->redirectToRoute('vendeur');
 
 
@@ -96,6 +122,7 @@ class VendeurController extends AbstractController
             $vendeur = new Vendeurr();
         }
         $form = $this->createForm(EditVendeurType::class, $vendeur)->remove("password");
+       
         $form->handleRequest($request);
         $user = new Utilisateur();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -103,7 +130,7 @@ class VendeurController extends AbstractController
             $modif = $vendeur->getId() !== null;
             $objectManager->persist($vendeur);
             $objectManager->flush();
-            $this->addFlash("success", ($modif) ? "La modification a été effectuée" : "L'ajout a été effectuée");
+            $this->addFlash("success","Cet Utilisateur est modifié avec succès");
             return $this->redirectToRoute('vendeur');
         }
 
@@ -130,6 +157,7 @@ class VendeurController extends AbstractController
 
         $user= $vendeur->getUtilisateur();
         $form = $this->createForm(SecUtilisateurType::class,$user);
+       
         $form -> handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             // encode the plain password
@@ -139,6 +167,7 @@ class VendeurController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+            $this->addFlash('success', 'le mot de passe a été changé avec succès');
             $objectManager->persist($user);
             $objectManager->flush();
             return $this->redirectToRoute("vendeur");

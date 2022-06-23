@@ -128,7 +128,7 @@ class ConcessionnaireController extends AbstractController
 
        
 
-        $cr = $this->MR->findAll();
+       // $cr = $this->MR->findAll();
         //$medias->Concessionnairemarchand::class->getfabriquants()->setMedia($cr);
 
         //Ici on va creeer un tableau pour les liens des logos des fabricants
@@ -143,7 +143,12 @@ class ConcessionnaireController extends AbstractController
             //Puis on l'enregistre dans le tableau
             //L'id ce met en KEY et le lien en VALUE
 
-            $lienLogo[$fab->getId()] = $fab->getMedia()->getLien();
+            if($fab->getMedia())
+            { $lienLogo[$fab->getId()] = $fab->getMedia()->getLien();}
+            else 
+            { 
+               $lienLogo[$fab->getId()] = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" ;
+             }
         }
 
         
@@ -153,35 +158,38 @@ class ConcessionnaireController extends AbstractController
          
 
         //On recupere le concessmarchand
-        $concessvalue = $form->get('concessionnairemarchand')->getData();
-
-        if($concessvalue != null){
+       // $form->get('concessionnairemarchand')->get('utilisateur')->get('roles')->setData(["ROLE_CONCESSIONNAIRE"]);
+        //if($concessvalue != null){
         //On recupere les vendeurs liés au concessionnaire
-        $vdrs = $this->AgentRepository->fillVendeursbyConcessionnairemarchand($concessvalue->getId());
+      //    $vdrs = $this->AgentRepository->fillVendeursbyConcessionnairemarchand($concessvalue->getId());
 
        
         //On ajoute les valeurs selected dans la select list Vendeurs
-        $form->get('concessionnairemarchand')->get('vendeurs')->setData($vdrs);
+      //  $form->get('concessionnairemarchand')->get('vendeurs')->setData($vdrs);
         
-        }
+       // }
+     
 
         
         $form -> handleRequest($request);
 
        
-       
+        //$user= new Utilisateur();
 
       
-        if($form->isSubmitted() && $form->isValid()){
+        if($form->isSubmitted()){
 
-            $vendeurs =$form->get('concessionnairemarchand')->get('vendeurs')->getData();
+        //    $vendeurs =$form->get('concessionnairemarchand')->get('vendeurs')->getData();
            
             //Ajoute la liste des vendeurs (unmapped)
-            foreach ($vendeurs as $vendeur){
-                $concessionnaires->getConcessionnairemarchand()->addAgent($vendeur);
-            }
+         //   foreach ($vendeurs as $vendeur){
+              //  $concessionnaires->getConcessionnairemarchand()->addAgent($vendeur);
+           // }
             
+         
             
+
+
             //Récupère l'image
             $media = $form->getData()->getConcessionnairemarchand()->getMedia();
            
@@ -201,12 +209,12 @@ class ConcessionnaireController extends AbstractController
             }
             //Ajoute le type du média
            
-            $type = $repository->gettype('photo');
-           
-            $media->setType($type);
-
+           // $type = $repository->gettype('photo');
+           //dd($form->getData());die;
+           $modif = $concessionnaires->getId() !== null;
            $this->om->persist($concessionnaires);
             $om->flush();
+            $this->addFlash("success", "Cet Utilisateur est modifié avec succès");
             return $this->redirectToRoute("concessionnaire");
           
         }
@@ -228,7 +236,6 @@ class ConcessionnaireController extends AbstractController
     public function add_concessionnaire(Concessionnaire $concessionnaires = null, TypemediaRepository $repository, UserPasswordHasherInterface $userPasswordHasher, ObjectManager $objectManager, Request $request)
     {
 
-        
         if(!$concessionnaires){
 
             $concessionnaires = new Concessionnaire();
@@ -241,7 +248,7 @@ class ConcessionnaireController extends AbstractController
 
 
 
-        $cr = $this->MR->findAll();
+    
         //$medias->Concessionnairemarchand::class->getfabriquants()->setMedia($cr);
 
         //Ici on va creeer un tableau pour les liens des logos des fabricants
@@ -255,35 +262,43 @@ class ConcessionnaireController extends AbstractController
             //Pour chaque fab on recupere l'id et le liens du logo
             //Puis on l'enregistre dans le tableau
             //L'id ce met en KEY et le lien en VALUE
-
-            $lienLogo[$fab->getId()] = $fab->getMedia()->getLien();
+            if($fab->getMedia())
+            { $lienLogo[$fab->getId()] = $fab->getMedia()->getLien();}
+            else 
+            { 
+               $lienLogo[$fab->getId()] = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" ;
+             }
         }
 
 
         $form = $this->createForm(ConcessionnaireType::class, $concessionnaires);
 
 
-
+        $form->get('concessionnairemarchand')->get('utilisateur')->get('roles')->setData(["ROLE_CONCESSIONNAIRE"]);
 
         $form -> handleRequest($request);
 
 
+        $user= new Utilisateur();
 
 
+        if($form->isSubmitted()  ){
 
-        if($form->isSubmitted() ){
+ 
+             $concessionnaires->getConcessionnairemarchand()->getUtilisateur()->setPassword(
+                $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('concessionnairemarchand')->get('utilisateur')->get('password')->getData()
+                    )
+                );
+           // }
 
-            $vendeurs =$form->get('concessionnairemarchand')->get('vendeurs')->getData();
-
-            //Ajoute la liste des vendeurs (unmapped)
-            foreach ($vendeurs as $vendeur){
-                $concessionnaires->getConcessionnairemarchand()->addAgent($vendeur);
-            }
-
-
+        
             
             $media = $form->get('concessionnairemarchand')->getData()->getMedia();
            
+      
+     
             if ($media) {
                 //Récupère le fichier image
                 $mediafile = $form->get('concessionnairemarchand')->getData()->getMedia()->getImageFile();
@@ -298,24 +313,15 @@ class ConcessionnaireController extends AbstractController
                
                 //Définit les valeurs
                 $media->setNom($name);
+                
                 $media->setLien($lien);
+               // dd($media->setLien($lien));die;
+
   
-                 //dd($media);die;
-
-
-                //Ajoute le type du média
-        //    $type = $repository->gettype('photo');
-             
-           // $media->setType($type);
             }
-           
-            ////////
-
-           
-            
-
-
-
+                 
+                  
+            //$this->addFlash('success', 'L\'ajout a été effectuée avec succeés');
             $this->om->persist($concessionnaires);
            
             $om->flush();
@@ -325,7 +331,7 @@ class ConcessionnaireController extends AbstractController
 
         return $this->render('concessionnaire/ajoutConcessionnaire.html.twig', [
             'concessionnaire' => $concessionnaires,
-           // 'medias'=>$medias,
+            //'medias'=>$medias,
             'form' => $form->createView(),
             'isModification' => $concessionnaires->getId() !== null,
             // On passe le tableau cree plus haut en param
@@ -340,20 +346,19 @@ class ConcessionnaireController extends AbstractController
     {
         $concessionnaire = $this->ConcessionnaireRepository->findOneById($concessionnaire->getId());
        
-        $concessionnairemarchand = $concessionnaire->getConcessionnairemarchand();
+        //$concessionnairemarchand = $concessionnaire->getConcessionnairemarchand();
        
         
-        $agents = $this->AgentRepository-> fillAgentsbyConcessionnairemarchand($concessionnairemarchand->getId());
+      //  $agents = $this->AgentRepository-> fillAgentsbyConcessionnairemarchand($concessionnairemarchand->getId());
         
-        $vendeurs = $this->AgentRepository-> fillVendeursbyConcessionnairemarchand($concessionnairemarchand->getId());
+      //  $vendeurs = $this->AgentRepository-> fillVendeursbyConcessionnairemarchand($concessionnairemarchand->getId());
         
          
          // dd($vendeurs);
         
         return $this->render('concessionnaire/consultation.html.twig', [
             'concessionnaire' => $concessionnaire,
-            'vendeurs' => $vendeurs,
-            'agents' => $agents
+       
 
         ]);
     }
@@ -387,7 +392,7 @@ class ConcessionnaireController extends AbstractController
                 );
 
           
-
+                $this->addFlash('success', 'le mot de passe a été changé avec succès');
             $objectManager->persist($user);
             $objectManager->flush();
 

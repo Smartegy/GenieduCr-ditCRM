@@ -65,7 +65,7 @@ class UtilisateurType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlanK([
-                        'message' => 'Please enter a password',
+                        'message' => 'veuillez remplir un mot de passe',
                     ]),
                     new Length([
                         'min' => 6,

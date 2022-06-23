@@ -139,10 +139,10 @@
 						
 						<div class="row mb-6">
 							
-							{{ form_label(form.vendeurs, "Vendeurs :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+							{{ form_label(form.vendeurrs, "Vendeurs :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
 							
 							<div class="col-lg-8 fv-row fv-plugins-icon-container">
-								{{ form_widget(form.vendeurs, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+								{{ form_widget(form.vendeurrs, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
 							</div>
 						</div>
 						
@@ -153,7 +153,19 @@
 					{# Génération automatique des champs pas encore écrits.
 					Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfonyy !)
 					et tous les champs cachés (type « hidden »). #}
-				
+					<div class="row mb-6 pt-2" style="display:none;" >
+
+                      
+						{% for role in form.utilisateur.roles  %}
+						   <div class="img_checkbox col-lg-2  col-sm-2">
+
+							   {{form_row(role)}}{#pour rendre le input  checkbox#}
+
+							
+
+						   </div>
+					   {% endfor %}
+				</div>	
 			   
 			<div class="card-footer d-flex justify-content-end py-6 px-9">
 				<button type="reset" class="btn btn-light btn-active-light-primary me-2">Annuler</button>

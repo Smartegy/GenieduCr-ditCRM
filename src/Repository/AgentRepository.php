@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repository;
+use App\Entity\Typeagent;
 use App\Entity\Agent;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -59,18 +60,19 @@ class AgentRepository extends ServiceEntityRepository
 
     }
 
-// public function findVendeursforVehicules(){
+    public function findVendeursforVehicules(){
 
-//     return $this->createQueryBuilder('e')
-//     ->addSelect('e') // to make Doctrine actually use the join
-//     ->innerjoin('e.typeagent', 'r')
-//     ->where('r.Type = :vendeur')
-//     ->setParameter('vendeur', 'Vendeur')
-//     ->getQuery()
-//     ->getResult()
-//     ;
+        return $this->createQueryBuilder('e')
+        ->addSelect('e') // to make Doctrine actually use the join
+        ->innerjoin('e.typeagent', 'r')
+        ->where('r.Type = :vendeur')
+        ->setParameter('vendeur', 'Vendeur')
+        ->getQuery()
+        ->getResult()
+        ;
 
-// }
+    }
+
 
 
       public function fillAgents(){
@@ -106,9 +108,11 @@ class AgentRepository extends ServiceEntityRepository
     public function findAgentbyPartnaire($value){
 
         return $this->createQueryBuilder('agent')
-        ->addSelect('agent')
+        ->addSelect('agent') 
+        ->innerjoin('agent.typeagent', 'typeagent')  
         ->innerjoin('agent.partenaire', 'p')  
-        ->Where('p.id = :val')
+       ->where('typeagent.Type = :agent')
+        ->andWhere('p.id = :val')
        ->setParameter('val', $value)
         ->setParameter('agent', 'Agent')
         ->getQuery()
@@ -121,8 +125,10 @@ class AgentRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('agent')
         ->addSelect('agent') 
-        ->innerjoin('agent.partenaire', 'p')
-        ->Where('p.id = :val')
+        ->innerjoin('agent.typeagent', 'typeagent')  
+        ->innerjoin('agent.partenaire', 'p')  
+       ->where('typeagent.Type = :agent')
+        ->andWhere('p.id = :val')
        ->setParameter('val', $value)
         ->setParameter('agent', 'Vendeur')
         ->getQuery()
@@ -133,8 +139,10 @@ class AgentRepository extends ServiceEntityRepository
     public function fillVendeursbyConcessionnairemarchand($value){
         return $this->createQueryBuilder('agent')
             ->addSelect('agent')
+            ->innerjoin('agent.typeagent', 'typeagent')
             ->innerjoin('agent.concessionnairemarchands', 'c')
-            ->Where('c.id = :val')
+            ->where('typeagent.Type = :agent')
+            ->andWhere('c.id = :val')
             ->setParameter('val', $value)
             ->setParameter('agent', 'Vendeur')
             ->getQuery()
@@ -145,8 +153,10 @@ class AgentRepository extends ServiceEntityRepository
     public function fillAgentsbyConcessionnairemarchand($value){
         return $this->createQueryBuilder('agent')
             ->addSelect('agent')
+            ->innerjoin('agent.typeagent', 'typeagent')
             ->innerjoin('agent.concessionnairemarchands', 'c')
-            ->Where('c.id = :val')
+            ->where('typeagent.Type = :agent')
+            ->andWhere('c.id = :val')
             ->setParameter('val', $value)
             ->setParameter('agent', 'Agent')
             ->getQuery()
@@ -184,7 +194,29 @@ class AgentRepository extends ServiceEntityRepository
         ;
     }
 
-   
+    public function findOneByIdutilisateur($value): ?Agent
+    {
+        return $this->createQueryBuilder('agent')
+        ->innerjoin('agent.utilisateur', 'u')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    } 
 
+
+
+
+    public function findIdByUtilisateur($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.utilisateur', 'a')
+            ->andwhere('a.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
 }

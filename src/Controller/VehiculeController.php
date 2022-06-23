@@ -44,6 +44,7 @@ use Symfony\Component\Form\Extension\Core\Type\ResetType;
  use App\Form\TestType;
 use App\Entity\Status;
 use App\Entity\Utilisateur;
+use App\Repository\VendeurrRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
@@ -79,20 +80,165 @@ class VehiculeController extends AbstractController
  
 
     #[Route('/vehicule', name: 'vehicule')]
-    public function filter( ModeleRepository $MRep ,Security $security, VehiculeRepository $repository,FabriquantRepository $Frep,  StatusRepository $Rstatus , Request $request , UtilisateurRepository $Users,ConcessionnaireRepository $consi)
+    public function filter( ModeleRepository $MRep ,Security $security, VehiculeRepository $repository,FabriquantRepository $Frep,  StatusRepository $Rstatus , Request $request ,VendeurrRepository $vendeurr, UtilisateurRepository $Users,ConcessionnaireRepository $consi,AgentRepository $agents,MarchandRepository $marchand,PartenaireRepository $partenaire)
     {
         
         /** @var User $user */
         $user = $security->getUser();
         $userrole = $user->getRoles();
-      //  $usernom= $user->getNomutilisateur();
         $userId= $user->getId();
-       // dd($userrole[0]);
-      $con= $consi->findIdByNom($userId);
-      // $data= $consi->findIdByNom(14);
-      //dd($con);die;
-        $data=$repository->findListbyCompagnie($con);
-    
+
+        if($userrole[0] == 'ROLE_AGENT' )
+        {
+            ////////////////véhicules visibles par l'agent////////////////   
+            /////////////véhicules de l'agent//////////////////  
+            $agentt= $Users->findOneById($userId);
+            $voitureagentt=$repository->findListbyCompagnie($agentt);
+         
+            ///////////////////véhicules du concessionnaire de cet agent/////////////////////////////
+            $agent=$agents->findOneByIdutilisateur($userId);
+            $consbyagent =$consi->findByAgent($agent);
+       
+            $tabcons=[];
+            foreach ($consbyagent as $value)
+            {
+                 $userr=$Users->findOneByConcessionnaire($value);
+                 array_push($tabcons,$userr); 
+            }
+
+            $tabconsveh=[];
+            foreach ($tabcons as $val)
+            {
+                $voiturconsisionnaire=$repository->findListbyCompagnie($val);
+                array_push($tabconsveh,$voiturconsisionnaire); 
+            }
+          
+            $vehicons=call_user_func_array('array_merge',$tabconsveh);
+            //////////////////////////////////véhicules du partenaire de cet agent//////////////////////////////////////////////////////////
+          
+            $partbyagent=$partenaire->findByAgent($agent);
+            $tabpart=[];
+            foreach ($partbyagent as $value)
+            {
+                   $userpart=$Users->findOneByPartenaire($value);
+                 array_push($tabpart,$userpart); 
+            }
+            
+            $tabpartveh=[];
+            foreach ($tabpart as $value)
+            {
+                 $voiturpartenaire=$repository->findListbyCompagnie($value);
+                 array_push($tabpartveh,$voiturpartenaire); 
+            }
+            
+            $vehipart=call_user_func_array('array_merge',$tabpartveh);
+           ////////////////////////////////////véhicules du marchand de cet agent///////////////////////
+            $marchanbyagent=$marchand->findByAgent($agent);
+            $tabmarch=[];
+            foreach ($marchanbyagent as $value)
+            {
+                 $userrmarch=$Users->findOneByMarchand($value);
+                 array_push($tabmarch,$userrmarch); 
+            }
+            $tabmarchveh=[];
+            foreach ($tabmarch as $value)
+            {
+                 $voiturmarchand=$repository->findListbyCompagnie($value);
+                 array_push($tabmarchveh,$voiturmarchand); 
+            }
+            $vehimarch=call_user_func_array('array_merge',$tabmarchveh);
+            /////////////////////////grouprmrnt de le liste des véhicule visible par l'agent/////////
+       
+ 
+            $vehiculeagent = array_merge($voitureagentt,$vehipart,$vehimarch,$vehicons);
+           
+      
+            ////////////////fin/////////////////////////////////////////
+        }elseif($userrole[0] == 'ROLE_VENDEUR' )
+        {
+            
+
+               ////////////////véhicules visibles par vendeur////////////////   
+            /////////////véhicules de vendeur//////////////////  
+            $vendeurrs= $Users->findOneById($userId);
+         
+            $voiturevendeurr=$repository->findListbyCompagnie($vendeurrs);
+           
+            ///////////////////véhicules du concessionnaire de ce vendeur/////////////////////////////
+            $vendeur=$vendeurr->findIdByUtilisateur($userId);
+           
+            $consbyvendeur =$consi->findByVendeur($vendeur);
+            $tabcons=[];
+            foreach ($consbyvendeur as $value)
+            {
+                 $userr=$Users->findOneByConcessionnaire($value);
+                 array_push($tabcons,$userr); 
+            }
+
+            $tabconsveh=[];
+            foreach ($tabcons as $val)
+            {
+                $voiturconsisionnaire=$repository->findListbyCompagnie($val);
+                array_push($tabconsveh,$voiturconsisionnaire); 
+            }
+            $vehicons=call_user_func_array('array_merge',$tabconsveh);
+            //////////////////////////////////véhicules du partenaire de ce vendeur//////////////////////////////////////////////////////////
+          
+            $partbyagent=$partenaire->findByVendeur($vendeur);
+            $tabpart=[];
+            foreach ($partbyagent as $value)
+            {
+                   $userpart=$Users->findOneByPartenaire($value);
+                 array_push($tabpart,$userpart); 
+            }
+            
+            $tabpartveh=[];
+            foreach ($tabpart as $value)
+            {
+                 $voiturpartenaire=$repository->findListbyCompagnie($value);
+                 array_push($tabpartveh,$voiturpartenaire); 
+            }
+            
+            $vehipart=call_user_func_array('array_merge',$tabpartveh);
+           ////////////////////////////////////véhicules du marchand de ce vendeur///////////////////////
+            $marchanbyagent=$marchand->findByVendeur($vendeur);
+            $tabmarch=[];
+            foreach ($marchanbyagent as $value)
+            {
+                 $userrmarch=$Users->findOneByMarchand($value);
+                 array_push($tabmarch,$userrmarch); 
+            }
+            $tabmarchveh=[];
+            foreach ($tabmarch as $value)
+            {
+                 $voiturmarchand=$repository->findListbyCompagnie($value);
+                 array_push($tabmarchveh,$voiturmarchand); 
+            }
+            $vehimarch=call_user_func_array('array_merge',$tabmarchveh);
+            /////////////////////////grouprmrnt de le liste des véhicule visible par vendeur/////////
+       
+ 
+            $vehiculevendeur = array_merge($voiturevendeurr,$vehipart,$vehimarch,$vehicons);
+           
+      
+            ////////////////fin/////////////////////////////////////////
+        }
+        elseif(($userrole[0] == 'ROLE_CONCESSIONNAIRE') || ($userrole[0] == 'ROLE_PARTENAIRE') || ($userrole[0] == 'ROLE_MARCHAND'))
+        {
+////////////////véhicules visibles par Concessionnaire et marchand et partenaire////////////////  
+      $con= $Users->findOneById($userId);
+      $data=$repository->findListbyCompagnie($con);
+ ////////////////fin/////////////////////////////////////////   
+      }  
+
+
+
+
+
+
+
+      if($userrole[0] == 'ROLE_ADMIN' )
+  {
 
         $form = $this->createFormBuilder()
         ->add('Year',
@@ -241,18 +387,926 @@ class VehiculeController extends AbstractController
             }
             else {$filterr = $repository -> findAll() ;}
         }
-//dd($filterr) ; die() ; 
+ } 
+ elseif($userrole[0] == 'ROLE_AGENT' )
+ {
+
+       $form = $this->createFormBuilder()
+       ->add('Year',
+           'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
+           'choices' => $this->getYears(1960) , 
+           'label' => false,
+           'required' => false
+       ])
+
+
+       ->add('Status',EntityType::class,array(
+           'class' => Status::class,
+           'choice_label' => function ($status) {
+            
+               return $status->getNom();
+            },
+            'expanded' => false ,
+            'required' => false ,
+            'label' => false 
+
+       ))
+
+       ->add('Marque',EntityType::class,array(
+           'class' => Fabriquant::class,
+           'choice_label' => function ($F) {
+            
+               return $F->getNom();
+            },
+            'required' => false ,
+            'label' => false 
+
+       ))
+
+       ->add('Modele',EntityType::class,array(
+           'class' => Modele::class,
+           'choice_label' => function ($M) {
+            
+               return $M->getNom();
+            },
+            'required' => false ,
+            'label' => false 
+
+       ))
+
+
+       ->add('Users',EntityType::class,array(
+           'class' => Utilisateur::class,
+           'choice_label' => function ($users) {
+            
+               return $users->getnom();
+            },
+            'required' => false ,
+            'label' => false 
+
+       ))
+
+       ->add('Inv',EntityType::class,array(
+           'class' => Vehicule::class,
+           'choice_label' => function ($vehicules) {
+            
+               return $vehicules->getNuminventaire();
+            },
+            'required' => false ,
+            'label' => false 
+
+       ))
+       ->add('Submit', SubmitType::class)
+
+       ->add('Reset', ResetType::class )
+
+       ->getForm();
+       ;
+
+       $form -> handleRequest($request);
+       $y =$form->get('Year')->getData() ;
+       $Status =$form->get('Status')->getData() ;
+       $marque =$form->get('Marque')->getData() ;
+       $Modele =$form->get('Modele')->getData() ; 
+       $Users =$form->get('Users')->getData();  
+       $vehicules = $repository -> findAll();
+       $vehicule1 = $repository -> findOneById(1);
+       $Inv =$form->get('Inv')->getData();           
+         //   dd($vehicule1->getMainPhoto()) ; die () ;
      
+
+      $phe ='' ;
+      $condition = '' ;
+      if ($marque)
+      { $marque_form = ($form->get('Marque')->getData( ))->getnom() ;
+       $condition .=  '$v->getmarque()->getnom()  ==   $marque_form '  ; }
+       if ($Modele) 
+       { $modele_form = ($form->get('Modele')->getData( ))->getnom()  ;
+           $condition .=  '&& $v->getmodele()->getnom() == $modele_form ' ; }
+           if ($Inv)
+           {   $Inv_form = ($form->get('Inv')->getData())->getNuminventaire()  ;
+               $condition .=  '&& $v->getNuminventaire() == $Inv_form ' ; }
+               if ($Users  )
+               { $U_form = $form->get('Users')->getData()->getNomutilisateur();
+
+                   $condition .=  '&& $v->getutilisateur()->getNomutilisateur() == $U_form ' ; }
+                   if ($y  )
+                   {$Y_form = $form->get('Year')->getData() ;
+                       $condition .=  '&& $v->getannee() == $Y_form ' ; } 
+                       if ($Status )
+                       {$S_form = $form->get('Status')->getData()->getnom();
+                           $condition .=  '&& $v->getstatus()->getnom() == $S_form  ' ; }
+
+
+
+
+                           if ( substr($condition, 0,2) == '&&' ) 
+
+                           { $condition[0] = " " ;
+                               $condition[1] = " " ;
+
+                           }
+
+
+                           {$cmd = ' if (' . $condition . ') ';
+                               $cmd .= ' {  ' ;
+         // $condition .= $phe . ' = true' ;
+         $cmd .= '$phe = true ;'   ;
+         $cmd .= '  } ' ;
+         $cmd .= ' else {  $phe = false ;}   ' ;
+
+
+
+
+         $i =0 ;
+         $filterr = $vehiculeagent ;
+         if(!empty($condition))
+
+         {   $filterr = [] ;
+           foreach ( $vehicules as $v)
+           {
+               ++$i ;
+
+               if($condition)
+               { eval( $cmd );
+                   if($phe == 'true') 
+                   { 
+                       $filterr[$i] = $v ; }
+    
+                   }
+               }
+           }
+           else {$filterr = $vehiculeagent ;}
+       }
+}   if($userrole[0] == 'ROLE_ADMIN' )
+{
+
+      $form = $this->createFormBuilder()
+      ->add('Year',
+          'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
+          'choices' => $this->getYears(1960) , 
+          'label' => false,
+          'required' => false
+      ])
+
+
+      ->add('Status',EntityType::class,array(
+          'class' => Status::class,
+          'choice_label' => function ($status) {
+           
+              return $status->getNom();
+           },
+           'expanded' => false ,
+           'required' => false ,
+           'label' => false 
+
+      ))
+
+      ->add('Marque',EntityType::class,array(
+          'class' => Fabriquant::class,
+          'choice_label' => function ($F) {
+           
+              return $F->getNom();
+           },
+           'required' => false ,
+           'label' => false 
+
+      ))
+
+      ->add('Modele',EntityType::class,array(
+          'class' => Modele::class,
+          'choice_label' => function ($M) {
+           
+              return $M->getNom();
+           },
+           'required' => false ,
+           'label' => false 
+
+      ))
+
+
+      ->add('Users',EntityType::class,array(
+          'class' => Utilisateur::class,
+          'choice_label' => function ($users) {
+           
+              return $users->getnom();
+           },
+           'required' => false ,
+           'label' => false 
+
+      ))
+
+      ->add('Inv',EntityType::class,array(
+          'class' => Vehicule::class,
+          'choice_label' => function ($vehicules) {
+           
+              return $vehicules->getNuminventaire();
+           },
+           'required' => false ,
+           'label' => false 
+
+      ))
+      ->add('Submit', SubmitType::class)
+
+      ->add('Reset', ResetType::class )
+
+      ->getForm();
+      ;
+
+      $form -> handleRequest($request);
+      $y =$form->get('Year')->getData() ;
+      $Status =$form->get('Status')->getData() ;
+      $marque =$form->get('Marque')->getData() ;
+      $Modele =$form->get('Modele')->getData() ; 
+      $Users =$form->get('Users')->getData();  
+      $vehicules = $repository -> findAll();
+      $vehicule1 = $repository -> findOneById(1);
+      $Inv =$form->get('Inv')->getData();           
+        //   dd($vehicule1->getMainPhoto()) ; die () ;
+    
+
+     $phe ='' ;
+     $condition = '' ;
+     if ($marque)
+     { $marque_form = ($form->get('Marque')->getData( ))->getnom() ;
+      $condition .=  '$v->getmarque()->getnom()  ==   $marque_form '  ; }
+      if ($Modele) 
+      { $modele_form = ($form->get('Modele')->getData( ))->getnom()  ;
+          $condition .=  '&& $v->getmodele()->getnom() == $modele_form ' ; }
+          if ($Inv)
+          {   $Inv_form = ($form->get('Inv')->getData())->getNuminventaire()  ;
+              $condition .=  '&& $v->getNuminventaire() == $Inv_form ' ; }
+              if ($Users  )
+              { $U_form = $form->get('Users')->getData()->getNomutilisateur();
+
+                  $condition .=  '&& $v->getutilisateur()->getNomutilisateur() == $U_form ' ; }
+                  if ($y  )
+                  {$Y_form = $form->get('Year')->getData() ;
+                      $condition .=  '&& $v->getannee() == $Y_form ' ; } 
+                      if ($Status )
+                      {$S_form = $form->get('Status')->getData()->getnom();
+                          $condition .=  '&& $v->getstatus()->getnom() == $S_form  ' ; }
+
+
+
+
+                          if ( substr($condition, 0,2) == '&&' ) 
+
+                          { $condition[0] = " " ;
+                              $condition[1] = " " ;
+
+                          }
+
+
+                          {$cmd = ' if (' . $condition . ') ';
+                              $cmd .= ' {  ' ;
+        // $condition .= $phe . ' = true' ;
+        $cmd .= '$phe = true ;'   ;
+        $cmd .= '  } ' ;
+        $cmd .= ' else {  $phe = false ;}   ' ;
+
+
+
+
+        $i =0 ;
+        $filterr = $repository -> findAll() ;
+        if(!empty($condition))
+
+        {   $filterr = [] ;
+          foreach ( $vehicules as $v)
+          {
+              ++$i ;
+
+              if($condition)
+              { eval( $cmd );
+                  if($phe == 'true') 
+                  { 
+                      $filterr[$i] = $v ; }
+   
+                  }
+              }
+          }
+          else {$filterr = $repository -> findAll() ;}
+      }
+} 
+elseif($userrole[0] == 'ROLE_VENDEUR' )
+{
+
+     $form = $this->createFormBuilder()
+     ->add('Year',
+         'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
+         'choices' => $this->getYears(1960) , 
+         'label' => false,
+         'required' => false
+     ])
+
+
+     ->add('Status',EntityType::class,array(
+         'class' => Status::class,
+         'choice_label' => function ($status) {
+          
+             return $status->getNom();
+          },
+          'expanded' => false ,
+          'required' => false ,
+          'label' => false 
+
+     ))
+
+     ->add('Marque',EntityType::class,array(
+         'class' => Fabriquant::class,
+         'choice_label' => function ($F) {
+          
+             return $F->getNom();
+          },
+          'required' => false ,
+          'label' => false 
+
+     ))
+
+     ->add('Modele',EntityType::class,array(
+         'class' => Modele::class,
+         'choice_label' => function ($M) {
+          
+             return $M->getNom();
+          },
+          'required' => false ,
+          'label' => false 
+
+     ))
+
+
+     ->add('Users',EntityType::class,array(
+         'class' => Utilisateur::class,
+         'choice_label' => function ($users) {
+          
+             return $users->getnom();
+          },
+          'required' => false ,
+          'label' => false 
+
+     ))
+
+     ->add('Inv',EntityType::class,array(
+         'class' => Vehicule::class,
+         'choice_label' => function ($vehicules) {
+          
+             return $vehicules->getNuminventaire();
+          },
+          'required' => false ,
+          'label' => false 
+
+     ))
+     ->add('Submit', SubmitType::class)
+
+     ->add('Reset', ResetType::class )
+
+     ->getForm();
+     ;
+
+     $form -> handleRequest($request);
+     $y =$form->get('Year')->getData() ;
+     $Status =$form->get('Status')->getData() ;
+     $marque =$form->get('Marque')->getData() ;
+     $Modele =$form->get('Modele')->getData() ; 
+     $Users =$form->get('Users')->getData();  
+     $vehicules = $vehiculevendeur;
+     $vehicule1 = $repository -> findOneById(1);
+     $Inv =$form->get('Inv')->getData();           
+       //   dd($vehicule1->getMainPhoto()) ; die () ;
+   
+
+    $phe ='' ;
+    $condition = '' ;
+    if ($marque)
+    { $marque_form = ($form->get('Marque')->getData( ))->getnom() ;
+     $condition .=  '$v->getmarque()->getnom()  ==   $marque_form '  ; }
+     if ($Modele) 
+     { $modele_form = ($form->get('Modele')->getData( ))->getnom()  ;
+         $condition .=  '&& $v->getmodele()->getnom() == $modele_form ' ; }
+         if ($Inv)
+         {   $Inv_form = ($form->get('Inv')->getData())->getNuminventaire()  ;
+             $condition .=  '&& $v->getNuminventaire() == $Inv_form ' ; }
+             if ($Users  )
+             { $U_form = $form->get('Users')->getData()->getNomutilisateur();
+
+                 $condition .=  '&& $v->getutilisateur()->getNomutilisateur() == $U_form ' ; }
+                 if ($y  )
+                 {$Y_form = $form->get('Year')->getData() ;
+                     $condition .=  '&& $v->getannee() == $Y_form ' ; } 
+                     if ($Status )
+                     {$S_form = $form->get('Status')->getData()->getnom();
+                         $condition .=  '&& $v->getstatus()->getnom() == $S_form  ' ; }
+
+
+
+
+                         if ( substr($condition, 0,2) == '&&' ) 
+
+                         { $condition[0] = " " ;
+                             $condition[1] = " " ;
+
+                         }
+
+
+                         {$cmd = ' if (' . $condition . ') ';
+                             $cmd .= ' {  ' ;
+       // $condition .= $phe . ' = true' ;
+       $cmd .= '$phe = true ;'   ;
+       $cmd .= '  } ' ;
+       $cmd .= ' else {  $phe = false ;}   ' ;
+
+
+
+
+       $i =0 ;
+       $filterr = $vehiculevendeur ;
+       if(!empty($condition))
+
+       {   $filterr = [] ;
+         foreach ( $vehicules as $v)
+         {
+             ++$i ;
+
+             if($condition)
+             { eval( $cmd );
+                 if($phe == 'true') 
+                 { 
+                     $filterr[$i] = $v ; }
+  
+                 }
+             }
+         }
+         else {$filterr = $vehiculevendeur ;}
+        }
+     
+} 
+ elseif( ($userrole[0] == 'ROLE_CONCESSIONNAIRE') || ($userrole[0] == 'ROLE_PARTENAIRE') || ($userrole[0] == 'ROLE_MARCHAND') )
+ {
+
+       $form = $this->createFormBuilder()
+       ->add('Year',
+           'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
+           'choices' => $this->getYears(1960) , 
+           'label' => false,
+           'required' => false
+       ])
+
+
+       ->add('Status',EntityType::class,array(
+           'class' => Status::class,
+           'choice_label' => function ($status) {
+            
+               return $status->getNom();
+            },
+            'expanded' => false ,
+            'required' => false ,
+            'label' => false 
+
+       ))
+
+       ->add('Marque',EntityType::class,array(
+           'class' => Fabriquant::class,
+           'choice_label' => function ($F) {
+            
+               return $F->getNom();
+            },
+            'required' => false ,
+            'label' => false 
+
+       ))
+
+       ->add('Modele',EntityType::class,array(
+           'class' => Modele::class,
+           'choice_label' => function ($M) {
+            
+               return $M->getNom();
+            },
+            'required' => false ,
+            'label' => false 
+
+       ))
+
+
+       ->add('Users',EntityType::class,array(
+           'class' => Utilisateur::class,
+           'choice_label' => function ($users) {
+            
+               return $users->getnom();
+            },
+            'required' => false ,
+            'label' => false 
+
+       ))
+
+       ->add('Inv',EntityType::class,array(
+           'class' => Vehicule::class,
+           'choice_label' => function ($vehicules) {
+            
+               return $vehicules->getNuminventaire();
+            },
+            'required' => false ,
+            'label' => false 
+
+       ))
+       ->add('Submit', SubmitType::class)
+
+       ->add('Reset', ResetType::class )
+
+       ->getForm();
+       ;
+
+       $form -> handleRequest($request);
+       $y =$form->get('Year')->getData() ;
+       $Status =$form->get('Status')->getData() ;
+       $marque =$form->get('Marque')->getData() ;
+       $Modele =$form->get('Modele')->getData() ; 
+       $Users =$form->get('Users')->getData();  
+       $vehicules = $data;
+       $vehicule1 = $repository -> findOneById(1);
+       $Inv =$form->get('Inv')->getData();           
+         //   dd($vehicule1->getMainPhoto()) ; die () ;
+     
+
+      $phe ='' ;
+      $condition = '' ;
+      if ($marque)
+      { $marque_form = ($form->get('Marque')->getData( ))->getnom() ;
+       $condition .=  '$v->getmarque()->getnom()  ==   $marque_form '  ; }
+       if ($Modele) 
+       { $modele_form = ($form->get('Modele')->getData( ))->getnom()  ;
+           $condition .=  '&& $v->getmodele()->getnom() == $modele_form ' ; }
+           if ($Inv)
+           {   $Inv_form = ($form->get('Inv')->getData())->getNuminventaire()  ;
+               $condition .=  '&& $v->getNuminventaire() == $Inv_form ' ; }
+               if ($Users  )
+               { $U_form = $form->get('Users')->getData()->getNomutilisateur();
+
+                   $condition .=  '&& $v->getutilisateur()->getNomutilisateur() == $U_form ' ; }
+                   if ($y  )
+                   {$Y_form = $form->get('Year')->getData() ;
+                       $condition .=  '&& $v->getannee() == $Y_form ' ; } 
+                       if ($Status )
+                       {$S_form = $form->get('Status')->getData()->getnom();
+                           $condition .=  '&& $v->getstatus()->getnom() == $S_form  ' ; }
+
+
+
+
+                           if ( substr($condition, 0,2) == '&&' ) 
+
+                           { $condition[0] = " " ;
+                               $condition[1] = " " ;
+
+                           }
+
+
+                           {$cmd = ' if (' . $condition . ') ';
+                               $cmd .= ' {  ' ;
+         // $condition .= $phe . ' = true' ;
+         $cmd .= '$phe = true ;'   ;
+         $cmd .= '  } ' ;
+         $cmd .= ' else {  $phe = false ;}   ' ;
+
+
+
+
+         $i =0 ;
+         $filterr = $data ;
+         if(!empty($condition))
+
+         {   $filterr = [] ;
+           foreach ( $vehicules as $v)
+           {
+               ++$i ;
+
+               if($condition)
+               { eval( $cmd );
+                   if($phe == 'true') 
+                   { 
+                       $filterr[$i] = $v ; }
+    
+                   }
+               }
+           }
+           else {$filterr = $data;}
+       }
+}  
+
+
         return $this->render('vehicule/index.html.twig', [
             'form' => $form->createView(),
             'vehicule' => $filterr  ]);   
      }
 
-
-
-    #[Route('/liquidation', name: 'liquidation')]
-    public function filterliquidation( ModeleRepository $MRep , VehiculeRepository $repository,FabriquantRepository $Frep,  StatusRepository $Rstatus , Request $request , UtilisateurRepository $Users)
-    {
+     #[Route('/liquidation', name: 'liquidation')]
+     public function filterliquidation( ModeleRepository $MRep ,Security $security, VehiculeRepository $repository,FabriquantRepository $Frep,  StatusRepository $Rstatus , Request $request ,VendeurrRepository $vendeurr, UtilisateurRepository $Users,ConcessionnaireRepository $consi,AgentRepository $agents,MarchandRepository $marchand,PartenaireRepository $partenaire)
+     {
+         
+         /** @var User $user */
+         $user = $security->getUser();
+         $userrole = $user->getRoles();
+         $userId= $user->getId();
+ 
+         if($userrole[0] == 'ROLE_AGENT' )
+         {
+             ////////////////véhicules visibles par l'agent////////////////   
+             /////////////véhicules de l'agent//////////////////  
+             $agentt= $Users->findOneById($userId);
+             $voitureagentt=$repository->findListbyCompagnie($agentt);
+          
+             ///////////////////véhicules du concessionnaire de cet agent/////////////////////////////
+             $agent=$agents->findOneByIdutilisateur($userId);
+             $consbyagent =$consi->findByAgent($agent);
+             $tabcons=[];
+             foreach ($consbyagent as $value)
+             {
+                  $userr=$Users->findOneByConcessionnaire($value);
+                  array_push($tabcons,$userr); 
+             }
+ 
+             $tabconsveh=[];
+             foreach ($tabcons as $val)
+             {
+                 $voiturconsisionnaire=$repository->findListbyCompagnie($val);
+                 array_push($tabconsveh,$voiturconsisionnaire); 
+             }
+             $vehicons=call_user_func_array('array_merge',$tabconsveh);
+             //////////////////////////////////véhicules du partenaire de cet agent//////////////////////////////////////////////////////////
+           
+             $partbyagent=$partenaire->findByAgent($agent);
+             $tabpart=[];
+             foreach ($partbyagent as $value)
+             {
+                    $userpart=$Users->findOneByPartenaire($value);
+                  array_push($tabpart,$userpart); 
+             }
+             
+             $tabpartveh=[];
+             foreach ($tabpart as $value)
+             {
+                  $voiturpartenaire=$repository->findListbyCompagnie($value);
+                  array_push($tabpartveh,$voiturpartenaire); 
+             }
+             
+             $vehipart=call_user_func_array('array_merge',$tabpartveh);
+            ////////////////////////////////////véhicules du marchand de cet agent///////////////////////
+             $marchanbyagent=$marchand->findByAgent($agent);
+             $tabmarch=[];
+             foreach ($marchanbyagent as $value)
+             {
+                  $userrmarch=$Users->findOneByMarchand($value);
+                  array_push($tabmarch,$userrmarch); 
+             }
+             $tabmarchveh=[];
+             foreach ($tabmarch as $value)
+             {
+                  $voiturmarchand=$repository->findListbyCompagnie($value);
+                  array_push($tabmarchveh,$voiturmarchand); 
+             }
+             $vehimarch=call_user_func_array('array_merge',$tabmarchveh);
+             /////////////////////////grouprmrnt de le liste des véhicule visible par l'agent/////////
+        
+  
+             $vehiculeagent = array_merge($voitureagentt,$vehipart,$vehimarch,$vehicons);
+            
+       
+             ////////////////fin/////////////////////////////////////////
+         }elseif($userrole[0] == 'ROLE_VENDEUR' )
+         {
+             
+ 
+                ////////////////véhicules visibles par vendeur////////////////   
+             /////////////véhicules de vendeur//////////////////  
+             $vendeurrs= $Users->findOneById($userId);
+             $voiturevendeurr=$repository->findListbyCompagnie($vendeurrs);
+          
+             ///////////////////véhicules du concessionnaire de ce vendeur/////////////////////////////
+             $vendeur=$vendeurr->findOneByIdutilisateur($userId);
+             $consbyvendeur =$consi->findByVendeur($vendeur);
+             $tabcons=[];
+             foreach ($consbyvendeur as $value)
+             {
+                  $userr=$Users->findOneByConcessionnaire($value);
+                  array_push($tabcons,$userr); 
+             }
+ 
+             $tabconsveh=[];
+             foreach ($tabcons as $val)
+             {
+                 $voiturconsisionnaire=$repository->findListbyCompagnie($val);
+                 array_push($tabconsveh,$voiturconsisionnaire); 
+             }
+             $vehicons=call_user_func_array('array_merge',$tabconsveh);
+             //////////////////////////////////véhicules du partenaire de ce vendeur//////////////////////////////////////////////////////////
+           
+             $partbyagent=$partenaire->findByVendeur($vendeur);
+             $tabpart=[];
+             foreach ($partbyagent as $value)
+             {
+                    $userpart=$Users->findOneByPartenaire($value);
+                  array_push($tabpart,$userpart); 
+             }
+             
+             $tabpartveh=[];
+             foreach ($tabpart as $value)
+             {
+                  $voiturpartenaire=$repository->findListbyCompagnie($value);
+                  array_push($tabpartveh,$voiturpartenaire); 
+             }
+             
+             $vehipart=call_user_func_array('array_merge',$tabpartveh);
+            ////////////////////////////////////véhicules du marchand de ce vendeur///////////////////////
+             $marchanbyagent=$marchand->findByVendeur($vendeur);
+             $tabmarch=[];
+             foreach ($marchanbyagent as $value)
+             {
+                  $userrmarch=$Users->findOneByMarchand($value);
+                  array_push($tabmarch,$userrmarch); 
+             }
+             $tabmarchveh=[];
+             foreach ($tabmarch as $value)
+             {
+                  $voiturmarchand=$repository->findListbyCompagnie($value);
+                  array_push($tabmarchveh,$voiturmarchand); 
+             }
+             $vehimarch=call_user_func_array('array_merge',$tabmarchveh);
+             /////////////////////////grouprmrnt de le liste des véhicule visible par vendeur/////////
+        
+  
+             $vehiculevendeur = array_merge($voiturevendeurr,$vehipart,$vehimarch,$vehicons);
+            
+       
+             ////////////////fin/////////////////////////////////////////
+         }
+         elseif(($userrole[0] == 'ROLE_CONCESSIONNAIRE') || ($userrole[0] == 'ROLE_PARTENAIRE') || ($userrole[0] == 'ROLE_MARCHAND'))
+         {
+ ////////////////véhicules visibles par Concessionnaire et marchand et partenaire////////////////  
+       $con= $Users->findOneById($userId);
+       $data=$repository->findListbyCompagnie($con);
+  ////////////////fin/////////////////////////////////////////   
+       }  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+       if($userrole[0] == 'ROLE_ADMIN' )
+   {
+ 
+         $form = $this->createFormBuilder()
+         ->add('Year',
+             'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
+             'choices' => $this->getYears(1960) , 
+             'label' => false,
+             'required' => false
+         ])
+ 
+ 
+         ->add('Status',EntityType::class,array(
+             'class' => Status::class,
+             'choice_label' => function ($status) {
+              
+                 return $status->getNom();
+              },
+              'expanded' => false ,
+              'required' => false ,
+              'label' => false 
+ 
+         ))
+ 
+         ->add('Marque',EntityType::class,array(
+             'class' => Fabriquant::class,
+             'choice_label' => function ($F) {
+              
+                 return $F->getNom();
+              },
+              'required' => false ,
+              'label' => false 
+ 
+         ))
+ 
+         ->add('Modele',EntityType::class,array(
+             'class' => Modele::class,
+             'choice_label' => function ($M) {
+              
+                 return $M->getNom();
+              },
+              'required' => false ,
+              'label' => false 
+ 
+         ))
+ 
+ 
+         ->add('Users',EntityType::class,array(
+             'class' => Utilisateur::class,
+             'choice_label' => function ($users) {
+              
+                 return $users->getnom();
+              },
+              'required' => false ,
+              'label' => false 
+ 
+         ))
+ 
+         ->add('Inv',EntityType::class,array(
+             'class' => Vehicule::class,
+             'choice_label' => function ($vehicules) {
+              
+                 return $vehicules->getNuminventaire();
+              },
+              'required' => false ,
+              'label' => false 
+ 
+         ))
+         ->add('Submit', SubmitType::class)
+ 
+         ->add('Reset', ResetType::class )
+ 
+         ->getForm();
+         ;
+ 
+         $form -> handleRequest($request);
+         $y =$form->get('Year')->getData() ;
+         $Status =$form->get('Status')->getData() ;
+         $marque =$form->get('Marque')->getData() ;
+         $Modele =$form->get('Modele')->getData() ; 
+         $Users =$form->get('Users')->getData();  
+         $vehicules = $repository -> findAll();
+         $vehicule1 = $repository -> findOneById(1);
+         $Inv =$form->get('Inv')->getData();           
+           //   dd($vehicule1->getMainPhoto()) ; die () ;
+       
+ 
+        $phe ='' ;
+        $condition = '' ;
+        if ($marque)
+        { $marque_form = ($form->get('Marque')->getData( ))->getnom() ;
+         $condition .=  '$v->getmarque()->getnom()  ==   $marque_form '  ; }
+         if ($Modele) 
+         { $modele_form = ($form->get('Modele')->getData( ))->getnom()  ;
+             $condition .=  '&& $v->getmodele()->getnom() == $modele_form ' ; }
+             if ($Inv)
+             {   $Inv_form = ($form->get('Inv')->getData())->getNuminventaire()  ;
+                 $condition .=  '&& $v->getNuminventaire() == $Inv_form ' ; }
+                 if ($Users  )
+                 { $U_form = $form->get('Users')->getData()->getNomutilisateur();
+ 
+                     $condition .=  '&& $v->getutilisateur()->getNomutilisateur() == $U_form ' ; }
+                     if ($y  )
+                     {$Y_form = $form->get('Year')->getData() ;
+                         $condition .=  '&& $v->getannee() == $Y_form ' ; } 
+                         if ($Status )
+                         {$S_form = $form->get('Status')->getData()->getnom();
+                             $condition .=  '&& $v->getstatus()->getnom() == $S_form  ' ; }
+ 
+ 
+ 
+ 
+                             if ( substr($condition, 0,2) == '&&' ) 
+ 
+                             { $condition[0] = " " ;
+                                 $condition[1] = " " ;
+ 
+                             }
+ 
+ 
+                             {$cmd = ' if (' . $condition . ') ';
+                                 $cmd .= ' {  ' ;
+           // $condition .= $phe . ' = true' ;
+           $cmd .= '$phe = true ;'   ;
+           $cmd .= '  } ' ;
+           $cmd .= ' else {  $phe = false ;}   ' ;
+ 
+ 
+ 
+ 
+           $i =0 ;
+           $filterr = $repository -> findAll() ;
+           if(!empty($condition))
+ 
+           {   $filterr = [] ;
+             foreach ( $vehicules as $v)
+             {
+                 ++$i ;
+ 
+                 if($condition)
+                 { eval( $cmd );
+                     if($phe == 'true') 
+                     { 
+                         $filterr[$i] = $v ; }
+      
+                     }
+                 }
+             }
+             else {$filterr = $repository -> findAll() ;}
+         }
+  } 
+  elseif($userrole[0] == 'ROLE_AGENT' )
+  {
+ 
         $form = $this->createFormBuilder()
         ->add('Year',
             'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
@@ -260,8 +1314,8 @@ class VehiculeController extends AbstractController
             'label' => false,
             'required' => false
         ])
-
-
+ 
+ 
         ->add('Status',EntityType::class,array(
             'class' => Status::class,
             'choice_label' => function ($status) {
@@ -271,9 +1325,9 @@ class VehiculeController extends AbstractController
              'expanded' => false ,
              'required' => false ,
              'label' => false 
-
+ 
         ))
-
+ 
         ->add('Marque',EntityType::class,array(
             'class' => Fabriquant::class,
             'choice_label' => function ($F) {
@@ -282,9 +1336,9 @@ class VehiculeController extends AbstractController
              },
              'required' => false ,
              'label' => false 
-
+ 
         ))
-
+ 
         ->add('Modele',EntityType::class,array(
             'class' => Modele::class,
             'choice_label' => function ($M) {
@@ -293,10 +1347,10 @@ class VehiculeController extends AbstractController
              },
              'required' => false ,
              'label' => false 
-
+ 
         ))
-
-
+ 
+ 
         ->add('Users',EntityType::class,array(
             'class' => Utilisateur::class,
             'choice_label' => function ($users) {
@@ -305,9 +1359,9 @@ class VehiculeController extends AbstractController
              },
              'required' => false ,
              'label' => false 
-
+ 
         ))
-
+ 
         ->add('Inv',EntityType::class,array(
             'class' => Vehicule::class,
             'choice_label' => function ($vehicules) {
@@ -316,15 +1370,15 @@ class VehiculeController extends AbstractController
              },
              'required' => false ,
              'label' => false 
-
+ 
         ))
         ->add('Submit', SubmitType::class)
-
+ 
         ->add('Reset', ResetType::class )
-
+ 
         ->getForm();
         ;
-
+ 
         $form -> handleRequest($request);
         $y =$form->get('Year')->getData() ;
         $Status =$form->get('Status')->getData() ;
@@ -332,10 +1386,11 @@ class VehiculeController extends AbstractController
         $Modele =$form->get('Modele')->getData() ; 
         $Users =$form->get('Users')->getData();  
         $vehicules = $repository -> findAll();
+        $vehicule1 = $repository -> findOneById(1);
         $Inv =$form->get('Inv')->getData();           
-
+          //   dd($vehicule1->getMainPhoto()) ; die () ;
       
-
+ 
        $phe ='' ;
        $condition = '' ;
        if ($marque)
@@ -349,7 +1404,7 @@ class VehiculeController extends AbstractController
                 $condition .=  '&& $v->getNuminventaire() == $Inv_form ' ; }
                 if ($Users  )
                 { $U_form = $form->get('Users')->getData()->getNomutilisateur();
-
+ 
                     $condition .=  '&& $v->getutilisateur()->getNomutilisateur() == $U_form ' ; }
                     if ($y  )
                     {$Y_form = $form->get('Year')->getData() ;
@@ -357,37 +1412,37 @@ class VehiculeController extends AbstractController
                         if ($Status )
                         {$S_form = $form->get('Status')->getData()->getnom();
                             $condition .=  '&& $v->getstatus()->getnom() == $S_form  ' ; }
-
-
-
-
+ 
+ 
+ 
+ 
                             if ( substr($condition, 0,2) == '&&' ) 
-
+ 
                             { $condition[0] = " " ;
                                 $condition[1] = " " ;
-
+ 
                             }
-
-
+ 
+ 
                             {$cmd = ' if (' . $condition . ') ';
                                 $cmd .= ' {  ' ;
           // $condition .= $phe . ' = true' ;
           $cmd .= '$phe = true ;'   ;
           $cmd .= '  } ' ;
           $cmd .= ' else {  $phe = false ;}   ' ;
-
-
-
-
+ 
+ 
+ 
+ 
           $i =0 ;
-          $filterr = $repository -> findAll() ;
+          $filterr = $vehiculeagent ;
           if(!empty($condition))
-
+ 
           {   $filterr = [] ;
             foreach ( $vehicules as $v)
             {
                 ++$i ;
-
+ 
                 if($condition)
                 { eval( $cmd );
                     if($phe == 'true') 
@@ -397,18 +1452,470 @@ class VehiculeController extends AbstractController
                     }
                 }
             }
-            else {$filterr = $repository -> findAll() ;}
+            else {$filterr = $vehiculeagent ;}
         }
+ }   if($userrole[0] == 'ROLE_ADMIN' )
+ {
+ 
+       $form = $this->createFormBuilder()
+       ->add('Year',
+           'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
+           'choices' => $this->getYears(1960) , 
+           'label' => false,
+           'required' => false
+       ])
+ 
+ 
+       ->add('Status',EntityType::class,array(
+           'class' => Status::class,
+           'choice_label' => function ($status) {
+            
+               return $status->getNom();
+            },
+            'expanded' => false ,
+            'required' => false ,
+            'label' => false 
+ 
+       ))
+ 
+       ->add('Marque',EntityType::class,array(
+           'class' => Fabriquant::class,
+           'choice_label' => function ($F) {
+            
+               return $F->getNom();
+            },
+            'required' => false ,
+            'label' => false 
+ 
+       ))
+ 
+       ->add('Modele',EntityType::class,array(
+           'class' => Modele::class,
+           'choice_label' => function ($M) {
+            
+               return $M->getNom();
+            },
+            'required' => false ,
+            'label' => false 
+ 
+       ))
+ 
+ 
+       ->add('Users',EntityType::class,array(
+           'class' => Utilisateur::class,
+           'choice_label' => function ($users) {
+            
+               return $users->getnom();
+            },
+            'required' => false ,
+            'label' => false 
+ 
+       ))
+ 
+       ->add('Inv',EntityType::class,array(
+           'class' => Vehicule::class,
+           'choice_label' => function ($vehicules) {
+            
+               return $vehicules->getNuminventaire();
+            },
+            'required' => false ,
+            'label' => false 
+ 
+       ))
+       ->add('Submit', SubmitType::class)
+ 
+       ->add('Reset', ResetType::class )
+ 
+       ->getForm();
+       ;
+ 
+       $form -> handleRequest($request);
+       $y =$form->get('Year')->getData() ;
+       $Status =$form->get('Status')->getData() ;
+       $marque =$form->get('Marque')->getData() ;
+       $Modele =$form->get('Modele')->getData() ; 
+       $Users =$form->get('Users')->getData();  
+       $vehicules = $repository -> findAll();
+       $vehicule1 = $repository -> findOneById(1);
+       $Inv =$form->get('Inv')->getData();           
+         //   dd($vehicule1->getMainPhoto()) ; die () ;
+     
+ 
+      $phe ='' ;
+      $condition = '' ;
+      if ($marque)
+      { $marque_form = ($form->get('Marque')->getData( ))->getnom() ;
+       $condition .=  '$v->getmarque()->getnom()  ==   $marque_form '  ; }
+       if ($Modele) 
+       { $modele_form = ($form->get('Modele')->getData( ))->getnom()  ;
+           $condition .=  '&& $v->getmodele()->getnom() == $modele_form ' ; }
+           if ($Inv)
+           {   $Inv_form = ($form->get('Inv')->getData())->getNuminventaire()  ;
+               $condition .=  '&& $v->getNuminventaire() == $Inv_form ' ; }
+               if ($Users  )
+               { $U_form = $form->get('Users')->getData()->getNomutilisateur();
+ 
+                   $condition .=  '&& $v->getutilisateur()->getNomutilisateur() == $U_form ' ; }
+                   if ($y  )
+                   {$Y_form = $form->get('Year')->getData() ;
+                       $condition .=  '&& $v->getannee() == $Y_form ' ; } 
+                       if ($Status )
+                       {$S_form = $form->get('Status')->getData()->getnom();
+                           $condition .=  '&& $v->getstatus()->getnom() == $S_form  ' ; }
+ 
+ 
+ 
+ 
+                           if ( substr($condition, 0,2) == '&&' ) 
+ 
+                           { $condition[0] = " " ;
+                               $condition[1] = " " ;
+ 
+                           }
+ 
+ 
+                           {$cmd = ' if (' . $condition . ') ';
+                               $cmd .= ' {  ' ;
+         // $condition .= $phe . ' = true' ;
+         $cmd .= '$phe = true ;'   ;
+         $cmd .= '  } ' ;
+         $cmd .= ' else {  $phe = false ;}   ' ;
+ 
+ 
+ 
+ 
+         $i =0 ;
+         $filterr = $repository -> findAll() ;
+         if(!empty($condition))
+ 
+         {   $filterr = [] ;
+           foreach ( $vehicules as $v)
+           {
+               ++$i ;
+ 
+               if($condition)
+               { eval( $cmd );
+                   if($phe == 'true') 
+                   { 
+                       $filterr[$i] = $v ; }
+    
+                   }
+               }
+           }
+           else {$filterr = $repository -> findAll() ;}
+       }
+ } 
+ elseif($userrole[0] == 'ROLE_VENDEUR' )
+ {
+ 
+      $form = $this->createFormBuilder()
+      ->add('Year',
+          'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
+          'choices' => $this->getYears(1960) , 
+          'label' => false,
+          'required' => false
+      ])
+ 
+ 
+      ->add('Status',EntityType::class,array(
+          'class' => Status::class,
+          'choice_label' => function ($status) {
+           
+              return $status->getNom();
+           },
+           'expanded' => false ,
+           'required' => false ,
+           'label' => false 
+ 
+      ))
+ 
+      ->add('Marque',EntityType::class,array(
+          'class' => Fabriquant::class,
+          'choice_label' => function ($F) {
+           
+              return $F->getNom();
+           },
+           'required' => false ,
+           'label' => false 
+ 
+      ))
+ 
+      ->add('Modele',EntityType::class,array(
+          'class' => Modele::class,
+          'choice_label' => function ($M) {
+           
+              return $M->getNom();
+           },
+           'required' => false ,
+           'label' => false 
+ 
+      ))
+ 
+ 
+      ->add('Users',EntityType::class,array(
+          'class' => Utilisateur::class,
+          'choice_label' => function ($users) {
+           
+              return $users->getnom();
+           },
+           'required' => false ,
+           'label' => false 
+ 
+      ))
+ 
+      ->add('Inv',EntityType::class,array(
+          'class' => Vehicule::class,
+          'choice_label' => function ($vehicules) {
+           
+              return $vehicules->getNuminventaire();
+           },
+           'required' => false ,
+           'label' => false 
+ 
+      ))
+      ->add('Submit', SubmitType::class)
+ 
+      ->add('Reset', ResetType::class )
+ 
+      ->getForm();
+      ;
+ 
+      $form -> handleRequest($request);
+      $y =$form->get('Year')->getData() ;
+      $Status =$form->get('Status')->getData() ;
+      $marque =$form->get('Marque')->getData() ;
+      $Modele =$form->get('Modele')->getData() ; 
+      $Users =$form->get('Users')->getData();  
+      $vehicules = $vehiculevendeur;
+      $vehicule1 = $repository -> findOneById(1);
+      $Inv =$form->get('Inv')->getData();           
+        //   dd($vehicule1->getMainPhoto()) ; die () ;
+    
+ 
+     $phe ='' ;
+     $condition = '' ;
+     if ($marque)
+     { $marque_form = ($form->get('Marque')->getData( ))->getnom() ;
+      $condition .=  '$v->getmarque()->getnom()  ==   $marque_form '  ; }
+      if ($Modele) 
+      { $modele_form = ($form->get('Modele')->getData( ))->getnom()  ;
+          $condition .=  '&& $v->getmodele()->getnom() == $modele_form ' ; }
+          if ($Inv)
+          {   $Inv_form = ($form->get('Inv')->getData())->getNuminventaire()  ;
+              $condition .=  '&& $v->getNuminventaire() == $Inv_form ' ; }
+              if ($Users  )
+              { $U_form = $form->get('Users')->getData()->getNomutilisateur();
+ 
+                  $condition .=  '&& $v->getutilisateur()->getNomutilisateur() == $U_form ' ; }
+                  if ($y  )
+                  {$Y_form = $form->get('Year')->getData() ;
+                      $condition .=  '&& $v->getannee() == $Y_form ' ; } 
+                      if ($Status )
+                      {$S_form = $form->get('Status')->getData()->getnom();
+                          $condition .=  '&& $v->getstatus()->getnom() == $S_form  ' ; }
+ 
+ 
+ 
+ 
+                          if ( substr($condition, 0,2) == '&&' ) 
+ 
+                          { $condition[0] = " " ;
+                              $condition[1] = " " ;
+ 
+                          }
+ 
+ 
+                          {$cmd = ' if (' . $condition . ') ';
+                              $cmd .= ' {  ' ;
+        // $condition .= $phe . ' = true' ;
+        $cmd .= '$phe = true ;'   ;
+        $cmd .= '  } ' ;
+        $cmd .= ' else {  $phe = false ;}   ' ;
+ 
+ 
+ 
+ 
+        $i =0 ;
+        $filterr = $vehiculevendeur ;
+        if(!empty($condition))
+ 
+        {   $filterr = [] ;
+          foreach ( $vehicules as $v)
+          {
+              ++$i ;
+ 
+              if($condition)
+              { eval( $cmd );
+                  if($phe == 'true') 
+                  { 
+                      $filterr[$i] = $v ; }
+   
+                  }
+              }
+          }
+          else {$filterr = $vehiculevendeur ;}
+         }
+      
+ } 
+  elseif( ($userrole[0] == 'ROLE_CONCESSIONNAIRE') || ($userrole[0] == 'ROLE_PARTENAIRE') || ($userrole[0] == 'ROLE_MARCHAND') )
+  {
+ 
+        $form = $this->createFormBuilder()
+        ->add('Year',
+            'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
+            'choices' => $this->getYears(1960) , 
+            'label' => false,
+            'required' => false
+        ])
+ 
+ 
+        ->add('Status',EntityType::class,array(
+            'class' => Status::class,
+            'choice_label' => function ($status) {
+             
+                return $status->getNom();
+             },
+             'expanded' => false ,
+             'required' => false ,
+             'label' => false 
+ 
+        ))
+ 
+        ->add('Marque',EntityType::class,array(
+            'class' => Fabriquant::class,
+            'choice_label' => function ($F) {
+             
+                return $F->getNom();
+             },
+             'required' => false ,
+             'label' => false 
+ 
+        ))
+ 
+        ->add('Modele',EntityType::class,array(
+            'class' => Modele::class,
+            'choice_label' => function ($M) {
+             
+                return $M->getNom();
+             },
+             'required' => false ,
+             'label' => false 
+ 
+        ))
+ 
+ 
+        ->add('Users',EntityType::class,array(
+            'class' => Utilisateur::class,
+            'choice_label' => function ($users) {
+             
+                return $users->getnom();
+             },
+             'required' => false ,
+             'label' => false 
+ 
+        ))
+ 
+        ->add('Inv',EntityType::class,array(
+            'class' => Vehicule::class,
+            'choice_label' => function ($vehicules) {
+             
+                return $vehicules->getNuminventaire();
+             },
+             'required' => false ,
+             'label' => false 
+ 
+        ))
+        ->add('Submit', SubmitType::class)
+ 
+        ->add('Reset', ResetType::class )
+ 
+        ->getForm();
+        ;
+ 
+        $form -> handleRequest($request);
+        $y =$form->get('Year')->getData() ;
+        $Status =$form->get('Status')->getData() ;
+        $marque =$form->get('Marque')->getData() ;
+        $Modele =$form->get('Modele')->getData() ; 
+        $Users =$form->get('Users')->getData();  
+        $vehicules = $data;
+        $vehicule1 = $repository -> findOneById(1);
+        $Inv =$form->get('Inv')->getData();           
+          //   dd($vehicule1->getMainPhoto()) ; die () ;
+      
+ 
+       $phe ='' ;
+       $condition = '' ;
+       if ($marque)
+       { $marque_form = ($form->get('Marque')->getData( ))->getnom() ;
+        $condition .=  '$v->getmarque()->getnom()  ==   $marque_form '  ; }
+        if ($Modele) 
+        { $modele_form = ($form->get('Modele')->getData( ))->getnom()  ;
+            $condition .=  '&& $v->getmodele()->getnom() == $modele_form ' ; }
+            if ($Inv)
+            {   $Inv_form = ($form->get('Inv')->getData())->getNuminventaire()  ;
+                $condition .=  '&& $v->getNuminventaire() == $Inv_form ' ; }
+                if ($Users  )
+                { $U_form = $form->get('Users')->getData()->getNomutilisateur();
+ 
+                    $condition .=  '&& $v->getutilisateur()->getNomutilisateur() == $U_form ' ; }
+                    if ($y  )
+                    {$Y_form = $form->get('Year')->getData() ;
+                        $condition .=  '&& $v->getannee() == $Y_form ' ; } 
+                        if ($Status )
+                        {$S_form = $form->get('Status')->getData()->getnom();
+                            $condition .=  '&& $v->getstatus()->getnom() == $S_form  ' ; }
+ 
+ 
+ 
+ 
+                            if ( substr($condition, 0,2) == '&&' ) 
+ 
+                            { $condition[0] = " " ;
+                                $condition[1] = " " ;
+ 
+                            }
+ 
+ 
+                            {$cmd = ' if (' . $condition . ') ';
+                                $cmd .= ' {  ' ;
+          // $condition .= $phe . ' = true' ;
+          $cmd .= '$phe = true ;'   ;
+          $cmd .= '  } ' ;
+          $cmd .= ' else {  $phe = false ;}   ' ;
+ 
+ 
+ 
+ 
+          $i =0 ;
+          $filterr = $data ;
+          if(!empty($condition))
+ 
+          {   $filterr = [] ;
+            foreach ( $vehicules as $v)
+            {
+                ++$i ;
+ 
+                if($condition)
+                { eval( $cmd );
+                    if($phe == 'true') 
+                    { 
+                        $filterr[$i] = $v ; }
+     
+                    }
+                }
+            }
+            else {$filterr = $data;}
+        }
+ }  
+ 
+ 
+         return $this->render('vehicule/index_liquidation.html.twig', [
+             'form' => $form->createView(),
+             'vehicule' => $filterr  ]);   
+      }
+ 
 
-        
-        return $this->render('vehicule/index_liquidation.html.twig', [
-            
-         
-            'form' => $form->createView(),
-            
-             'vehicule' => $filterr 
-        ]); 
-    }
    
 
 
@@ -483,7 +1990,9 @@ class VehiculeController extends AbstractController
 
             }
         }
-            
+        $modif = $vehicules->getId() !== null;
+       // $this->addFlash('success', 'L\'ajout d\'un nouveau véhicule a été effectuée avec succès'); 
+          $this->addFlash("success", ($modif) ? 'L\'ajout d\'un nouveau véhicule a été effectuée avec succès' : "La modification est modifié avec succès ");
             $this->om->persist($vehicules);
            
            

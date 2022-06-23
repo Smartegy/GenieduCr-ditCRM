@@ -97,11 +97,25 @@
                                     </li>
                                     <!--end::Nav item-->
                                     <!--begin::Nav item-->
+                                    {% if is_granted('ROLE_ADMIN') %}
                                     <li class="nav-item mt-2">
                                         <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path("leads_edit",{ 'id' : lead.Id})}}">Modification</a>
                                     </li>
+                                    {% elseif is_granted('ROLE_AGENT') %}
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path("leads_edit",{ 'id' : lead.Id})}}">Modification</a>
+                                    </li>
+                                    {% elseif is_granted('ROLE_CONCESSIONNAIRE') %}
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path("leads_edit",{ 'id' : lead.Id})}}">Modification</a>
+                                    </li>
+                                    {% elseif is_granted('ROLE_MARCHAND') %}
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path("leads_edit",{ 'id' : lead.Id})}}">Modification</a>
+                                    </li>
+                                    {% endif %}
                                     <!--end::Nav item-->
-                                 
+                                    {% if is_granted('ROLE_ADMIN') %}
                                     <!--begin::Nav item-->
                                     <li class="nav-item mt-2">
                                         <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('notes_index', {'idlead' : lead.id})}}">Notes</a>
@@ -117,6 +131,23 @@
                                         <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('sms', {'idlead' : lead.id})}}">SMS</a>
                                     </li>
                                     <!--end::Nav item-->
+                                    {% elseif  is_granted('ROLE_AGENT') %}
+                                       <!--begin::Nav item-->
+                                       <li class="nav-item mt-2">
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('notes_index', {'idlead' : lead.id})}}">Notes</a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('files_index', {'idlead' : lead.id})}}">Documents Attaché</a>
+                                    </li>
+
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('courriel', {'idlead' : lead.id})}}">Courriel</a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path('sms', {'idlead' : lead.id})}}">SMS</a>
+                                    </li>
+                                    <!--end::Nav item-->
+                                    {% endif %}
 
                                 </ul>
                                 <!--begin::Navs-->
@@ -133,8 +164,18 @@
                                 </div>
                                 <!--end::Card title-->
                                 <!--begin::Action-->
+                                {% if  is_granted('ROLE_ADMIN') %}
+                                   <a href= "{{path("leads_edit",{ 'id' : lead.Id})}}" class="btn btn-primary align-self-center">Éditer le profil</a>
+                                <!--end::Action-->
+                                {% elseif ('ROLE_AGENT')  %}
                                 <a href= "{{path("leads_edit",{ 'id' : lead.Id})}}" class="btn btn-primary align-self-center">Éditer le profil</a>
                                 <!--end::Action-->
+                                {% elseif ('ROLE_CONCESSIONNAIRE')  %}
+                                <a href= "{{path("leads_edit",{ 'id' : lead.Id})}}" class="btn btn-primary align-self-center">Éditer le profil</a>
+                                <!--end::Action-->
+                                {% elseif ('ROLE_MARCHAND')  %}
+                                <a href= "{{path("leads_edit",{ 'id' : lead.Id})}}" class="btn btn-primary align-self-center">Éditer le profil</a>
+                                {% endif %}
                             </div>
 
                             <!--begin::Card header-->

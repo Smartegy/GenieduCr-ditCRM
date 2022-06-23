@@ -195,8 +195,12 @@ class EmailController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'courriel envoyé avec succès');
            $entityManager->persist( $maill);
            $entityManager->flush();
+        
+          
+          // $this->addFlash('success', 'L\'ajout a été effectuée avec succeés');
          //  dd($form) ; die() ;
            $mail = (new Email())
             ->from( $userEmail )

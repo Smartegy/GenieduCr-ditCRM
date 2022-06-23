@@ -122,10 +122,10 @@
                     </div>
                     <div class="row mb-6">
 
-                        {{ form_label(form.concessionnairemarchand.vendeurs, "Vendeurs :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+                        {{ form_label(form.concessionnairemarchand.vendeurrs, "Vendeurs :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
 
                         <div class="col-lg-6">
-                            {{ form_widget(form.concessionnairemarchand.vendeurs) }}
+                            {{ form_widget(form.concessionnairemarchand.vendeurrs) }}
                         </div>
                     </div>
                     <div class="row mb-6">
@@ -161,7 +161,7 @@
                     <div class="row mb-6 pt-2">
 
                       
-                            {%for fabNom in form.concessionnairemarchand.fabriquants %}
+                            {% for fabNom in form.concessionnairemarchand.fabriquants %}
                                 <div class="img_checkbox col-lg-2  col-sm-2">
 
                                     {{form_row(fabNom)}}{#pour rendre le input  checkbox#}
@@ -169,9 +169,22 @@
                                     <img src="{{asset(listeLogo[fabNom.vars.name])}}"style="width:45%"  />{# pour connaitre les variables disponible#}
 
                                 </div>
-                            {%endfor%}
+                            {% endfor %}
                     </div>
+                    <div class="row mb-6 pt-2" style="display:none;" >
 
+                      
+                         {% for role in form.concessionnairemarchand.utilisateur.roles  %}
+                            <div class="img_checkbox col-lg-2  col-sm-2">
+
+                                {{form_row(role)}}{#pour rendre le input  checkbox#}
+
+                             
+
+                            </div>
+                        {% endfor %}
+                     </div>
+                  
 
                     <div class="card-footer d-flex justify-content-end py-6 px-9">
                         <button type="reset" class="btn btn-light btn-active-light-primary me-2"><a href="{{path("concessionnaire")}}"> Annuler</a></button>

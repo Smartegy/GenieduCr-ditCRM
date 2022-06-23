@@ -34,8 +34,7 @@ class VendeurrType extends AbstractType
             ])
             /* ->add('concessionnairemarchands', ConcessionnairemarchandType::class)*/
 
-            ->add('datecreation')
-            ->add('datemodification')
+      
 
             ->add('utilisateur', UtilisateurType::class)
         ;

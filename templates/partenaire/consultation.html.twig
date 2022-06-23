@@ -274,9 +274,9 @@
 											<div class="col-lg-8">
 											
 
-                                        {% for agent in agents %}
+                                        {% for ag in partenaire.agents %}
 										
-											 <span class="fw-bolder fs-6 text-gray-800"> {{agent.utilisateur.nom}}</span> <br>
+											 <span class="fw-bolder fs-6 text-gray-800"> {{ag.utilisateur.nomutilisateur}}</span> <br>
 										{% endfor %}
                                                 </span>
 											</div>
@@ -291,9 +291,9 @@
 											<div class="col-lg-8">
 											
 
-                                        {% for vendeur in vendeurs %}
+                                        {% for vend in partenaire.vendeurrs %}
 										
-											 <span class="fw-bolder fs-6 text-gray-800"> {{vendeur.utilisateur.nom}}</span> <br>
+											 <span class="fw-bolder fs-6 text-gray-800"> {{vend.utilisateur.nomutilisateur}}</span> <br>
 										{% endfor %}
                                                 </span>
 											</div>

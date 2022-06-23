@@ -29,6 +29,11 @@
                         <div id="kt_content_container" class="container-xxl">
                             <!--begin::Card-->
                             <div class="card">
+                                {% for message in app.flashes('success') %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                                 {% endfor %}
                                 <!--begin::Card header-->
                                 <div class="card-header border-0 pt-6">
                                     <div><h1>{{page_title}}</h1></div>
@@ -38,6 +43,7 @@
                                         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
 
 
+                                        {% if is_granted('ROLE_ADMIN') %}
                                             <!--end::Export-->
                                             <!--begin::Add user-->
                                             <button type="button" class="btn btn-primary" >
@@ -55,6 +61,7 @@
                                                 <!--end::Svg Icon-->
 
                                             </button>
+                                        {% endif %}    
 
 
                                         </div>
@@ -157,7 +164,7 @@
 											
 																	   
 																		
-																		
+                                                    {% if is_granted('ROLE_ADMIN') %}					
 												    	<a href="{{path('suppression_marchand', {'id' : marchand.id})}}" class="confirmModalLink btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 																		
 																		
@@ -173,6 +180,7 @@
                                                                 <!--end::Svg Icon-->
 
                                                             </a>
+                                                        {% endif %}
                                                         </form>
 
                                                            <div class="modal fade" tabindex="-1" id="kt_modal_1">

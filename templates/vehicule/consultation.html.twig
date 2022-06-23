@@ -100,9 +100,25 @@
 												<a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="{{path("consultation_vehicule",{ 'id' : vehicules.Id})}}">Aperçu</a>
 											</li>
 									 
-											<li class="nav-item mt-2">
+											
+
+                                            {% if is_granted('ROLE_ADMIN') %}	 
+                                            <li class="nav-item mt-2">
 												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path("edit-vehicule",{ 'id' : vehicules.Id})}}">Information Génerale</a>
 											</li>
+                                            {% elseif is_granted('ROLE_CONCESSIONNAIRE')%}	
+                                            <li class="nav-item mt-2">
+												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path("edit-vehicule",{ 'id' : vehicules.Id})}}">Information Génerale</a>
+											</li>
+                                            {% elseif is_granted('ROLE_MARCHAND')%}	
+                                           <li class="nav-item mt-2">
+												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path("edit-vehicule",{ 'id' : vehicules.Id})}}">Information Génerale</a>
+											</li>
+                                            {% endif %} 
+
+
+
+                                           
                                             <li class="nav-item mt-2">
 												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{path("options_vehicule",{ 'id' : vehicules.Id})}}">Options du Véhicule</a>
 											</li>
@@ -125,8 +141,13 @@
                                       
 										<!--end::Card title-->
 										<!--begin::Action-->
+                                        {% if is_granted('ROLE_ADMIN') %}	 
 										<a href= "{{path("edit-vehicule",{ 'id' : vehicules.Id})}}" class="btn btn-primary align-self-center">Editer Véhicule</a>
-                                       
+                                        {% elseif is_granted('ROLE_CONCESSIONNAIRE')%}	
+                                        <a href= "{{path("edit-vehicule",{ 'id' : vehicules.Id})}}" class="btn btn-primary align-self-center">Editer Véhicule</a>
+                                        {% elseif is_granted('ROLE_MARCHAND')%}	
+                                        <a href= "{{path("edit-vehicule",{ 'id' : vehicules.Id})}}" class="btn btn-primary align-self-center">Editer Véhicule</a> 
+                                        {% endif %} 
 										<!--end::Action-->
 									</div>
                                     <div class="card-body border-top p-9" class="card-header border-0 cursor-pointer" class="collapse show"></div>

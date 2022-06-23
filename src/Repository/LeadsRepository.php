@@ -137,8 +137,32 @@ class LeadsRepository extends ServiceEntityRepository
         ;
     }
 */
-
-
+public function findachatByActeur($value,$param,$where) 
+{
+    return $this->createQueryBuilder('lead')
+        ->andWhere('lead.type = :val')
+        ->andWhere('lead.isCLient = :val2')
+        ->andWhere($where)
+        ->setParameter('val','1')
+        ->setParameter('val2','0')
+        ->setParameter($param,$value) 
+        ->getQuery()
+        ->getResult()
+    ;
+}
+public function findventeByActeur($value,$param,$where) 
+{
+    return $this->createQueryBuilder('lead')
+        ->andWhere('lead.type = :val')
+        ->andWhere('lead.isCLient = :val2')
+        ->andWhere($where)
+        ->setParameter('val','0')
+        ->setParameter('val2','0')
+        ->setParameter($param,$value) 
+        ->getQuery()
+        ->getResult()
+    ;
+}
     public function findachat() 
     {
         return $this->createQueryBuilder('lead')
@@ -163,7 +187,21 @@ class LeadsRepository extends ServiceEntityRepository
     }
 
 
-   public function findClientachat() 
+   public function findClientachatByActeur($value,$param,$where) 
+    {
+         return $this->createQueryBuilder('lead')
+            ->andWhere('lead.type = :val')
+            ->andWhere('lead.isCLient = :val2')
+            ->andWhere($where)
+            ->setParameter('val','1')
+            ->setParameter('val2','1')
+            ->setParameter($param,$value) 
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findClientachat() 
     {
          return $this->createQueryBuilder('lead')
             ->andWhere('lead.type = :val')
@@ -181,6 +219,19 @@ class LeadsRepository extends ServiceEntityRepository
             ->andWhere('lead.isCLient = :val2')
             ->setParameter('val','0')
             ->setParameter('val2','1')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    public function findClientventeByActeur($value,$param,$where)
+    {
+       return $this->createQueryBuilder('lead')
+            ->andWhere('lead.type = :val')
+            ->andWhere('lead.isCLient = :val2')
+            ->andWhere($where)
+            ->setParameter('val','0')
+            ->setParameter('val2','1')
+            ->setParameter($param,$value) 
             ->getQuery()
             ->getResult()
         ;

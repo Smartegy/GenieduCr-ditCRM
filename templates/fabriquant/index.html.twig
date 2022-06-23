@@ -32,6 +32,12 @@
                         <div id="kt_content_container" class="container-xxl">
                             <!--begin::Card-->
                             <div class="card">
+                                {% for message in app.flashes('success') %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                                 {% endfor %}
+                                
                                 <!--begin::Card header-->
                                 <div class="card-header border-0 pt-6">
                                     <div><h1>Listes des Fabriquants</h1></div>
@@ -132,9 +138,9 @@
                                                                 <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">
                                                                 {% if fabriquant.media %}
                                                                 
-                                                                <img src="{{asset(fabriquant.media.lien)}}" alt={{fabriquant.nom}}  style="max-width:30%;!important;"/>
+                                                                <img src="{{asset(fabriquant.media.lien)}}" alt={{fabriquant.nom}}  style="max-width:30%!important;"/>
                                                                 {% else %}
-                                                                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" alt={{fabriquant.nom}}  style="max-width:30%;!important;"/>
+                                                                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" alt={{fabriquant.nom}}  style="max-width:30%!important;"/>
 
                                                                 {% endif %}
                                                                 </a>

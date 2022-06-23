@@ -70,6 +70,37 @@ class PartenaireRepository extends ServiceEntityRepository
     }*/
 
 
-
+    public function findIdByUtilisateur($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.utilisateur', 'a')
+            ->where('a.id = :idcons')
+            ->setParameter('idcons', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    
+    public function findByAgent($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.agents', 'b')
+            ->andwhere('b.id = :idcons')
+            ->setParameter('idcons', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    
+    public function findByVendeur($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.vendeurrs', 'b')
+            ->andwhere('b.id = :idcons')
+            ->setParameter('idcons', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     
 }

@@ -6,6 +6,7 @@ use App\Entity\Agent;
 use App\Entity\Concessionnairemarchand;
 use App\Entity\Fabriquant;
 use App\Entity\Medias;
+use App\Entity\Vendeurr;
 use App\Repository\AgentRepository;
 //use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ObjectManager;
@@ -89,21 +90,22 @@ class ConcessionnairemarchandType extends AbstractType
                                                ])
            ->add('agents', EntityType::class,array(
                     'class' => Agent::class,
-                    'choice_label' => 'utilisateur.nom', 
+                    'choice_label' => 'utilisateur.nomutilisateur', 
 
                         
                         'expanded' => false,
-                        'multiple' => true
+                        'multiple' => true,
+                        'mapped' => true
                       
                     ))
 
 
-            ->add('vendeurs', EntityType::class,array(
-            'class' => Agent::class,
-            'choice_label' => 'utilisateur.nom',
+            ->add('vendeurrs', EntityType::class,array(
+            'class' => Vendeurr::class,
+            'choice_label' => 'utilisateur.nomutilisateur',
                 'expanded' => false,
                 'multiple' => true,
-                'mapped' => false
+                'mapped' => true
             ))
             
                

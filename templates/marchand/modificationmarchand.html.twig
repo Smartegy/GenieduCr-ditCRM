@@ -176,11 +176,11 @@
 											</div>
 											<div class="row mb-6">
 
-												{{ form_label(form.concessionnairemarchand.vendeurs, "Vendeurs :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+												{{ form_label(form.concessionnairemarchand.vendeurrs, "Vendeurs :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
 	
 												<div class="col-lg-6 ">
-													{{ form_widget(form.concessionnairemarchand.vendeurs) }}
-													{{ form_errors(form.concessionnairemarchand.vendeurs)}}
+													{{ form_widget(form.concessionnairemarchand.vendeurrs) }}
+													{{ form_errors(form.concessionnairemarchand.vendeurrs)}}
 
 												</div>
 											</div>
@@ -232,6 +232,19 @@
 
 
 
+									</div>
+									<div class="row mb-6 pt-2" style="display:none;" >
+
+                      
+										{% for role in form.concessionnairemarchand.utilisateur.roles  %}
+										   <div class="img_checkbox col-lg-2  col-sm-2">
+			   
+											   {{form_row(role)}}{#pour rendre le input  checkbox#}
+			   
+											
+			   
+										   </div>
+									   {% endfor %}
 									</div>
 
 

@@ -35,73 +35,48 @@ class FilesLeadController extends AbstractController
     {
         $question_id = $request->query->get('idlead');
        $data= $request->getPathInfo();
-       //dd($data);die;
        $res= explode('/',$data,5);
-     
         $param=$res[4];
        $paranfinal= intval($param);
-       // dd($paranfinal);die;
-       // dd($question_id);die;
+ 
         $result= $files->findNotesByLead($paranfinal );
         $fille = new Fileslead();
         $form = $this->createForm(FilesLeadType::class, $fille);
-       
-        //dd($files);die();
-
-      
-
-    
-
         $onelead=$leadsRepository->findOneById($paranfinal);
-       // dd($onelead);die;
-       //$request->get('lead')->setId(2); 
+
        $form->get('lead')->setData($onelead);
 
         
         $form->handleRequest($request);
       
         $files = $request->files;
-       // dd($files);die;
 
-   
       
-        if ($form->isSubmitted() ) {
-         //   dd('helo');die;
-         
-           
-          
-          //  $media = $form->getData()->getNom();
-          //  dd($media);die;
-       
+        if ($form->isSubmitted()  && $form->isValid() ) {
+
           $fdataile = $form['nom']->getData();
-          $name = $fdataile->getClientOriginalName();
+        if($fdataile)
+        {
+            $name = $fdataile->getClientOriginalName();
 
-          $lien = '/media/files/'.$name;
+            $lien = '/media/files/'.$name;
+            $fdataile->move('../public/media/files', $name);
+             
 
-            
+           $fille->setNom($name);
+           $fille->setLien($lien);
+  
+  
+          // dd($fille->getLien());die;
 
-
-          //dd($lien);die;
+        }
+         
         
-
-       
-       //  $form->get('nom')->setData($name);
-         //$form->get('lien')->setData($lien);
-       
-
-         $fille->setNom($name);
-         $fille->setLien($lien);
-
-
-
-
-
-        
-
+        $this->addFlash("success", "un fichier a été ajouté avec succeès");
         $entityManager->persist($fille);
         $entityManager->flush();
 
-         
+      
             return $this->redirectToRoute('files_index',array('idlead' => $paranfinal));
         }
        // $form->get('lead')->setData($onelead); 

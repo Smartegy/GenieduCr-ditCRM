@@ -14,8 +14,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Security;
+
+
 
 /**
 * @IsGranted("IS_AUTHENTICATED_FULLY")
@@ -36,57 +40,57 @@ class PartenaireController extends AbstractController
     
    }
     #[Route('/partenaire', name: 'partenaire')]
-    public function index(PartenaireRepository $repository , AgentRepository $AgentRepository ): Response
+    public function index(PartenaireRepository $repository ,Security $security): Response
     {
-        $agents = $AgentRepository->findAll();
-        $partenaires = $repository -> findAll();
+       
+         /** @var User $user */
+     $user = $security->getUser();
+     $userrole = $user->getRoles();
+   //  $usernom= $user->getNomutilisateur();
+     $usernom= $user->getId();
+  
+////////////////////////////Role Admin//////////////////////
+  if($userrole[0] == 'ROLE_ADMIN' )
+  {
+     $partenaires = $repository -> findAll();
+    // dd($concessionnaires);die;
+
+  }
+  ////////////////////////////Role AGENT//////////////////////
+  if($userrole[0] == 'ROLE_PARTENAIRE' )
+  {
+     $partenaires = $repository ->findIdByUtilisateur($usernom);
+    
+  }
         return $this->render('partenaire/index.html.twig', [
            
             'partenaires' => $partenaires ,
-            'agent' => $agents
+          
         ]);
     }
     #[Route('/partenaire/creation', name: 'creation_partenaire')]
-    public function ajout_partenaire(Partenaire $partenaire = null, ObjectManager $objectManager, Request $request)
+    public function ajout_partenaire(Partenaire $partenaire = null, ObjectManager $objectManager, Request $request,UserPasswordHasherInterface $userPasswordHasher)
     {
-     
         if(!$partenaire){
             $partenaire = new Partenaire();
-            
         }
-        $om=$this->om;
-    
-        
-        
-       
+          $om=$this->om;
         $form = $this->createForm(PartenaireType::class, $partenaire);
-        
-        //On recupere le partenaire
-        $partenaire = $form->getData();
-        
-        if($partenaire != null){
-        //On recupere les vendeurs liés au Partenaire
-        $prtnrs = $this->AgentRepository->findVendeurbyPartenaire($partenaire->getId());
-       
-        //On ajoute les valeurs selected dans la select list Vendeurs
-        $form->get('vendeurs')->setData($prtnrs);
-        
-        }
+        $form->get('utilisateur')->get('roles')->setData(["ROLE_PARTENAIRE"]);
         $form -> handleRequest($request);
-       
+        $user= new Utilisateur();
+ 
+     if($form->isSubmitted() && $form->isValid()){
         
+        $partenaire->getUtilisateur()->setPassword(
+            $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('utilisateur')->get('password')->getData()
+                )
+            );
+         
            
-            if($form->isSubmitted() && $form->isValid()){
-            $vendeurs =$form->get('vendeurs')->getData();
-            
-             //Ajoute la liste des vendeurs (unmapped)
-             foreach ($vendeurs as $vendeur){
-                $partenaire->addAgent($vendeur);
-            }
-            $vendeurvalue = $form->get('vendeurs')->getData();
-            
-            
-            //Récupère l'image
+           //Récupère l'image
             $media = $form->getData()->getMedia();
             if ($media) {
                 //Récupère le fichier image
@@ -106,24 +110,21 @@ class PartenaireController extends AbstractController
 
                 //$media->setType($type);
 
-
-
             }
-            
-            
-           
+            $this->addFlash('success', 'L\'ajout a été effectuée avec succès');
             $objectManager->persist($partenaire);
             $objectManager->flush();
             return $this->redirectToRoute("partenaire");
+       
         }
-        
         return $this->render('partenaire/ajoutPartenaire.html.twig', [
-            'partenaires' => $partenaire,
+           
             'form' => $form->createView(),
-            'isModification' => $partenaire->getId() !== null,
+         
             
         ]);
     }
+
 
     #[Route('/partenaire/{id}', name: 'modification_partenaire', methods:'GET|POST')]
     public function modification_partenaire(Partenaire $partenaire = null, ObjectManager $objectManager, Request $request)
@@ -143,28 +144,14 @@ class PartenaireController extends AbstractController
       
 
         //On recupere le partenaire
-        $partenaire = $form->getData();
 
-        if($partenaire != null){
-            //On recupere les vendeurs liés au Partenaire
-            $vendeurs= $this->AgentRepository->findVendeurbyPartenaire($partenaire->getId());
-
-            //On ajoute les valeurs selected dans la select list Vendeurs
-            $form->get('vendeurs')->setData($vendeurs);
-
-        }
         $form -> handleRequest($request);
         // $vendeurs = $form->getData('vendeurs');
         //($vendeurs);
 
         // dd($vendeurs);
         if($form->isSubmitted() && $form->isValid()){
-            $vendeurs =$form->get('vendeurs')->getData();
-            //Ajoute la liste des vendeurs (non mapped)
-            //Ajoute la liste des vendeurs (unmapped)
-            foreach ($vendeurs as $vendeur){
-                $partenaire->addAgent($vendeur);
-            }
+         
           /*  $vendeurvalue = $form->get('vendeurs')->getData();
             if($vendeurvalue != null){
                 $ven = $this->AgentRepository->fillVendeur($vendeurvalue->getId());
@@ -194,13 +181,12 @@ class PartenaireController extends AbstractController
             //Ajoute le type du média
            
             /* $type = 'photo';*/
-            $type = $this->TypemediaRepository->gettype('photo');
            
-            $media->setType($type);
-}
+             }
 
             $objectManager->persist($partenaire);
             $objectManager->flush();
+            $this->addFlash("success", "Cet Utilisateur est modifié avec succès");
             return $this->redirectToRoute("partenaire");
         }
 
@@ -218,13 +204,11 @@ class PartenaireController extends AbstractController
      
     
     $partenaire = $this->PartenaireRepository ->findOneById($partenaire->getId());
-    $agents = $this->AgentRepository-> findAgentbyPartnaire($partenaire->getId()); 
-   // dd($agents);  
-    $vendeurs = $this->AgentRepository-> findVendeurbyPartenaire($partenaire->getId());                  
+   // dd($partenaire);die;
+   
      return $this->render('partenaire/consultation.html.twig', [
          'partenaire' => $partenaire,
-         'vendeurs' => $vendeurs,
-         'agents' => $agents
+   
       
      ]);
  }
@@ -261,7 +245,7 @@ class PartenaireController extends AbstractController
                                 );
                              
                          
-                         
+                                $this->addFlash('success', 'le mot de passe a été changé avec succès'); 
                          $objectManager->persist($partenaire);
                          $objectManager->flush();
                         

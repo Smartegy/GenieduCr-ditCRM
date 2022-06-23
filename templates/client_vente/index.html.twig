@@ -21,6 +21,7 @@
 								 
 										<!--begin::Tables widget 8-->
 									<div class="card ">
+									
 									<!--begin::Card head-->
 									<div class="card-header card-header-stretch">
 										<!--begin::Title-->
@@ -866,44 +867,6 @@
 												       	</a>
 
 
-                                                        <form  method="POST" style="display:inline-block"  id="myform" action="{{path('clientsvente_delete', {'id' : lead.id})}}" onsubmit="returne">
-															<input type="hidden" name="_method" value="delete">
-															<input type="hidden" name="_token" value="{{csrf_token('SUP' ~ lead.id)}}">
-										                    <a href="{{path('clientsvente_delete', {'id' : lead.id})}}" class="confirmModalLink btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-																	<span class="svg-icon svg-icon-3">
-																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"  data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer un lead">
-																			<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black" />
-																			<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black" />
-																			<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black" />
-																		</svg>
-																	</span>
-																	<!--end::Svg Icon-->
-                                                            </a>
-												       </form>
-																	
-														<div class="modal fade" tabindex="-1" id="kt_modal_1">
-															<div class="modal-dialog">
-																<div class="modal-content">
-																    <div class="modal-header">
-																		<h5 class="modal-title">Confirmation de suppresion</h5>
-																			<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-																				<span class="svg-icon svg-icon-2x"></span>
-																			</div>
-																									<!--end::Close-->
-																	</div>
-																					
-																	<div class="modal-body">
-																		<p>Voulez-vous vraiment supprimer cet Lead?</p>
-																	</div>
-																					
-																	<div class="modal-footer">
-																		<button type="button" class="btn btn-light" data-bs-dismiss="modal" id="confirmModalNo">Annuler</button>
-																		<button type="submit"  class="btn btn-primary" id="confirmModalYes">Supprimer</button>
-																								
-																	</div>
-																</div>
-															</div>
-														</div>
  
 													</td>
 													<!--end::Action=-->
@@ -981,32 +944,7 @@
 });
 </script>
 
-<script type="text/javascript">
 
-		$(document).ready(function(){
-
-			var theHREF;
-			$(".confirmModalLink").click(function(e) {
-					e.preventDefault();
-					theHREF = $(this).attr("href");
-					console.log(theHREF);
-					$("#kt_modal_1").modal("show");
-				});
-
-				$("#confirmModalNo").click(function(e) {
-					$("#kt_modal_1").modal("hide");
-				});
-
-				$("#confirmModalYes").click(function(e) {
-				//	window.location.href = theHREF;
-					$('#myform'). attr('action', theHREF);
-
-					document.getElementById("myform").submit();
-				});
-
-		});
-
-</script> 
  
 
  	 

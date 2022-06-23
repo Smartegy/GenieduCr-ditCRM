@@ -219,43 +219,37 @@
                                         <!--end::Col-->
 
                                     </div>
-                                    <div class="row mb-7">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 fw-bold text-muted">Agents</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-8">
-											
-
-                                        {% for agent in agents %}
-                                           
-                                            <span class="fw-bolder fs-6 text-gray-800"> {{agent.utilisateur.nom}}</span>
-                                        {% endfor %}
-                                                </span>
-                                        </div>
+                                 <div class="row mb-7">
+                                    <label class="col-lg-4 fw-bold text-muted">Vendeurs </label>
+                                    <!--begin::Col-->
+                                    {% for verd in concessionnaire.concessionnairemarchand.vendeurrs %}
+                                   <div class="col-lg-8">
+                                    
+                                       <span class="fw-bolder fs-6 text-gray-800">{{verd.utilisateur.nomutilisateur}}</span>
+                                  
                                     </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="row mb-7">
+                                   <label class="col-lg-4 fw-bold text-muted">Agents </label>
+                                   <!--begin::Col-->
+                                   {% for agents in concessionnaire.concessionnairemarchand.agents %}
+                                  <div class="col-lg-8">
+                                      <span class="fw-bolder fs-6 text-gray-800">{{agents.utilisateur.nomutilisateur}}</span>
+                                  </div>
+                                  {% endfor %}
+                                </div> 
 
-                                    <div class="row mb-7">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 fw-bold text-muted">Vendeurs</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-8">
-												
+                          
+                              
 
-                                        {% for vendeur in vendeurs %}
-                                        
-                                            <span class="fw-bolder fs-6 text-gray-800">  {{vendeur.utilisateur.nom}}</span><br>
-                                        {% endfor %}
-                                                </span>
-                                        </div>
-                                    </div>
+                             
                                     
                                     <div class="row mb-6">
 
                                               <label class="col-lg-4 fw-bold text-muted"> Liste des Fabriquants</label>
  
-                                           {%for fab in concessionnaire.Concessionnairemarchand.fabriquants %}
+                                           {% for fab in concessionnaire.Concessionnairemarchand.fabriquants %}
                                           
                                                  <div class="img_checkbox col-lg-2  col-sm-2 justify-content-between">
  
@@ -265,6 +259,7 @@
                                          
                                                 
                                     </div>
+       
 
                                     <!--end::Input group-->
                                     <!--begin::Input group-->

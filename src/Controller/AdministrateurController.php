@@ -95,6 +95,7 @@ class AdministrateurController extends AbstractController
  
       
       $form = $this->createForm(AdministrateurType::class,$administrateurs);
+      $form->get('utilisateur')->get('roles')->setData(["ROLE_ADMIN"]);
 
       $form -> handleRequest($request);
 
@@ -113,12 +114,12 @@ class AdministrateurController extends AbstractController
             )
         );
                         
-                    $modif = $administrateurs->getId() !== null;
-                    
+                //    $modif = $administrateurs->getId() !== null;
+                $this->addFlash('success', 'L\'ajout a été effectuée avec succès'); 
                     $objectManager->persist($administrateurs);
                     $objectManager->flush();
                     // $this->addFlash("success", ($modif) ? "La modification a été effectuée" : "L'ajout a été effectuée");
-                    $this->addFlash('success', 'Article Created! Knowledge is power!');
+                   
                     return $this->redirectToRoute("administrateur");
                
                
@@ -163,7 +164,7 @@ class AdministrateurController extends AbstractController
                         
                         $objectManager->persist($administrateurs);
                         $objectManager->flush();
-                        $this->addFlash("success", ($modif) ? "La modification a été effectuée" : "L'ajout a été effectuée");
+                        $this->addFlash("success", "Cet Utilisateur est modifié avec succès");
                         return $this->redirectToRoute("administrateur");
                     
                     
@@ -216,7 +217,7 @@ class AdministrateurController extends AbstractController
                 );
 
 
-
+                $this->addFlash('success', 'le mot de passe a été changé avec succès');
                 $objectManager->persist($user);
                 $objectManager->flush();
 

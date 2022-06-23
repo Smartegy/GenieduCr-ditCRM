@@ -47,4 +47,16 @@ class VendeurrRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findIdByUtilisateur($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.utilisateur', 'a')
+            ->andwhere('a.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
 }

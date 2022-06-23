@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Security;
 
 
 /**
@@ -30,9 +31,29 @@ class AgentController extends AbstractController
 
     }
     #[Route('/agent', name: 'agent')]
-    public function index(AgentRepository $repository): Response
+    public function index(AgentRepository $repository,Security $security): Response
     {
-        $agentss = $repository -> findAll();
+
+     /** @var User $user */
+     $user = $security->getUser();
+     $userrole = $user->getRoles();
+   //  $usernom= $user->getNomutilisateur();
+     $usernom= $user->getId();
+   
+////////////////////////////Role Admin//////////////////////
+  if($userrole[0] == 'ROLE_ADMIN' )
+  {
+     $agentss = $repository -> findAll();
+    // dd($concessionnaires);die;
+
+  }
+  ////////////////////////////Role AGENT//////////////////////
+  if($userrole[0] == 'ROLE_AGENT' )
+  {
+     $agentss = $repository ->findIdByUtilisateur($usernom);
+    
+  }
+  
         return $this->render('agent/index.html.twig', [
             'agent' => $agentss,
         ]);
@@ -48,6 +69,7 @@ class AgentController extends AbstractController
  
       
       $form = $this->createForm(AgentType::class,$agent);
+      $form->get('utilisateur')->get('roles')->setData(["ROLE_AGENT"]);
       $form -> handleRequest($request);
       
       $user= new Utilisateur();
@@ -69,10 +91,11 @@ class AgentController extends AbstractController
                             );
                         
                     $modif = $agent->getId() !== null;
-                    
+                    $this->addFlash('success', 'L\'ajout a été effectuée avec succès');
                     $objectManager->persist($agent);
                     $objectManager->flush();
-                    $this->addFlash("success", ($modif) ? "La modification a été effectuée" : "L'ajout a été effectuée");
+                   // $this->addFlash("success", ($modif) ? "La modification a été effectuée" : "L'ajout a été effectuée");
+                  
                     return $this->redirectToRoute("agent");
                
                
@@ -123,7 +146,8 @@ class AgentController extends AbstractController
          );
 
 
-
+         $secure = $user->getPassword() !== null;
+         $this->addFlash('success', 'le mot de passe a été changé avec succès');
          $objectManager->persist($user);
          $objectManager->flush();
 
@@ -167,13 +191,13 @@ class AgentController extends AbstractController
                         
                               
                      $modif = $agent->getId() !== null;
-                     
+                     //$this->addFlash('success', 'cet Utilisateur est modifier avec succeés');             
                      $objectManager->persist($agent);
                      $objectManager->flush();
-                     $this->addFlash("success", ($modif) ? "La modification a été effectuée" : "L'ajout a été effectuée");
+                     $this->addFlash("success", "Cet Utilisateur est modifié avec succès");
+                     // $this->addFlash("success", ($modif) ? "La modification a été effectuée" : "L'ajout a été effectuée");
                      return $this->redirectToRoute("agent");
-                 
-                 
+                    
          
          
      }

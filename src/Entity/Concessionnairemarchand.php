@@ -63,20 +63,20 @@ class Concessionnairemarchand
      * @ORM\ManyToMany(targetEntity=Agent::class, inversedBy="concessionnairemarchand")
      * @Assert\Valid()
      */
-    private $agents;
+    public $agents;
 
     /**
      * @ORM\ManyToMany(targetEntity=Vendeurr::class, inversedBy="concessionnairemarchand")
      * @Assert\Valid()
      */
-    private $vendeurrs;
+    public $vendeurrs;
 
     /**
      * @ORM\OneToOne(targetEntity=Medias::class, cascade={"persist", "remove"})
      * @Assert\Valid()
     
      */
-    private $media;
+    public $media;
 
     /**
      * @ORM\OneToOne(targetEntity=Concessionnaire::class, mappedBy="Concessionnairemarchand", cascade={"persist", "remove"})
@@ -205,7 +205,7 @@ class Concessionnairemarchand
     {
         return $this->vendeurrs;
     }
-    public function addVendeur(Vendeurr $vendeur): self
+    public function addVendeurr(Vendeurr $vendeur): self
     {
         if (!$this->vendeurrs->contains($vendeur)) {
             $this->vendeurrs[] = $vendeur;
@@ -214,7 +214,7 @@ class Concessionnairemarchand
         return $this;
     }
 
-    public function removeVendeur(Vendeurr $vendeur): self
+    public function removeVendeurr(Vendeurr $vendeur): self
     {
         $this->vendeurrs->removeElement($vendeur);
 
