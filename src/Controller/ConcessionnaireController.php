@@ -295,20 +295,20 @@ class ConcessionnaireController extends AbstractController
 
         
             
-            $media = $form->get('concessionnairemarchand')->getData()->getMedia();
-           
+           $media = $form->getData()->getConcessionnairemarchand()->getMedia();
+          
       
      
             if ($media) {
                 //Récupère le fichier image
-                $mediafile = $form->get('concessionnairemarchand')->getData()->getMedia()->getImageFile();
-               
+                $mediafile = $form->getData()->getConcessionnairemarchand()->getMedia()->getImageFile();
+      
                 //Ajouter le nom
                 $name = $mediafile->getClientOriginalName();
                
                 //Déplacer le fichier
                 $lien = '/media/logos/'.$name;
-                
+               
                 $mediafile->move('../public/media/logos', $name);
                
                 //Définit les valeurs
@@ -321,7 +321,8 @@ class ConcessionnaireController extends AbstractController
             }
                  
                   
-            //$this->addFlash('success', 'L\'ajout a été effectuée avec succeés');
+            $this->addFlash('success', 'L\'ajout a été effectuée avec succeés');
+           // dd($concessionnaires) ;die;
             $this->om->persist($concessionnaires);
            
             $om->flush();

@@ -172,9 +172,12 @@ class MarchandController extends AbstractController
         ]);
     }
 
-    #[Route('/marchand/creation', name: 'creation_marchand')]
+    #[Route('/createmarchand', name: 'creation_marchand')]
     public function ajout_modification(Marchand $marchand = null, TypemediaRepository $repository, UserPasswordHasherInterface $userPasswordHasher, Request $request)
     {
+
+       //  dd("hello");die;
+
         if(!$marchand){
             $marchand = new Marchand();
         }

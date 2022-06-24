@@ -1985,14 +1985,20 @@ elseif($userrole[0] == 'ROLE_VENDEUR' )
 
                 //Ajoute le type du média
                 /* $type = 'photo';*/
-                $type = $repository->gettype('photo');
-                $media->setType($type);
+                //$type = $repository->gettype('photo');
+               // $media->setType($type);
 
             }
         }
         $modif = $vehicules->getId() !== null;
-       // $this->addFlash('success', 'L\'ajout d\'un nouveau véhicule a été effectuée avec succès'); 
-          $this->addFlash("success", ($modif) ? 'L\'ajout d\'un nouveau véhicule a été effectuée avec succès' : "La modification est modifié avec succès ");
+        if($modif)
+        {
+            $this->addFlash("success", "Le véhicule  est modifié avec succès ");
+        }else{
+            $this->addFlash("success",'L\'ajout d\'un nouveau véhicule a été effectuée avec succès');
+        }
+      
+        
             $this->om->persist($vehicules);
            
            
@@ -2021,7 +2027,7 @@ elseif($userrole[0] == 'ROLE_VENDEUR' )
     public function delete (Vehicule $vehicules, Request $request,ObjectManager $objectManager)
     {
      
-  
+            //dd($vehicules->getGalerie());die;
             $objectManager->remove($vehicules);
             $objectManager->flush();
             return $this->redirectToRoute("vehicule");

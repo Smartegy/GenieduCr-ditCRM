@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  
 
 /**
- * @ORM\Entity(repositoryClass=MarchandRepository::class)
+ * @ORM\Entity(repositoryClass=App\Repository\MarchandRepository::class)
  */
 class Marchand
 {
@@ -23,7 +23,7 @@ class Marchand
     /**
      * @ORM\OneToOne(targetEntity=Concessionnairemarchand::class, inversedBy="marchand", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
-     
+ 
 
      
      */

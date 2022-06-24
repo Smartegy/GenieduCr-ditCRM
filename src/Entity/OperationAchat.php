@@ -26,8 +26,11 @@ class OperationAchat
     public $numserie;
 
     /**
-     * @ORM\OneToOne(targetEntity=Vehicule::class, cascade={"persist", "remove"})
+      * @ORM\OneToOne(targetEntity=Vehicule::class, inversedBy="operationachat", orphanRemoval=true)
+       * @ORM\JoinColumn(referencedColumnName="id",nullable=true,onDelete="SET NULL")}
+
      */
+    
     public $vehicule;
 
     /**

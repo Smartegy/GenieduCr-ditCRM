@@ -87,6 +87,8 @@ class ClientAchatController extends AbstractController
             foreach($leadss as $e)
             {
               $data =$e->getrappel();
+         if($data != NULL )
+             {
               $data= $data->format('Y-m-d');
               $car = $e->getModele()  ;
               $car .= ' ';
@@ -103,13 +105,15 @@ class ClientAchatController extends AbstractController
                    'date' =>$data
                        );
                  }
-      
+                }
             } 
             //dump($tomworrowR) ;
     
             foreach($leadss as $e)
             {
               $data =$e->getrappel();
+         if($data != NULL )
+           {
               $data= $data->format('Y-m-d');
               $car = $e->getModele()  ;
               $car .= ' ';
@@ -126,7 +130,7 @@ class ClientAchatController extends AbstractController
                    'date' =>$data
                        );
                  }
-      
+             }
             }
     
             //dump($yestR) ; 
@@ -134,6 +138,8 @@ class ClientAchatController extends AbstractController
             foreach($leadss as $e)
             {
               $data =$e->getrappel();
+          if($data != NULL )
+           {
               $data1 =$e->getrappel();
               $data= $data->format('Y-m-d');
               
@@ -158,7 +164,7 @@ class ClientAchatController extends AbstractController
                    'date' =>$data
                        );
                  }
-      
+           }
             }       //  dump($output) ; die ;
     
     
@@ -366,6 +372,8 @@ class ClientAchatController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+      if($data != NULL )
+        {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -382,19 +390,21 @@ class ClientAchatController extends AbstractController
                'date' =>$data
                    );
              }
-  
+        }
         } 
         //dump($tomworrowR) ;
 
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
           $car .= $e->getMarque() ;
           
-          if($data == $yesterday)
+             if($data == $yesterday)
              { $yestR[] = array(
               'id'=>$e->getid(),
               'nom'=>$e->getnom() ,
@@ -405,7 +415,7 @@ class ClientAchatController extends AbstractController
                'date' =>$data
                    );
              }
-  
+           }
         }
 
         //dump($yestR) ; 
@@ -413,6 +423,8 @@ class ClientAchatController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+       if($data != NULL )
+        {
           $data1 =$e->getrappel();
           $data= $data->format('Y-m-d');
           
@@ -437,7 +449,7 @@ class ClientAchatController extends AbstractController
                'date' =>$data
                    );
              }
-  
+         }
         }       //  dump($output) ; die ;
 
 
@@ -660,10 +672,11 @@ class ClientAchatController extends AbstractController
         
         $modele=$email->findAll();
             
-
+      
         if ($form->isSubmitted() && $form->isValid()) {
+          
             $entityManager->flush();
-     
+            $this->addFlash("success", "un Client est modifié avec succès");  
        
 
 

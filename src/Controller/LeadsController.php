@@ -241,7 +241,10 @@ class LeadsController extends AbstractController
         
         foreach($leadss as $e)
         {
+          
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -258,6 +261,7 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
+            }   
   
         } 
         //dump($tomworrowR) ;
@@ -265,6 +269,8 @@ class LeadsController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -281,7 +287,7 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         }
 
         //dump($yestR) ; 
@@ -290,6 +296,8 @@ class LeadsController extends AbstractController
         {
           $data =$e->getrappel();
           $data1 =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           
 
@@ -313,7 +321,7 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         }       //  dump($output) ; die ;
 
 
@@ -521,6 +529,8 @@ class LeadsController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -537,13 +547,15 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         } 
         //dump($tomworrowR) ;
 
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -560,7 +572,7 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+         }
         }
 
         //dump($yestR) ; 
@@ -568,6 +580,8 @@ class LeadsController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data1 =$e->getrappel();
           $data= $data->format('Y-m-d');
           
@@ -592,7 +606,7 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         }       //  dump($output) ; die ;
 
 
@@ -800,6 +814,8 @@ class LeadsController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -816,13 +832,15 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+           }
         } 
         //dump($tomworrowR) ;
 
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -839,7 +857,7 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         }
 
         //dump($yestR) ; 
@@ -847,6 +865,8 @@ class LeadsController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data1 =$e->getrappel();
           $data= $data->format('Y-m-d');
           
@@ -871,7 +891,7 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         }       //  dump($output) ; die ;
 
 
@@ -1079,6 +1099,8 @@ class LeadsController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -1095,13 +1117,15 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         } 
         //dump($tomworrowR) ;
 
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -1118,6 +1142,7 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
+            }   
   
         }
 
@@ -1126,6 +1151,8 @@ class LeadsController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data1 =$e->getrappel();
           $data= $data->format('Y-m-d');
           
@@ -1150,7 +1177,7 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         }       //  dump($output) ; die ;
 
 
@@ -1358,6 +1385,8 @@ class LeadsController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -1374,13 +1403,15 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         } 
         //dump($tomworrowR) ;
 
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -1397,7 +1428,7 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         }
 
         //dump($yestR) ; 
@@ -1405,6 +1436,8 @@ class LeadsController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data1 =$e->getrappel();
           $data= $data->format('Y-m-d');
           
@@ -1429,7 +1462,7 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         }       //  dump($output) ; die ;
 
 
@@ -1637,6 +1670,8 @@ class LeadsController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -1653,13 +1688,15 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         } 
         //dump($tomworrowR) ;
 
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data= $data->format('Y-m-d');
           $car = $e->getModele()  ;
           $car .= ' ';
@@ -1676,7 +1713,7 @@ class LeadsController extends AbstractController
                'date' =>$data
                    );
              }
-  
+            }
         }
 
         //dump($yestR) ; 
@@ -1684,6 +1721,8 @@ class LeadsController extends AbstractController
         foreach($leadss as $e)
         {
           $data =$e->getrappel();
+          if($data != NULL )
+          {
           $data1 =$e->getrappel();
           $data= $data->format('Y-m-d');
           
@@ -1707,8 +1746,8 @@ class LeadsController extends AbstractController
                'car' =>$car ,
                'date' =>$data
                    );
-             }
-  
+              }
+            }
         }       //  dump($output) ; die ;
 
 
@@ -1953,39 +1992,14 @@ class LeadsController extends AbstractController
         $modele=$email->findAll();
 
 
-      
+        $this->addFlash("success", "un lead est ajouté avec succès");  
         if ($form->isSubmitted() && $form->isValid()) {
  
  
             $entityManager->persist($lead);
             $entityManager->flush();
             
-          if($form->get('statusleads')->getData() == "Livrés")
-          {  
-             //ALFA552226
-             
-  
-              $numserie=$form->get('numserie')->getData(); 
-              $onecar= $vehicule->findOneByVin($numserie);
-              $name=$form->get('nom')->getData();
-              $namelead=$leadrep->findOneByNom($name);
-
-              $operationA= new OperationAchat();
-          
-              $operationA->setNumserie($numserie);
-              $operationA->setNumserie($numserie);
-              $operationA->setVehicule($onecar);
-              $operationA->setLeads($namelead);
          
-            
-                 $entityManager->persist($operationA);
-                 $entityManager->flush();
-              
-
-                 
-            //  dd('this lead should be livreded');die;
-        
-          }
 
 
 
@@ -2010,6 +2024,7 @@ class LeadsController extends AbstractController
     public function show(Leads $lead): Response
     {
 
+      
 
         return $this->render('leads/show.html.twig', [
             'lead' => $lead,
@@ -2028,7 +2043,7 @@ class LeadsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
         //  dd($form->get('numserie')->getData());die; 
-       
+     
 
           if($form->get('statusleads')->getData() == "Livrés")
             {  
@@ -2064,11 +2079,11 @@ class LeadsController extends AbstractController
                    $entityManager->flush();
                  //  dd($car);die;
 
-                   
+                    
 
             }
 
-
+            $this->addFlash("success", "un lead est modifié avec succès");  
             return $this->redirectToRoute('leads_index', [], Response::HTTP_SEE_OTHER);
         }
 

@@ -661,8 +661,8 @@ class ClientVenteController extends AbstractController
      
        
 
-
-            return $this->redirectToRoute('leads_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash("success", "un Client est modifié avec succès");  
+            return $this->redirectToRoute('app_client_vente', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('client_vente/edit.html.twig', [

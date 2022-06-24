@@ -558,7 +558,11 @@ class Vehicule
      */
     private $options;
 
-  
+    /**
+     * @ORM\OneToOne(targetEntity=OperationAchat::class, orphanRemoval=true)
+     */
+    private $operationachat;
+
 
     
 
@@ -1884,6 +1888,18 @@ class Vehicule
     public function __toString()
     {
         return $this->getVin();
+    }
+
+    public function getOperationachat(): ?OperationAchat
+    {
+        return $this->operationachat;
+    }
+
+    public function setOperationachat(?OperationAchat $operationachat): self
+    {
+        $this->operationachat = $operationachat;
+
+        return $this;
     }
    
 

@@ -21,6 +21,11 @@
 								 
 										<!--begin::Tables widget 8-->
 									<div class="card ">
+										{% for message in app.flashes('success') %}
+										<div class="alert alert-success">
+											{{ message }}
+										</div>	
+										{% endfor %}	
 									
 									<!--begin::Card head-->
 									<div class="card-header card-header-stretch">
