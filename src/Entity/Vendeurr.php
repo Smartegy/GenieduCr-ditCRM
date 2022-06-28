@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\VendeurrRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -72,6 +73,15 @@ class Vendeurr
         $this->leads = new ArrayCollection();
         $this->concessionnairemarchands = new ArrayCollection();
         $this->partenaire = new ArrayCollection();
+        if($this->datecreation == null){
+            $this->datecreation = new DateTime('now');
+        }
+        
+        $this->datemodification = new DateTime('now');
+        $this->partenaire = new ArrayCollection();
+        $this->vehicules = new ArrayCollection();
+        $this->leads = new ArrayCollection();
+    
 
     }
 

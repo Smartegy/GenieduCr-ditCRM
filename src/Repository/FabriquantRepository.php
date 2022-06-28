@@ -47,4 +47,14 @@ class FabriquantRepository extends ServiceEntityRepository
         ;
     }
     */
+ 
+    public function findOneById($value): ?Fabriquant
+    {
+        return $this->createQueryBuilder('fab')
+            ->andWhere('fab.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

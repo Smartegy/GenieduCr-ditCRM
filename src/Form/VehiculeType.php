@@ -274,9 +274,9 @@ class VehiculeType extends AbstractType
             
                     ->add('liquidation')
            
-               
+                      
 
-
+                    ->add('importe')
          
         
            

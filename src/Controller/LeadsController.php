@@ -1992,10 +1992,10 @@ class LeadsController extends AbstractController
         $modele=$email->findAll();
 
 
-        $this->addFlash("success", "un lead est ajouté avec succès");  
+       
         if ($form->isSubmitted() && $form->isValid()) {
  
- 
+          $this->addFlash("success", "un lead est ajouté avec succès");  
             $entityManager->persist($lead);
             $entityManager->flush();
             

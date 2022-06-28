@@ -1933,7 +1933,10 @@ elseif($userrole[0] == 'ROLE_VENDEUR' )
             $vehicules = new Vehicule(); }
             $om = $this->om;
             $form = $this->createForm(VehiculeType::class,$vehicules);
+            $form->get('importe')->setData(true);
             $form -> handleRequest($request);
+         
+           
                // dd($request->files->get('galerie')); die;
             if($form->isSubmitted()&& $form->isValid()){
                 $galerie =$form->getData()->getGalerie();
@@ -2003,6 +2006,10 @@ elseif($userrole[0] == 'ROLE_VENDEUR' )
            
            
             $om->flush();
+
+
+
+      
             return $this->redirectToRoute("vehicule");
                 
         

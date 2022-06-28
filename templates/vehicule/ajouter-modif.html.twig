@@ -221,7 +221,7 @@
 										{{ form_label(form.marque, "Marque :", {'label_attr': {'class':"col-lg-6 col-form-label required fw-bold fs-6"}}) }}
 										
 										<div class="col-lg-8 fv-row fv-plugins-icon-container">
-											{{ form_widget(form.marque, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+											{{ form_widget(form.marque, {'id':'marquee','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
 										</div>
 									</div>
 									<div class="col mb-4">
@@ -1629,7 +1629,7 @@
 						{{ form_widget(form.garentie, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
 					</div>
 			</div>
-			
+			<div style="display:none"> {{ form_row(form.importe)}}}	</div>
 
 
 			
@@ -1666,7 +1666,18 @@
 
 
 
-		
+<script>
+	$("#marquee").on("click", function(e) {
+
+e.preventDefault(); 
+marque = document.getElementById('marquee').value;
+console.log(marque);
+
+
+
+});
+
+</script>		
 	
     
 {% endblock %}

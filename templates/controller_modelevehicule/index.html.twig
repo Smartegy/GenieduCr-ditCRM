@@ -1,0 +1,17 @@
+
+{% extends 'base.html.twig' %}
+{% set page_title = 'fabriquant' %}
+{% set P_page_title = '' %}
+{% set P_path = '/inventaire/' %} 
+
+{% block body %}
+
+{% for mod in listmodle %}
+<div>{{mod.fabricant.id}}</div>
+<div>{{mod.id}}</div>
+<div>{{mod.nom}}</div>
+
+
+{% endfor %}
+
+{% endblock %}

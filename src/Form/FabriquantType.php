@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Fabriquant;
-
+use App\Entity\Modele;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
@@ -43,6 +43,11 @@ class FabriquantType extends AbstractType
 
             ->add('media', MediasType::class,[
                 'required'=>true]  )
+
+           
+
+                  
+
             ;
            
         ;

@@ -47,4 +47,13 @@ class ModeleRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findByFabriquant($value)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.fabricant = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

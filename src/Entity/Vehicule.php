@@ -563,6 +563,11 @@ class Vehicule
      */
     private $operationachat;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $importe;
+
 
     
 
@@ -1898,6 +1903,18 @@ class Vehicule
     public function setOperationachat(?OperationAchat $operationachat): self
     {
         $this->operationachat = $operationachat;
+
+        return $this;
+    }
+
+    public function getImporte(): ?bool
+    {
+        return $this->importe;
+    }
+
+    public function setImporte(bool $importe): self
+    {
+        $this->importe = $importe;
 
         return $this;
     }

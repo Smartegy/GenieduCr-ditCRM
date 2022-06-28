@@ -87,6 +87,15 @@ class Fabriquant
      */
     private $nom;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Modele::class, mappedBy="fabricant")
+     */
+    private $modeles;
+
+
+
+
+
    
   
 
@@ -103,6 +112,7 @@ class Fabriquant
     }
     
     $this->datemodification = new DateTime('now');
+    $this->modeles = new ArrayCollection();
 
     }
 
@@ -245,6 +255,43 @@ class Fabriquant
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Modele>
+     */
+    public function getModeles(): Collection
+    {
+        return $this->modeles;
+    }
+
+    public function addModele(Modele $modele): self
+    {
+        if (!$this->modeles->contains($modele)) {
+            $this->modeles[] = $modele;
+            $modele->setFabricant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModele(Modele $modele): self
+    {
+        if ($this->modeles->removeElement($modele)) {
+            // set the owning side to null (unless already changed)
+            if ($modele->getFabricant() === $this) {
+                $modele->setFabricant(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    public function __toString()
+    {
+        return $this->getNom();
+    }
+  
 
     
 
