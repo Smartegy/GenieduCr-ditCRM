@@ -36,7 +36,7 @@ class Leads
      */
     private $courriel;
 
-    /**
+      /**
      * @ORM\Column(type="datetime")
      */
     private $datecreation;
@@ -71,10 +71,7 @@ class Leads
      */
     private $revenumensuel;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $depuisquand;
+   
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -101,10 +98,8 @@ class Leads
      */
     private $paiementmonsuel;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $date;
+  
+    
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -146,10 +141,7 @@ class Leads
      */
     private $modele;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $annee;
+
 
   
 
@@ -306,9 +298,29 @@ class Leads
      */
     private $marquevente;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    public $annee_revenu;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    public $mois_revenu;
+
+    /**
+     * @ORM\Column(type="integer" , nullable=true)
+     */
+    public $annee_habitation;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    public $mois_habitation;
 
 
-  
+
+    
 
 
   
@@ -321,8 +333,9 @@ class Leads
     {
        
 
-        if($this->datecreation == null){
-            $this->datecreation = new DateTime('now');
+        if($this->datecreationtable == null){
+           $this->datecreation = new DateTime('now');
+     
             $this->datecreationtable = new DateTime('now');
         }
         
@@ -382,8 +395,7 @@ class Leads
 
         return $this;
     }
-
-    public function getDatecreation(): ?\DateTimeInterface
+        public function getDatecreation(): ?\DateTimeInterface
     {
         return $this->datecreation;
     }
@@ -473,17 +485,8 @@ class Leads
         return $this;
     }
 
-    public function getDepuisquand(): ?\DateTimeInterface
-    {
-        return $this->depuisquand;
-    }
-
-    public function setDepuisquand(?\DateTimeInterface $depuisquand): self
-    {
-        $this->depuisquand = $depuisquand;
-
-        return $this;
-    }
+ 
+    
 
     public function getNomcompagnie(): ?string
     {
@@ -545,17 +548,7 @@ class Leads
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(?\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
+  
 
     public function getDatecreationtable(): ?\DateTimeInterface
     {
@@ -645,17 +638,7 @@ class Leads
         return $this;
     }
 
-    public function getAnnee(): ?int
-    {
-        return $this->annee;
-    }
-
-    public function setAnnee(?int $annee): self
-    {
-        $this->annee = $annee;
-
-        return $this;
-    }
+ 
 
 
 
@@ -1101,6 +1084,54 @@ class Leads
     public function setMarquevente(?string $marquevente): self
     {
         $this->marquevente = $marquevente;
+
+        return $this;
+    }
+
+    public function getAnneeRevenu(): ?int
+    {
+        return $this->annee_revenu;
+    }
+
+    public function setAnneeRevenu(?int $annee_revenu): self
+    {
+        $this->annee_revenu = $annee_revenu;
+
+        return $this;
+    }
+
+    public function getMoisRevenu(): ?int
+    {
+        return $this->mois_revenu;
+    }
+
+    public function setMoisRevenu(?int $mois_revenu): self
+    {
+        $this->mois_revenu = $mois_revenu;
+
+        return $this;
+    }
+
+    public function getAnneeHabitation(): ?int
+    {
+        return $this->annee_habitation;
+    }
+
+    public function setAnneeHabitation(int $annee_habitation): self
+    {
+        $this->annee_habitation = $annee_habitation;
+
+        return $this;
+    }
+
+    public function getMoisHabitation(): ?int
+    {
+        return $this->mois_habitation;
+    }
+
+    public function setMoisHabitation(?int $mois_habitation): self
+    {
+        $this->mois_habitation = $mois_habitation;
 
         return $this;
     }

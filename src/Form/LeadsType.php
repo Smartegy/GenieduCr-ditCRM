@@ -51,13 +51,14 @@ class LeadsType extends AbstractType
         ])
             ->add('statutprofessionnel')
             ->add('revenumensuel')
-            ->add('depuisquand')
+           
             ->add('nomcompagnie')
             ->add('occupationposte')
             ->add('adressedomicile')
             ->add('locationproprietaire')
             ->add('paiementmonsuel')
-            ->add('date')
+    
+            
             ->add('rappel', null, [
                 'required'   => false,
                
@@ -67,12 +68,7 @@ class LeadsType extends AbstractType
             ->add('textsms')
             ->add('marque')
             ->add('modele')
-            ->add('annee',
-            'Symfony\Component\Form\Extension\Core\Type\ChoiceType',[
-            'choices' => $this->getYears(1960),
-            'required' => false , 
-            'placeholder' => ' '
-            ])
+       
             ->add('type')
             ->add('isCLient')
            
@@ -193,11 +189,14 @@ class LeadsType extends AbstractType
             ->add('etatcarossrie_vente')
    
             ->add('remplacer_vehicule')
-
+         
             ->add('etatpneus_vente')
             ->add('prix_achat')
             ->add('prix_vente')
-         
+            ->add('annee_revenu')
+            ->add('mois_revenu')
+            ->add('annee_habitation')
+            ->add('mois_habitation')
            
         ;
     }

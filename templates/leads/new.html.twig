@@ -637,15 +637,25 @@
 			 </div>
 			</div>
 			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+				<div class="col mb-3" >
 				
-				{{ form_label(form.depuisquand, "Depuis Quand :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+				   {{ form_label(form.annee_revenu, "Anneé Revenu :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
 				
-				<div class="col-lg-8 fv-row fv-plugins-icon-container">
-					{{ form_widget(form.depuisquand , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
 				
-
-			 </div>
+					{{ form_widget(form.annee_revenu , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+				
+                </div>
+			 
+                <div class="col mb-3" >
+			        {{ form_label(form.mois_revenu, "Mois Revenu :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+				
+			
+					{{ form_widget(form.mois_revenu , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+				
+                </div>
+			 
 			</div>
+		
 			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
 				
 				{{ form_label(form.nomcompagnie, "Nom Compagnie :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
@@ -699,25 +709,23 @@
 			 </div>
 			</div>
 			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+		      <div class="col mb-6">
 				
-				{{ form_label(form.date, "Annee :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
+				{{ form_label(form.annee_habitation, "Anneé Habitation :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
 				
-				<div class="col-lg-8 fv-row fv-plugins-icon-container">
-					{{ form_widget(form.date , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+			
+					{{ form_widget(form.annee_habitation , {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
 					
-
-			 </div>
-			</div>
-			<div class="row mb-6" style="margin-left:10px;padding-right:100px">
+				</div>      
+				<div class="col mb-6">
+					{{ form_label(form.mois_habitation, "Mois Habitation:", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
 				
-				{{ form_label(form.annee, "anneé :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
-				
-				<div class="col-lg-8 fv-row fv-plugins-icon-container">
-					{{ form_widget(form.annee, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-					{{ form_errors(form.annee) }}
-
-			 </div>
+					
+						{{ form_widget(form.mois_habitation, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
+					
+			    </div>
 			</div>
+		
     </div>
 	<div class="fw-bolder text-success me-2">Les données du véhicule à acheter</div>
 	<div class="border border-dashed border-gray-300  min-w-125px rounded pt-4 pb-2 my-3" >
