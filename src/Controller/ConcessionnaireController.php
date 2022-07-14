@@ -94,7 +94,7 @@ class ConcessionnaireController extends AbstractController
     }
 
 
-    #[Route('/concessionnaire/{id}', name: 'suppression_concessionnaire', methods:'delete')]
+    #[Route('/concessionnaire/{id}', name: 'suppression_concessionnaire')]
     public function suppression(Concessionnaire $concessionnaires, Request $request){
 
        $om=$this->om;
@@ -232,7 +232,7 @@ class ConcessionnaireController extends AbstractController
         ]);
     }
 
-    #[Route('/concessionnaire/add-concessionnaire', name: 'add_concessionnaire')]
+    #[Route('/add-concessionnaire', name: 'add_concessionnaire')]
     public function add_concessionnaire(Concessionnaire $concessionnaires = null, TypemediaRepository $repository, UserPasswordHasherInterface $userPasswordHasher, ObjectManager $objectManager, Request $request)
     {
 
@@ -342,7 +342,7 @@ class ConcessionnaireController extends AbstractController
         ]);
     }
 
-    #[Route('/consulter-concessionnaire/{id}', name: 'consultation_concessionnaire', methods:'GET|POST')]
+    #[Route('/consulter_concessionnaire/{id}', name: 'consultation_concessionnaire', methods:'GET|POST')]
     public function consultation(Concessionnaire $concessionnaire): Response
     {
         $concessionnaire = $this->ConcessionnaireRepository->findOneById($concessionnaire->getId());

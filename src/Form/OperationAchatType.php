@@ -23,7 +23,9 @@ class OperationAchatType extends AbstractType
             ->add('prix_achat')
             ->add('prix_vente')
             ->add('numserie')
-            
+            ->add('marque_achat')
+             ->add('modele_achat')
+          
          
 
 

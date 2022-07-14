@@ -391,12 +391,18 @@
                                         </svg>
                                     </span>
                                     <!--end::Svg Icon-->
+                                    {% autoescape "html" %}
+                             <div style="display:none" id="parag">      
+                             <p >
+                               {{e.sujet}}  <br/><br/>  
+                              
+                                   
+                                    {{ e.text|raw }}     {# var won't be escaped #}
+                                    {# var won't be doubled-escaped #}
+                                {% endautoescape %}  
                             
-                             <p style="display:none" id="parag">
-                                {{e.sujet}}<br/><br/>
-                                {{e.text}}
                              </p>
-                                  
+                            </div>      
     
                             </div> 
                             <!--end::Message content-->
@@ -487,7 +493,7 @@
                                         </div>
 										<div class="row mb-6"  style="display:none;">
 							
-                                            {{ form_label(form.emetteur, "Emetteur :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+                                            {{ form_label(form.emetteur, "Emetteur :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
                                             
                                             <div class="col-lg-8 fv-row fv-plugins-icon-container">
                                                 {{ form_widget(form.emetteur, {'attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
@@ -498,12 +504,12 @@
                                         
                                         <div class="row mb-6" >
 							
-                                            {{ form_label(form.sujet, "Sujet :", {'label_attr': {'class':"col-lg-4 col-form-label required fw-bold fs-6"}}) }}
+                                            {{ form_label(form.sujet, "Sujet :", {'label_attr': {'class':"col-lg-4 col-form-label  fw-bold fs-6"}}) }}
                                             
                                             <div class="col-lg-8 fv-row fv-plugins-icon-container">
                                                 {{ form_widget(form.sujet, {'id': 'sujet','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
                                                 {{ form_errors(form.sujet) }}
-                                                 
+
                                         </div>
                                         </div>
                                         <div class="row mb-6">
@@ -512,10 +518,11 @@
                                             
                                             <div class="col-lg-8 fv-row fv-plugins-icon-container">
                                                 {{ form_widget(form.text, {'id': 'text','attr': {'class': 'form-control form-control-lg form-control-solid'}}) }}
-                                                {{ form_errors(form.text) }}
+                                                {{ form_errors(form.text ) }}
                 
                                         </div>
                                         </div>
+                                      
                                     
 
 										<div style="display:none;"> {{ form_row(form.lead)}}</div>
@@ -668,10 +675,7 @@ $("#modele").on("change", function(e) {
 <script  type="text/javascript">
     
  var  cache=  document.getElementsByClassName("cache");
-
-  var parag = document.getElementsByClassName("parag");
- 
-  var i = 0;
+ var i = 0;
  for(i=0; i<cache.length; i++) {
     cellule=cache[i];
     cellule.addEventListener("click", function(event){
@@ -692,7 +696,6 @@ $("#modele").on("change", function(e) {
 
 
 </script>
-
 
 
 {% endblock %} 

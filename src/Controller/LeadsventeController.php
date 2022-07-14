@@ -2045,6 +2045,8 @@ class LeadsventeController extends AbstractController
                $modelevente=$form->get('modele_vente')->getData();  
                 $marquevente=$form->get('marquevente')->getData(); 
                 $prix_vente=$form->get('prix_vente')->getData(); 
+                $modeleachat=$form->get('marque')->getData();  
+                $marqueachat=$form->get('modele')->getData(); 
     
                     $onecar= $vehicule->findOneByVin($numserie);
                     $name=$form->get('nom')->getData();
@@ -2070,6 +2072,9 @@ class LeadsventeController extends AbstractController
                     $operationA->setModele($modelevente);
                     $operationA->setMarque($marquevente);
                     $operationA->setLeads($namelead);
+
+                    $operationA->setModeleAchat($modeleachat);
+                    $operationA->setMarqueAchat($marqueachat);
                
                        
                   

@@ -2053,6 +2053,9 @@ class LeadsController extends AbstractController
            $modelevente=$form->get('modele_vente')->getData();  
             $marquevente=$form->get('marquevente')->getData(); 
 
+            $modeleachat=$form->get('marque')->getData();  
+            $marqueachat=$form->get('modele')->getData(); 
+
                 $onecar= $vehicule->findOneByVin($numserie);
                 $name=$form->get('nom')->getData();
                 $namelead=$leadrep->findOneByNom($name);
@@ -2067,7 +2070,8 @@ class LeadsController extends AbstractController
                 $operationA->setPrixVente($prix_vente);
                 $operationA->setModele($modelevente);
                 $operationA->setMarque($marquevente);
-           
+                $operationA->setModeleAchat($modeleachat);
+                $operationA->setMarqueAchat($marqueachat);
                    
               
                    $entityManager->persist($operationA);

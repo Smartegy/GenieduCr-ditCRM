@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\FilesLeadRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -40,7 +41,28 @@ class FilesLead
      */
     private $titre;
 
- 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    public $datecreation;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    public $datemodification;
+
+
+    public function __construct()
+    {
+       
+
+        if($this->datecreation == null){
+            $this->datecreation = new DateTime('now');
+        }
+        
+        $this->datemodification = new DateTime('now');
+        
+    }
 
 
 
@@ -106,6 +128,31 @@ class FilesLead
     public function setTitre(?string $titre): self
     {
         $this->titre = $titre;
+
+        return $this;
+    }
+
+
+    public function getDatecreation(): ?\DateTimeInterface
+    {
+        return $this->datecreation;
+    }
+
+    public function setDatecreation(\DateTimeInterface $datecreation): self
+    {
+        $this->datecreation = $datecreation;
+
+        return $this;
+    }
+
+    public function getDatemodification(): ?\DateTimeInterface
+    {
+        return $this->datemodification;
+    }
+
+    public function setDatemodification(\DateTimeInterface $datemodification): self
+    {
+        $this->datemodification = $datemodification;
 
         return $this;
     }

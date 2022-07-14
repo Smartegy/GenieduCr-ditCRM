@@ -35,7 +35,8 @@ class PartenaireType extends AbstractType
                 'class' => Agent::class,
                 'choice_label' => 'utilisateur.nom',
                     'expanded' => false,
-                    'multiple' => true
+                    'multiple' => true,
+                    'required' => false
                   
                 ))
                 ->add('vendeurrs', EntityType::class,array(
@@ -45,7 +46,8 @@ class PartenaireType extends AbstractType
                         
                         'expanded' => false,
                         'multiple' => true,
-                        'mapped' => true
+                        'mapped' => true,
+                        'required' => false
                     ))
                     
                     

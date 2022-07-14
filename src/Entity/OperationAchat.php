@@ -73,6 +73,16 @@ class OperationAchat
      */
     public $prix_vente;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    public $marque_achat;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    public $modele_achat;
+
 
 
 
@@ -205,6 +215,30 @@ class OperationAchat
     public function __toString()
     {
         return $this->numserie;
+    }
+
+    public function getMarqueAchat(): ?string
+    {
+        return $this->marque_achat;
+    }
+
+    public function setMarqueAchat(?string $marque_achat): self
+    {
+        $this->marque_achat = $marque_achat;
+
+        return $this;
+    }
+
+    public function getModeleAchat(): ?string
+    {
+        return $this->modele_achat;
+    }
+
+    public function setModeleAchat(?string $modele_achat): self
+    {
+        $this->modele_achat = $modele_achat;
+
+        return $this;
     }
 
 }

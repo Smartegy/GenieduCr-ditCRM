@@ -209,6 +209,7 @@ class EmailController extends AbstractController
              ->subject($form->get('sujet')->getData())
             //->text($Message)
             ->text($form->get('text')->getData())
+           
          ;
          $mailer->send($mail);
          $uri = $request->getUri();

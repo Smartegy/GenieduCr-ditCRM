@@ -33,21 +33,21 @@ class Concessionnairemarchand
    
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255 ,nullable=true)
       * @Assert\NotBlank(message="veuillez remplir le lien du site web ")
 
      */
     private $siteweb;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
     * @Assert\NotBlank(message="veuillez remplir le lien du dealer track ")
 
      */
     private $liendealertrack;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      * @Assert\NotBlank(message="veuillez remplir la description ")
 
      */

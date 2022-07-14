@@ -299,24 +299,25 @@ class Leads
     private $marquevente;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     public $annee_revenu;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     public $mois_revenu;
 
     /**
-     * @ORM\Column(type="integer" , nullable=true)
+     * @ORM\Column(type="string" , nullable=true)
      */
     public $annee_habitation;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     public $mois_habitation;
+
 
 
 
@@ -1088,53 +1089,55 @@ class Leads
         return $this;
     }
 
-    public function getAnneeRevenu(): ?int
+    public function getAnneeRevenu(): ?string
     {
         return $this->annee_revenu;
     }
 
-    public function setAnneeRevenu(?int $annee_revenu): self
+    public function setAnneeRevenu(?string $annee_revenu): self
     {
         $this->annee_revenu = $annee_revenu;
 
         return $this;
     }
 
-    public function getMoisRevenu(): ?int
+    public function getMoisRevenu(): ?string
     {
         return $this->mois_revenu;
     }
 
-    public function setMoisRevenu(?int $mois_revenu): self
+    public function setMoisRevenu(?string $mois_revenu): self
     {
         $this->mois_revenu = $mois_revenu;
 
         return $this;
     }
 
-    public function getAnneeHabitation(): ?int
+    public function getAnneeHabitation(): ?string
     {
         return $this->annee_habitation;
     }
 
-    public function setAnneeHabitation(int $annee_habitation): self
+    public function setAnneeHabitation(string $annee_habitation): self
     {
         $this->annee_habitation = $annee_habitation;
 
         return $this;
     }
 
-    public function getMoisHabitation(): ?int
+    public function getMoisHabitation(): ?string
     {
         return $this->mois_habitation;
     }
 
-    public function setMoisHabitation(?int $mois_habitation): self
+    public function setMoisHabitation(?string $mois_habitation): self
     {
         $this->mois_habitation = $mois_habitation;
 
         return $this;
     }
+
+   
 
 
 

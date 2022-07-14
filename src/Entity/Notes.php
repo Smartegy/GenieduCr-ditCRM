@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\NotesRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,7 +29,23 @@ class Notes
      */
     private $lead;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $datecreation;
+
+    public function __construct()
   
+    {
+       
+
+        if($this->datecreation == null){
+           $this->datecreation = new DateTime('now');
+ 
+        }
+ 
+
+    } 
 
     public function getId(): ?int
     {
@@ -55,6 +72,18 @@ class Notes
     public function setLead(?Leads $lead): self
     {
         $this->lead = $lead;
+
+        return $this;
+    }
+
+    public function getDatecreation(): ?\DateTimeInterface
+    {
+        return $this->datecreation;
+    }
+
+    public function setDatecreation(?\DateTimeInterface $datecreation): self
+    {
+        $this->datecreation = $datecreation;
 
         return $this;
     }

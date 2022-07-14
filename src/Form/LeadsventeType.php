@@ -168,6 +168,8 @@ class LeadsventeType extends AbstractType
             ->add('etatpneus_vente')
             ->add('prix_achat')
             ->add('prix_vente')
+           
+            
     
             ->add('operationAchats', EntityType::class,array(     	
                 'class' => OperationAchat::class,

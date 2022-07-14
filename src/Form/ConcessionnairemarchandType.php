@@ -53,21 +53,21 @@ class ConcessionnairemarchandType extends AbstractType
                 'required' => false]) 
 
             ->add('siteweb' , null , [
-                'required'   => true,
+                'required'   => false,
                 'constraints' => $Constraints ]
 
 
             )
 
             ->add('liendealertrack' , null , [
-                'required'   => true,
+                'required'   => false,
                 'constraints' => $Constraints ]
             
             )
 
 
             ->add('description',TextareaType::class , 
-            [ 'required' => True , 
+            [ 'required' => false , 
             'constraints' => $Constraints
             ] )
 
@@ -95,7 +95,8 @@ class ConcessionnairemarchandType extends AbstractType
                         
                         'expanded' => false,
                         'multiple' => true,
-                        'mapped' => true
+                        'mapped' => true,
+                        'required' => false 
                       
                     ))
 
@@ -105,7 +106,8 @@ class ConcessionnairemarchandType extends AbstractType
             'choice_label' => 'utilisateur.nomutilisateur',
                 'expanded' => false,
                 'multiple' => true,
-                'mapped' => true
+                'mapped' => true,
+                'required' => false 
             ))
             
                
