@@ -18,6 +18,7 @@ use Twilio\Rest\Client;
 use App\Entity\Courriel;
 use App\Entity\Sms;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
 
 #[AsCommand(
     name: 'make:rappel',
@@ -25,12 +26,13 @@ use Doctrine\ORM\EntityManagerInterface;
 )]
 class MakeRappelCommand extends Command
 {
-    public function __construct(MailerInterface $mailer,SendMailService $mail, LeadsRepository $lead, EntityManagerInterface $entityManager,LeadsRepository $leadsRepository)
+    public function __construct(MailerInterface $mailer,SendMailService $mail, LeadsRepository $lead, EntityManagerInterface $entityManager,LeadsRepository $leadsRepository,Security $security)
     {
         parent::__construct(); 
         $this->mailer = $mailer;
         $this->mail = $mail;
         $this->lead = $lead;
+        $this->security = $security;
         $this->entityManager = $entityManager;
         $this->leadsRepository = $leadsRepository;
         
@@ -45,8 +47,10 @@ class MakeRappelCommand extends Command
         ;
     }
 
+     
+     
 
-
+     
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -59,6 +63,9 @@ class MakeRappelCommand extends Command
         $Aujourdhui= new DateTime('now');
         $Aujourdhui = $Aujourdhui->format('Y-m-d');
        // $daterappellead=$this->lead->findAll();
+
+      
+         
         $input->getArguments();
 
  
@@ -76,14 +83,20 @@ class MakeRappelCommand extends Command
         $datacourriel=$title->getCourriel();
         $datatelephone=$title->getTelephone();
         $datatextsms=$title->getTextSms();
+           
 
+             
+
+               
         $onelead=$this->leadsRepository->findOneById($datalead);
         if($datederappel == $Aujourdhui )
         {
+
+        
     /*************send Email***********/ 
     if (!empty($sujet) AND !empty($text) ) {   
         $mail = (new Email())
-        ->from( 'imen.jouini123@gmail.com')
+        ->from( 'shajjar@genieducredit.com')
         ->to($datacourriel)
          ->subject($sujet)
         ->text($text)
@@ -93,8 +106,8 @@ class MakeRappelCommand extends Command
     }
     /*************send Sms***********/  
     if (!empty($datatextsms)) {  
-    $sid = 'AC257e749334cf5bbde19c3c21294be554';
-    $token = 'dd0f223537f0a4cf572265ae71910436';
+    $sid = 'AC7793004fae938a81497bdc5700f526c0';
+    $token = '9066ca357e7b1dd2e6548ee288af547c';
     $client = new Client($sid, $token);
 
     $client->messages->create(
@@ -102,7 +115,7 @@ class MakeRappelCommand extends Command
       //  $tellead,
       $datatelephone,
         [
-            'from' => '+14388174255',
+            'from' => '+4386009101',
             'body' => $datatextsms
         ]
     );
@@ -112,7 +125,7 @@ class MakeRappelCommand extends Command
      $Email= new Courriel();
      $Email->setText($text);
      $Email->setSujet($sujet);
-     $Email->setEmetteur("jouini.imen123@gmail.com");
+     $Email->setEmetteur("shajjar@genieducredit.com");
      $Email->setRecepteur($datacourriel);
      $Email->setLead($onelead);
      $Email->setModele(NULL);
