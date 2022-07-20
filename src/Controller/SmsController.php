@@ -56,6 +56,7 @@ use Twilio\Rest\Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Notifier\NotifierInterface;
 use Twilio\TwiML\Voice\Client as VoiceClient;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 /**
 * @IsGranted("IS_AUTHENTICATED_FULLY")
@@ -102,7 +103,7 @@ class SmsController extends AbstractController
        $form->get('recepteur')->setData($maillead);
 */
 $form->get('lead')->setData($onelead);
-$teluser="+14388174255";
+$teluser="+14386009101";
 $tellead="+15148341662"; 
 $form->get('emetteur')->setData($teluser);
 $form->get('recepteur')->setData($tellead);
@@ -187,7 +188,7 @@ $form->get('recepteur')->setData($tellead);
 
 
 
-
+            //dd($mixhistory);die;
 
 //dd($form->get('recepteur')) ;
 
@@ -195,16 +196,15 @@ $form->get('recepteur')->setData($tellead);
         if ($form->isSubmitted() && $form->isValid()) {
           //  dd($form->getData());die;
 
-            $entityManager->persist($sms);
-            $entityManager->flush();
+          
       
   // dd($form->getData());die;
 
-            $sid = 'AC257e749334cf5bbde19c3c21294be554';
-            $token = 'dd0f223537f0a4cf572265ae71910436';
+            $sid = 'AC7793004fae938a81497bdc5700f526c0';
+            $token = '9066ca357e7b1dd2e6548ee288af547c';
             $client = new Client($sid, $token);
-
-            $client->messages->create(
+            try {
+              $client->messages->create(
                 // the number you'd like to send the message to
               //  $tellead,
               $form->get('recepteur')->getData(),
@@ -218,8 +218,23 @@ $form->get('recepteur')->setData($tellead);
                 ]
             );
 
-            
-     //  dd($form->getData());die;
+              
+             } catch (TransportExceptionInterface $e) {
+
+           
+             }
+             if (!isset($e))
+             {
+                 $this->addFlash('success', 'sms envoyé avec succès');
+                 $entityManager->persist($sms);
+            $entityManager->flush();
+             }else
+             {
+                 $this->addFlash('error', 'sms n\'a pas été envoyé');
+                 return $this->redirectToRoute('sms',array('idlead' => $paranfinal));
+        
+             }
+   
         return $this->redirectToRoute('sms',array('idlead' => $paranfinal));
     }
 

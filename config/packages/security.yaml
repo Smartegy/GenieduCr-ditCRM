@@ -44,6 +44,13 @@ security:
           - { path: ^/profilpartenaire, roles: ROLE_PARTENAIRE }
           - { path: ^/profilagent, roles: ROLE_AGENT }
           - { path: ^/profilvendeur, roles: ROLE_VENDEUR }
+
+    role_hierarchy:
+          ROLE_EDITOR: ROLE_USER
+          ROLE_ADMIN: ROLE_EDITOR
+          
+       
+
         
   
 

@@ -19,6 +19,7 @@ use App\Entity\Courriel;
 use App\Entity\Sms;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 #[AsCommand(
     name: 'make:rappel',
@@ -72,13 +73,22 @@ class MakeRappelCommand extends Command
    /*************Lire les rappel et recupérer les constreintes ****************/
 
    $daterappellead=$this->lead->findAll();
+  
 
        foreach($daterappellead as $title )
        {
+        
         $datederappel=$title->getRappel();
+      
         $sujet= $title->getSujet();
         $text= $title->getText();
-        $datederappel=$datederappel->format('Y-m-d');
+        if($datederappel!= NULL)
+        {
+            $datederappel=$datederappel->format('Y-m-d');
+             
+        }
+
+       
         $datalead=$title->getId();
         $datacourriel=$title->getCourriel();
         $datatelephone=$title->getTelephone();
@@ -91,58 +101,105 @@ class MakeRappelCommand extends Command
         $onelead=$this->leadsRepository->findOneById($datalead);
         if($datederappel == $Aujourdhui )
         {
+        
+       
 
+                 /*************Enregistrer Email dans la BD***********/   
+     if (!empty($sujet) AND !empty($text) ) {
+        $Email= new Courriel();
+        $Email->setText($text);
+        $Email->setSujet($sujet);
+        $Email->setEmetteur("shajjar@genieducredit.com");
+        $Email->setRecepteur($datacourriel);
+        $Email->setLead($onelead);
+        $Email->setModele(NULL);
+ 
+      
         
     /*************send Email***********/ 
-    if (!empty($sujet) AND !empty($text) ) {   
+   
         $mail = (new Email())
         ->from( 'shajjar@genieducredit.com')
         ->to($datacourriel)
          ->subject($sujet)
         ->text($text)
      ;
+
+
+     try {
      $this->mailer->send($mail);
+     
+    } catch (TransportExceptionInterface $e) {
+        // some error prevented the email sending; display an
+        // error message or try to resend the message 
+       
+     echo($e);
+    
+       
+    }
+    if (!isset($e))
+    {
+        
+        $this->entityManager->persist($Email);
+        $this->entityManager->flush();
+    }else
+    {
+        
+    }  
 
     }
     /*************send Sms***********/  
     if (!empty($datatextsms)) {  
+
+        /*************Enregistrer Sms dans la BD***********/   
+   
+   
+        $Sms= new Sms();
+        $Sms->setText($datatextsms);
+        $Sms->setEmetteur("+14386009101");
+        $Sms->setRecepteur($datatelephone);
+        $Sms->setLead($onelead);
+        $Sms->setModele(NULL);
+
+
+
+
     $sid = 'AC7793004fae938a81497bdc5700f526c0';
     $token = '9066ca357e7b1dd2e6548ee288af547c';
-    $client = new Client($sid, $token);
 
-    $client->messages->create(
-        // the number you'd like to send the message to
-      //  $tellead,
-      $datatelephone,
-        [
-            'from' => '+4386009101',
-            'body' => $datatextsms
-        ]
-    );
-    }  
-     /*************Enregistrer Email dans la BD***********/   
-     if (!empty($sujet) AND !empty($text) ) {
-     $Email= new Courriel();
-     $Email->setText($text);
-     $Email->setSujet($sujet);
-     $Email->setEmetteur("shajjar@genieducredit.com");
-     $Email->setRecepteur($datacourriel);
-     $Email->setLead($onelead);
-     $Email->setModele(NULL);
-     $this->entityManager->persist($Email);
-     $this->entityManager->flush();
+
+    try {
+        $client = new Client($sid, $token);
+
+        $client->messages->create(
+            // the number you'd like to send the message to
+          //  $tellead,
+          $datatelephone,
+            [
+                'from' => '+14386009101',
+                'body' => $datatextsms
+            ]
+        );
+        
+    } catch (TransportExceptionInterface $e) {
+        // some error prevented the email sending; display an
+        // error message or try to resend the message 
+       
+     echo($e);
+    
+       
     }
-    /*************Enregistrer Sms dans la BD***********/   
-    if (!empty($datatextsms)) {
+    if (!isset($e))
+    {
+        
+        $this->entityManager->persist($Sms);
+        $this->entityManager->flush();
+    }else
+    {
+        
+    }  
    
-         $Sms= new Sms();
-          $Sms->setText($datatextsms);
-          $Sms->setEmetteur("+14388174255");
-          $Sms->setRecepteur($datatelephone);
-          $Sms->setLead($onelead);
-          $Sms->setModele(NULL);
-          $this->entityManager->persist($Sms);
-          $this->entityManager->flush();
+
 
     }
     /************* end SMS***********/ 
@@ -163,7 +220,7 @@ class MakeRappelCommand extends Command
 
        }
       
-
+      var_dump('fini');die;
         
 
 

@@ -46,6 +46,7 @@ use App\Service\SendMailService;
 use Twilio\Rest\Client;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Twilio\TwiML\Voice\Client as VoiceClient;
 
 /**
@@ -195,10 +196,10 @@ class EmailController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'courriel envoyé avec succès');
-           $entityManager->persist( $maill);
-           $entityManager->flush();
-        
+           
+           
+         
+           
           
           // $this->addFlash('success', 'L\'ajout a été effectuée avec succeés');
          //  dd($form) ; die() ;
@@ -211,7 +212,31 @@ class EmailController extends AbstractController
             ->text($form->get('text')->getData())
            
          ;
-         $mailer->send($mail);
+      
+         try {
+          
+            $mailer->send($mail);
+         
+
+        } catch (TransportExceptionInterface $e) {
+            // some error prevented the email sending; display an
+            // error message or try to resend the message 
+           
+         echo($e);
+           
+        }
+
+      if (!isset($e))
+        {
+            $this->addFlash('success', 'courriel envoyé avec succès');
+            $entityManager->persist( $maill);
+            $entityManager->flush();
+        }else
+        {
+            $this->addFlash('error', 'courriel n\'a pas été envoyé');
+            return $this->redirectToRoute('courriel',array('idlead' => $paranfinal));
+   
+        }
          $uri = $request->getUri();
          $subject =$form->get('modele')->getData() ;
         //$x = $form->getData() ;
